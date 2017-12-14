@@ -1,0 +1,117 @@
+page-addwallet {
+	.title .toolbar-title p{
+		margin: 0;
+	    font-size: 12px;
+	    font-weight: 500;
+	}
+	.content-sec{
+		width: 100%;
+		flex: left;
+		padding:16px;
+
+	}
+	.content-sec .sign{
+		width: 100%;
+		float: left;
+
+	}
+	.content-sec .sign .form-sec{
+		width: 100%;
+		float: left;
+	}
+	.content-sec .sign .form-sec .list{
+		width: 100%;
+		float: left;
+		margin-bottom: 0px;
+	}
+	.content-sec .sign .form-sec .list .grid{
+			padding: 0px;
+	}
+	.content-sec .sign .form-sec .list .item{
+		width: 100%;
+		float: left;
+		padding: 0px;
+		border:none;
+	}
+	.content-sec .sign .form-sec .list .item .item-inner{
+		border-bottom: 0.55px solid #c8c7cc;
+	}
+	.content-sec .sign .form-sec .list .item input{
+		font-size: 13px;
+        margin-top: 0px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        margin-right: 0px;
+        width: 100%;
+	}
+	.content-sec .sign .form-sec .list .item .label{
+		margin-bottom: 0px;
+        margin-top: 10px;
+        color: #a6a6a6;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+	}
+	
+	.left{
+		padding-left: 0px;
+	}
+	.right{
+		padding-right: 0px;
+	}
+	.date .text-input{
+		margin-bottom: 5px !important;
+		text-transform: uppercase;
+	}
+	.item .image{
+		margin: 0;
+	    text-align: right;
+	    position: absolute;
+	    right: 0;
+	    bottom: 9px;
+	}
+	.item .image img{
+		width: 55%;
+		float: right;
+	}
+	.top-sec .item-inner{
+		border: none !important;
+	}
+	.top-sec .button{
+		background-color: #ff563f;
+		font-size: 14px;
+		font-weight: 500;
+		border-radius: 3px;
+		margin: 10px auto;
+	}
+	.bottom-sec{
+		width: 100%;
+		float: left;
+		padding-bottom: 20px;
+	}
+	.bottom-sec .list{
+		width: 100%;
+		float: left;
+		margin: 0;
+	}
+	.content .list .item{
+		width: 100%;
+	    padding-left: 0px;
+	    float: left;
+	}
+	.bottom-sec .item-inner{
+		padding: 0px !important;
+	}
+	.bottom-sec .list .item .icon{
+		color: #020202;
+	    font-size: 16px;
+	    margin-bottom: 0;
+	    margin-right: 0;
+	}
+	.bottom-sec .list .item .label{
+	    color: #000000;
+	    font-weight: 500;
+	    font-size: 13px;
+	    text-transform: uppercase;
+	}
+}

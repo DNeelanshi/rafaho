@@ -1,0 +1,243 @@
+page-orderdetial {
+	.content{
+		width: 100%;
+		float: left;
+	}
+	 .text-sec{
+		width: 100%;
+		float: left;
+		padding:14px;
+	}
+	.top-sec{
+		width: 100%;
+		float: left;
+		background-color: #f2f2f2;
+        padding: 10px 14px;
+	}
+	.top-sec .grid{
+		padding: 0px;
+	}
+	.top-sec .left .chef{
+		width: 100%;
+		float: left;
+	}
+	.top-sec .left .chef h5{
+		width: 100%;
+	    float: left;
+	    font-size: 12px;
+	    color: #f27242;
+	    font-weight: 700;
+	    margin: 0px;
+	    line-height: 23px;
+	}
+    .top-sec .right .phn{
+		width: 100%;
+		float: left;
+	}
+	.top-sec .right .phn  span{
+		float: right;
+	    background-color: #2bb601;
+	    border-radius: 50%;
+	    width: 25px;
+	    height: 25px;
+	    text-align: center;
+	    position: relative;
+	}
+	.top-sec .right .phn  span img{
+		width: 75%;
+	    float: left;
+	    position: absolute;
+	    top: 0;
+	    bottom: 0;
+	    right: 0;
+	    left: 0;
+	    margin: auto;
+	}
+	.top-sec .right .phn h5{
+		    width: 75%;
+		    float: left;
+		    font-size: 12px;
+		    color: #000;
+		    font-weight: 700;
+		    text-align: left;
+		    margin: 0px;
+		    line-height: 23px;
+	}
+
+	
+	 .text-sec .mid-sec{
+		width: 100%;
+		float: left;
+		position: relative;
+	}
+	.text-sec .mid-sec .rghtbtn{
+		width: 40%;
+	    float: left;
+	    display: block;
+	    position: absolute;
+	    top: 0;
+	    right: 0;
+	}
+	.text-sec .mid-sec .rghtbtn .button{
+		margin: 0;
+	    font-size: 12px;
+	    padding: 0px 10px;
+	    height: 24px;
+	    float: right;
+	    background-color: #ff563f;
+	    border-radius: 2px;
+	}
+	 .text-sec .mid-sec h5{
+		    width: 60%;
+		    float: left;
+		    font-size: 12px;
+		    color: #000;
+		    font-weight: 700;
+		    margin: 0px;
+	}
+
+	 .text-sec .mid-sec p{
+		    width: 60%;
+		    float: left;
+		    font-size: 11px;
+		    color: #6a6a6a;
+		    font-weight: 500;
+		    margin: 0;
+	}
+	.left{
+		padding-left: 0;
+	}
+	.right{
+		padding-right: 0;
+	}
+	 .text-sec .bottom-sec{
+		width: 100%;
+		float: left;
+	}
+	 .text-sec .bottom-sec .list{
+	 	width: 100%;
+	 	float: left;
+	 	margin: 0px;
+	 }
+	 .text-sec .bottom-sec .item{
+	 	width: 100%;
+	 	float: left;
+	 	padding: 0px;
+	 	border:none;
+	 	min-height: 15px;
+	    height: 15px;
+	    margin-top: 6px;	
+    }
+    .text-sec .bottom-sec .item .item-inner{
+    	padding: 0px 0px 0px 25px;
+    }
+	 .text-sec .bottom-sec p{
+		    font-size: 11px;
+		    color: #6a6a6a;
+		    font-weight: 500;
+		    margin: 0;
+	 }
+	 .text-sec .bottom-sec h5{
+		    float: left;
+		    font-size: 12px;
+		    color: #000;
+		    font-weight: 700;
+		    margin: 0px;
+	 }
+	  .content-sec{
+		width: 100%;
+		float: left;
+	}
+	.content-sec .list{
+		width: 100%;
+		float: left;
+		margin:0px;
+
+	}
+	.content-sec .item{
+		width: 100%;
+		float: left;
+	   border-top: none !important;
+	    border-bottom: 1px solid #c8c7cc;
+	    padding: 0px 14px 0px 14px;
+	    background-color: #f9f9f9;
+	    align-items: baseline;
+	}
+	.content-sec .item .label{
+		margin:0px;
+	    padding-bottom: 5px;
+	}
+	.item-inner{
+		border:none !important;
+		padding-right: 0px !important;
+		padding-top: 9px;
+	}
+	.content-sec .item .label h2{
+		margin: 0;
+	    width: 100%;
+	    font-size: 12px;
+	    font-weight: 700;
+	    color: #000000;
+	
+	}
+	.content-sec .item .label p{
+		width: 100%;
+	    float: left;
+	    color: #6a6a6a;
+	    font-size: 11px;
+	    font-weight: 500;
+	}
+	.content-sec .item .label h3{
+		color: #383838;
+	    font-size: 11px;
+	    font-weight: 500;
+	    width: 100%;
+	    float: left;
+	    margin-bottom: 0;
+	}
+	.content-sec .item ion-thumbnail {
+		width: 55px !important;
+		height: 55px !important;
+		margin: 0 8px 0 0 !important;
+        padding-top: 12px !important;
+        min-width: auto;
+        min-height: auto;
+
+	}
+	.content-sec .item ion-thumbnail img{
+		width: 100% !important;
+		float:left !important;
+		height: auto !important;
+	}
+
+	.imgicon{
+		margin-right: 5px;
+		margin-top: 1px;
+	}
+	.total{
+		width: 100%;
+		float: left;
+		padding:14px;
+	}
+	.total h2{
+		width: 100%;
+		float: left;
+		text-align: right;
+		font-size: 13px;
+		color: #000;
+		font-weight: 700;
+		margin: 0px;
+	}
+	.total .left{
+		width: 50%;
+		float: left;
+		text-align: right;
+	}
+
+	.total .right{
+		width: 50%;
+		float: left;
+		text-align: right;
+	}
+	
+}

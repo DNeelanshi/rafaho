@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-navbar color="theme-header">
+    <ion-title>
+     Profile
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content refreshingText="Refreshing..." refreshingSpinner="bubbles" pullingText="Pull to refresh"></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="main">
+    <div class="top-sec">
+      <div class="main-img">
+       <img *ngIf="srcImage" class="pick0" [src]="srcImage">
+ <img *ngIf="!srcImage" class="pick0" src="assets/img/profile.png">
+      </div>
+      <div class="text-sec">
+        <h3>{{profile?.firstname }} {{ profile?.lastname}}</h3>
+       
+        <h6><ion-icon ios="ios-pin" md="md-pin"></ion-icon> {{city}}</h6>
+      </div>
+    </div>
+  </div>
+  <div class="content-sec">
+       <ion-list>
+        <ion-item (click)="edit()">
+            Edit profile
+          <ion-icon name="arrow-forward-outline" item-end></ion-icon>
+        </ion-item>
+         <ion-item (click)="wallet()">
+            Add wallet
+          <ion-icon name="arrow-forward-outline" item-end></ion-icon>
+        </ion-item>
+         <ion-item>
+            Payment
+          <ion-icon name="arrow-forward-outline" item-end></ion-icon>
+        </ion-item>
+         <ion-item (click)="frequent()">
+            Frequent questions
+          <ion-icon name="arrow-forward-outline" item-end></ion-icon>
+        </ion-item>
+         <ion-item (click)="whyrafaha()">
+            Why RAFAHO
+          <ion-icon name="arrow-forward-outline" item-end></ion-icon>
+        </ion-item>
+         <ion-item (click)="help()">
+            Help
+          <ion-icon name="arrow-forward-outline" item-end></ion-icon>
+        </ion-item>
+         <ion-item>
+            Settings
+          <ion-icon name="arrow-forward-outline" item-end></ion-icon>
+        </ion-item>
+         <ion-item (click)="term()">
+            Terms & conditions
+          <ion-icon name="arrow-forward-outline" item-end></ion-icon>
+        </ion-item>
+         <ion-item (click)="feedback()">
+            Feadback RAFAHO
+          <ion-icon name="arrow-forward-outline" item-end></ion-icon>
+        </ion-item>
+        <ion-item (click)="change()">
+            Change Password
+          <ion-icon name="arrow-forward-outline" item-end></ion-icon>
+        </ion-item>
+         <ion-item (click)="logout()">
+            Logout
+        </ion-item>
+      </ion-list>
+  </div>
+</ion-content>

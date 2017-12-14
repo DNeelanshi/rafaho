@@ -1,0 +1,119 @@
+<!--
+  Generated template for the EditprofilePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="theme-header">
+    <ion-title>Edit Profile</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content>
+     <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content refreshingText="Refreshing..." refreshingSpinner="bubbles" pullingText="Pull to refresh"></ion-refresher-content>
+  </ion-refresher>
+	<div class="main">
+    <div class="top-sec">
+      <div class="main-img">
+       <img *ngIf="srcImage" class="pick0" [src]="srcImage">
+ <img *ngIf="!srcImage" class="pick0" src="assets/img/profile.png">
+      </div>
+      <div class="input-sec" (click)="CameraAction()">
+      <div class="upld">
+      
+      	<ion-icon name="camera"></ion-icon>
+      </div>
+      </div>
+      <div class="text-sec">
+        <h3>{{data?.firstname }} {{ data?.lastname}}</h3>
+        <h6>  <ion-icon ios="ios-pin" md="md-pin"> {{city}}</ion-icon></h6>
+      </div>
+    </div>
+  </div>
+  <div class="content-sec">
+  	<div class="form-sec">
+  		<form #editprofile="ngForm" novalidate (submit)="submitinfo(editprofile)">
+  			<ion-list>
+  				<ion-grid>
+  					<ion-row>
+  						<ion-col col-12>
+						  <ion-item>
+						    <ion-input type="text" placeholder="First name" [(ngModel)]="data.firstname" name="firstname" #firstname="ngModel" required></ion-input>
+						  </ion-item>
+						</ion-col>
+
+						<ion-col col-12>
+						  <ion-item>
+						    <ion-input type="text" placeholder="Last name" [(ngModel)]="data.lastname" name="lastname" #lastname="ngModel" required></ion-input>
+						  </ion-item>
+						</ion-col>
+						<ion-col col-12>
+						   <ion-item>
+						    <ion-input type="email" placeholder="Email" [(ngModel)]="data.email" [readonly]="isReadonly()" name="email" #email="ngModel" pattern="^[a-z0-9]+(\.[_a-z0-9]+)+([@{1}])+(\.[a-z0-9-]+)+([.{1}])(\.[a-z]{1,15})$" required></ion-input>
+						  </ion-item>
+							<div class="alert alert-danger" color="danger">
+            <div *ngIf="email.errors && (email.dirty || email.touched)">
+              <div [hidden]="!email.errors.pattern">
+                Invalid email
+              </div>
+            </div>
+          </div>
+						</ion-col>
+						<ion-col col-12>
+						   <ion-item>
+						    <ion-input type="tel" placeholder="Phone number (xxx-xxx-xxx-xxx-xxx)" [(ngModel)]="data.phone" name="phone" #phone="ngModel" (input)="phonevalidation(data.phone)" maxlength="12" required></ion-input>
+						  </ion-item>
+							<div class="alert alert-danger" color="danger">
+                  <div *ngIf="phone.errors && (phone.dirty || phone.touched)">
+                    <div [hidden]="!phone.errors.pattern">
+                      Only number allowed with pattern (xxx-xxx-xxx-xxx-xxx)
+                    </div>
+                  </div>
+                </div>
+						</ion-col>
+						<ion-col col-6>
+						   <ion-item>
+						    <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="data.dob" name="dob" #dob="ngModel" max="{{date}}" required></ion-datetime>
+						  </ion-item>
+						</ion-col>
+						<ion-col col-6>
+						   <ion-item>
+						    	<ion-select [(ngModel)]="data.gender" name="gender" #gender="ngModel" required>
+							    <ion-option value="female">Female</ion-option>
+							    <ion-option value="male">Male</ion-option>
+							  </ion-select>
+						  </ion-item>
+						</ion-col>
+						<ion-col col-12>
+                                                     <div style="position: relative; overflow: hidden;">
+    <ion-icon ios="ios-search-outline" md="md-search" (click)="lupap()" style="position: absolute;
+    top: 4px;
+    right: -24px;
+    width: 50px;
+    height: 50px;
+    /* display: block; */
+    color: #000;
+    z-index: 999; 
+    font-size:26px; "></ion-icon>
+
+						    <ion-item>
+							    <ion-textarea class="enter" placeholder="Enter your address...." [(ngModel)]="data.address" name="address" #address="ngModel" required></ion-textarea>
+							</ion-item> 
+                                                     </div>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+
+			</ion-list>
+			 <div class="btn-sec">
+  	<button ion-button type="submit"  [disabled]="!editprofile.valid">Save</button>
+  </div>
+  		</form>
+  	</div>
+  </div>
+ 
+
+</ion-content>

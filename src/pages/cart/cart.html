@@ -1,0 +1,115 @@
+<!--
+  Generated template for the CartPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="theme-header">
+    <ion-title>Payment</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only class="btnprofile">
+      <div class="iconprf">
+          <img src="assets/img/cart.png">
+       </div>
+      </button>     
+    </ion-buttons>
+    
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content >
+	<div class="top-sec">
+			<ion-grid>
+				<ion-row>
+					<ion-col col-6 class="left">
+					  <div class="chef">
+						<h5>Chef Samuel Linder</h5>
+					  </div>
+					</ion-col>
+					<ion-col col-6 class="right">
+					  <div class="phn">
+						<h5>9041-601-775</h5>
+						<span (click)="loct()"><img src="assets/img/msg.png"></span>
+					  </div>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</div>
+	<div class="text-sec">
+		
+		<div class="mid-sec">
+			<h5>Customer Address: <button ion-button clear class="imgbtn" style="background-image:url('assets/img/creat.gif'); background-size:cover"></button></h5>
+			<p>71 Pilgrim Avenue</p>
+			<p>Chevy Chase,MD 20815</p>
+		</div>
+		<div class="bottom-sec">
+			<ion-list>
+				<ion-item>
+					<h5 item-start class="strt">Booking Date & Time</h5>
+					<p>21 August 2017</p>
+					<p item-end class="ennd">9:05am</p>
+				</ion-item>
+			</ion-list>
+
+		</div>
+	</div>
+	<div class="content-sec">
+	  <ion-list>
+	    <ion-item>
+	      <ion-thumbnail item-start>
+	        <img src="assets/img/southfod.png">
+	      </ion-thumbnail>
+	      <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png">South indian food</h2>
+	      <p>Idli,sambhar, Kerla</p>
+	      <p item-end class="left-p">$200.00</p>
+	      <h3>Per plate $40.00</h3>
+	      <div class="itembottom" style="width: 100%; float: left; padding-top: 3px;">
+	      <div class="counter_sec">
+			   <button ion-button clear><ion-icon name="remove"></ion-icon></button>
+			   <input type="text" value="0">
+			   <button ion-button clear><ion-icon name="add"></ion-icon></button>
+			  
+		  </div>
+		  <span>$20 x 5</span>
+		  </div>
+	      <div class="rghtbtn">
+	      	<button ion-button>Delete</button>
+	      </div>
+	    </ion-item>
+	    <ion-item>
+	      <ion-thumbnail item-start>
+	        <img src="assets/img/southfod.png">
+	      </ion-thumbnail>
+	      <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png">South indian food</h2>
+	      <p>Idli,sambhar, Kerla</p>
+	      <p item-end class="left-p">$200.00</p>
+	      <h3>Per plate $40.00</h3>
+	      <div class="itembottom" style="width: 100%; float: left; padding-top: 3px;">
+	      <div class="counter_sec">
+			   <button ion-button clear><ion-icon name="remove"></ion-icon></button>
+			   <input type="text" value="0">
+			   <button ion-button clear><ion-icon name="add"></ion-icon></button>
+			  
+		  </div>
+		  <span>$20 x 5</span>
+		  </div>
+	      <div class="rghtbtn">
+	      	<button ion-button>Delete</button>
+	      </div>
+	    </ion-item>
+	</ion-list>
+</div>
+<div class="total">
+	<h2 class="left">Subtotal</h2>
+	<h2 class="right">$606.00</h2>
+</div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <button ion-button full color="theme-header" (click)="pyment()">Checkout</button>
+  </ion-toolbar>
+</ion-footer>

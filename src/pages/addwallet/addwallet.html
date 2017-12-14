@@ -1,0 +1,88 @@
+<!--
+  Generated template for the AddwalletPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="theme-header">
+     <ion-title>
+     Add Money
+      <p>Card Details</p>
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+	<div class="content-sec">
+		<div class="sign">
+			<form class="form-sec">
+				<ion-list>
+			      <ion-grid>
+			      	<ion-row>
+			      		<ion-col col-12 class="left right">
+						  <ion-item>
+						    <ion-label stacked>Add Money</ion-label>
+						    <ion-input type="text"></ion-input>
+						  </ion-item>
+						</ion-col>
+						<ion-col col-12 class="right left">
+							<h2 style="font-size: 15px; color: #f27242; font-weight: 500;">Credit card details</h2>
+						  <ion-item>
+
+						    <ion-label stacked>Card Number</ion-label>
+				   		    <ion-input type="text"></ion-input>
+				   		    <div class="image" item-end>
+				   		    	<img src="assets/img/visa.png">
+				   		    </div>
+						  </ion-item>
+						</ion-col>
+						<ion-col col-12 class="left right">
+						  <ion-item>
+						    <ion-label stacked>cardholder</ion-label>
+						    <ion-input type="text"></ion-input>
+						  </ion-item>
+						</ion-col>
+						<ion-col col-6 class="left">
+						  <ion-item>
+						    <ion-label stacked>Expiery Date</ion-label>
+						    <ion-input type="date" class="date"></ion-input>
+						  </ion-item>
+						</ion-col>
+						<ion-col col-6 class="right">
+						  <ion-item>
+						    <ion-label stacked>CVV</ion-label>
+						    <ion-input type="text"></ion-input>
+						  </ion-item>
+						</ion-col>
+					</ion-row>
+				  </ion-grid>
+				</ion-list>
+			</form>
+		</div>
+		<div class="top-sec">
+		   <ion-item style="padding: 0px">
+			  <ion-label style="color: #565656; font-size: 13px; font-weight: 500;">Add card to wallet</ion-label>
+			  <ion-checkbox color="theme-header"></ion-checkbox>
+			</ion-item>
+			<button ion-button full>Continue</button>
+		</div>
+		<div class="bottom-sec">
+			<h3 style="font-size: 15px; color: #f27242; font-weight: 500;">Select your payment method</h3>
+			    <ion-list>
+			        <ion-item>
+			            Credit Card
+			          <ion-icon name="arrow-forward-outline" item-end></ion-icon>
+			        </ion-item>
+			         <ion-item>
+			            Debit Card
+			          <ion-icon name="arrow-forward-outline" item-end></ion-icon>
+			        </ion-item>
+			    </ion-list>
+		</div>
+
+	</div>
+</ion-content>

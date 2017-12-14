@@ -1,0 +1,80 @@
+page-filter {
+		.btnprofile{
+		font-size: 12px;
+	    font-weight: 400;
+	    text-align: center;
+	   
+	}
+
+	.header-sec{
+		width: 100%;
+	    float: left;
+	    background-color: #d7d7da;
+	    padding: 16px;
+	}
+	.header-sec h3{
+		width: 100%;
+	    font-size: 14px;
+	    font-weight: 700;
+	    float: left;
+	    margin: 0px;
+	    margin-bottom: 3px;
+	}
+	.header-sec .input{
+		background-color: #fff;
+    	border-radius: 5px;
+	}
+	.header-sec .input .text-input{
+		font-size: 12px;
+	    color: #a8a7a7;
+	    font-weight: 400;
+	    padding-left: 6px;
+        height: 15px;
+	}
+	.upper .text-input{
+		text-transform: uppercase;
+	}
+	.content-sec{
+		width: 100%;
+		float: left;
+	}
+	.content-sec .checkbox-checked{
+		border-color: #f27242;
+    	background-color: #f27242;
+	}
+	.content-sec .item{
+	    width: 100%;
+	    float: left;
+	    padding: 0;
+	    border: none !important;
+	}
+	.content-sec .item:last-child{
+		border: none;
+	}
+	.content-sec .item:last-child .item-inner{
+		border-bottom: 0.55px solid #c8c7cc;
+	}
+	.content-sec .item .label{
+		font-size: 13px;
+	    font-weight: 400;
+	    color: #313131;
+	}
+	.scroll-content{
+		padding-top: 5px;
+	}
+	.footer .button{
+	    margin: 0;
+	    text-align: center;
+	    background-color: #ff563f;
+	    font-size: 14px;
+	    font-weight: 500;
+	    width: 100%;
+	    float: left;
+	}
+	.footer .toolbar{
+		min-height: auto;
+	}
+	.footer .toolbar-background{
+		border: none;
+	}
+}

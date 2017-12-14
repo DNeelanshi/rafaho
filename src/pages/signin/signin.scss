@@ -1,0 +1,157 @@
+page-signin {
+	.content{
+		width: 100%;
+		float: left;
+	}
+	.content .main{
+		width: 100%;
+		float: left;
+		position: relative;
+	}
+	.content .main .text-sec{
+		width: 50%;
+		position: absolute;
+		left: 31px;
+        top: 25px;
+	}
+
+	.content .main .text-sec h2{
+		width: 100%;
+		color: #ff563f;
+		    font-size: 22px;
+       margin-bottom: 7px;
+       font-weight: 500;
+	}
+	.content .main .text-sec h3{
+		width: 100%;
+		color: #fff;
+		    font-size: 19px;
+    font-weight: 300;
+	}
+	.content .main h3 span{
+		color: #ff563f;
+	}
+	.content .main .top-img{
+		width: 100%;
+		float: left;
+	}
+	.content .main .top-img img{
+
+	}
+	.content .main .bottom-img{
+		width: 100%;
+		float: left;
+		position: absolute;
+		bottom: 0;
+
+
+	}
+	.content .main .bottom-img img{
+		width: 100%;
+		float: left;
+	}
+	.content .main .logo{
+		
+		float: left;
+		position: absolute;
+		    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background-color: #fff;
+    top: 119px;
+    left: 106px;
+    text-align: center;
+    box-shadow: 0 0 20px #656565;
+	}
+	.content .main .logo img{
+		width: 69%;
+    position: absolute;
+    left: 18px;
+    top: 13px;
+	}
+	.content-sec{
+		width: 100%;
+		flex: left;
+		padding:30px;
+
+	}
+	.content-sec .sign{
+		width: 100%;
+		float: left;
+		margin-top: 25px;
+
+	}
+	.content-sec .sign .form-sec{
+		width: 100%;
+		float: left;
+	}
+	.content-sec .sign .form-sec .list{
+		width: 100%;
+		float: left;
+		margin-bottom: 0px;
+	}
+	 .form-sec .list .item{
+		width: 100%;
+		float: left;
+		padding: 0px;
+		border:none;
+                border-bottom: 1px solid #c8c7cc !important;
+	}
+	 .form-sec .list .item .item-inner{
+		border-bottom: none !important;
+	}
+	.content-sec .sign .form-sec .list .item input{
+		font-size: 13px;
+        margin-top: 0px;
+        font-weight: 500;
+        letter-spacing: 1px;
+	}
+	.content-sec .sign .form-sec .list .item .label{
+		margin-bottom: 0px;
+        margin-top: 20px;
+        color: #a6a6a6;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+	}
+	.content-sec .frgtpwd{
+		width: 100%;
+		float: left;
+	}
+	.content-sec .frgtpwd h3{
+		width: 100%;
+	    float: left;
+	    text-align: right;
+	    color: #ff563f;
+	    font-size: 15px;
+	    font-weight: 500 !important;
+	    margin-top: 10px;
+	}
+	.frgtpwd .btn-sec{
+		width:100%;
+		float: left;
+		margin-top: 20px;
+		text-align: center;
+	}
+	.content-sec .frgtpwd button{
+		width: 100%;
+		float: left;
+		background-color: #ff563f;
+		font-weight: 500;
+       margin: auto;
+	}
+	.content-sec .frgtpwd .register{
+		width: 100%;
+	    float: left;
+	    text-align: center;
+	    color: #a6a6a6;
+	    font-size: 15px;
+	    font-weight: 500 !important;
+	    margin-top: 50px;
+	}
+	.content-sec .frgtpwd .register span{
+		color: #000000;
+	}
+
+
+}

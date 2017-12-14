@@ -1,0 +1,140 @@
+<!--
+  Generated template for the ChefdetialsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="theme-header">
+    <ion-title>
+      Chef Details
+      <p>Online Chef list</p>
+    </ion-title>
+    
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+	<div class="top-sec" padding>
+	<div class="top">
+		<ion-grid style="padding: 0px;">
+		<ion-row>
+			<ion-col col-3 style="padding-left: 0px">
+				<div class="image">
+					<img src="assets/img/profile.png">
+				</div>
+			</ion-col>
+			<ion-col col-9>
+				<div class="text">
+					<h2>Chef Samuel Linder</h2>
+				    <h3><span><ion-icon name="pin"></ion-icon></span> New York</h3>
+				    <p>$500 Min order</p>
+				    <h5 (click)="review()">
+				     <ul>
+				     	<li><ion-icon name="star" color="theme-header"></ion-icon></li>
+				     	<li><ion-icon name="star" color="theme-header"></ion-icon></li>
+				     	<li><ion-icon name="star" color="theme-header"></ion-icon></li>
+				     	<li><ion-icon name="star" color="lightgray"></ion-icon></li>
+				     	<li><ion-icon name="star" color="lightgray"></ion-icon></li>
+				     </ul>
+				    View Reviews</h5>
+				</div>
+				
+			</ion-col>
+			
+		</ion-row>
+	</ion-grid>
+	</div>
+</div>
+	
+	<div class="special">
+		<h3>Specialities</h3>
+		<ion-list>
+			 <ion-item>
+			      <ion-thumbnail item-start>
+			        <img src="assets/img/southfod.png">
+			      </ion-thumbnail>
+			      <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png">South indian food</h2>
+			      <p>Idli,sambhar, Kerla</p>
+			      <ion-note item-end="" class="note note-ios">3/4</ion-note>
+		    </ion-item>
+		     <ion-item>
+			      <ion-thumbnail item-start>
+			        <img src="assets/img/southfod.png">
+			      </ion-thumbnail>
+			      <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png">South indian food</h2>
+			      <p>Idli,sambhar, Kerla</p>
+			      <ion-note item-end="" class="note note-ios">3/4</ion-note>
+		    </ion-item>
+		</ion-list>
+	</div>
+	<div class="product" padding>
+		<ion-grid style="padding:0px;">
+			<div class="text">
+					<h3>Our Product</h3>
+				</div>
+			<ion-row>
+				
+				<ion-col col-4 style="padding-left: 0px">
+					<div class="colm">
+						<div class="image" style="width: 100%; float: left;">
+							<img src="assets/img/productone.png" style="width: 100%; float: left;">
+						</div>
+						<div class="text" style="position: absolute; text-align: center;">
+							<p>Honey-Chipotle Shrimp Salad</p>
+						</div>
+						<div class="offer" style="position: absolute; background-color: #2bb600; right: 4px; top: 4px; border-radius:2px; padding: 2px 5px;">
+							<p style="margin: 0; font-size: 11px; color: #fff; font-weight: 400;">20% off</p>
+						</div>
+					</div>
+				</ion-col>
+				<ion-col col-4 style="padding: 5px 2.5px;">
+					<div class="colm">
+						<div class="image" style="width: 100%; float: left;">
+							<img src="assets/img/productone.png" style="width: 100%; float: left;">
+						</div>
+						<div class="text" style="position: absolute; text-align: center;">
+							<p>Honey-Chipotle Shrimp Salad</p>
+						</div>
+					</div>
+				</ion-col>
+				<ion-col col-4 style="padding-right: 0px">
+					<div class="colm">
+						<div class="image" style="width: 100%; float: left;">
+							<img src="assets/img/productone.png" style="width: 100%; float: left;">
+						</div>
+						<div class="text" style="position: absolute; text-align: center;">
+							<p>Honey-Chipotle Shrimp Salad</p>
+						</div>
+						<div class="offer" style="position: absolute; background-color: #ffe400; right: 4px; top: 4px; border-radius:2px; padding: 2px 5px;">
+							<p style="margin: 0; font-size: 11px; color: #000; font-weight: 400;">10% off</p>
+						</div>
+					</div>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</div>
+	<div class="about">
+		<h3>About Me</h3>
+		<p>Speaking enthusiastically about and demonstrating their passion for food, flavours and delectable culinary creations from every corner of the globe, our celebrity chefs have unrivalled knowledge and expertise when it comes to all things culinary!</p>
+	</div>
+	<!-- <div class="acrdin">
+
+		  <ion-list style="margin-bottom: 0px;">
+		  <ion-item *ngFor="let d of diseases; let i=index" text-wrap (click)="toggleGroup(i)" [ngClass]="{active: isGroupShown(i)}">
+		    <h3>
+		      {{d.title}}
+		      <ion-icon color="success" item-right [name]="isGroupShown(i) ? 'arrow-up' : 'arrow-forward'" style="margin: 0; float: right;"></ion-icon>
+		    </h3>
+		    <div class="dsprtion" *ngIf="isGroupShown(i)">{{d.description}}</div>
+		  </ion-item>
+		</ion-list>
+	</div> -->
+
+
+
+
+</ion-content>

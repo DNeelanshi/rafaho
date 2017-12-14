@@ -1,0 +1,232 @@
+page-productview {
+	.header .iconprf{
+		position: relative;
+	}
+	.header .iconprf p{
+		position: absolute;
+	    top: 0;
+	    margin: 0;
+	    right: 0;
+	    background-color: #fff;
+	    color: #656565;
+	    font-size: 10px;
+	    border-radius: 50%;
+	    height: 12px;
+	    width: 12px;
+	    overflow: hidden;
+	    text-align: center;
+	}
+	.header .iconprf p span{
+		width: 100%;
+	    height: 100%;
+	    line-height: 12px;
+	}
+	.header .iconprf img{
+		width: 60%;
+		vertical-align: middle;
+	}
+	.title .toolbar-title p{
+		margin: 0;
+	    font-size: 12px;
+	    font-weight: 500;
+	}
+	.header .rightimg .image span{
+		width: 12px;
+	    height: 12px;
+	    position: absolute;
+	    border-radius: 50%;
+	    background-color: #fff;
+	    text-align: center;
+	    font-size: 10px;
+	    right: 3px;
+	    top: -3px;
+	}
+	.banner{
+		width: 100%;
+		float: left;
+		position: relative;
+	}
+	.banner .main-img{
+		width: 100%;
+		float: left;
+		text-align: center;
+	}
+	.banner .main-img img{
+		width: 100%;
+		float: left;
+	}
+	.banner .heart{
+		width: 30px;
+		height: 30px;
+		position: absolute;
+		top: 16px;
+		left: 16px;
+		border-radius: 50%;
+		background-color: #fff;
+	}
+	.banner .heart img{
+		width: 75%;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		margin: auto;
+	}
+	.banner .text{
+		position: absolute;
+	    width: 73%;
+	    float: left;
+	    left: 16px;
+	    bottom: 2px;
+	}
+	.banner .text h1{
+		color: #fff;
+    	font-weight: 400;
+	}
+	.right{
+		width: 100%;
+		float: left;
+	}
+	.content-sec{
+		width: 100%;
+		float: left;
+		padding: 0;
+		background-color: #f2f2f2;
+	}
+	.content-sec .top-sec{
+		width: 100%;
+		float: left;
+		padding-bottom: 6px;
+	}
+	.content-sec .top-sec h3{
+		width: 100%;
+	    float: left;
+	    margin: 0;
+	    font-size: 15px;
+	    font-weight: 700;
+	}
+	.content-sec .top-sec p{
+		width: 100%;
+	    float: left;
+	    margin: 0;
+	    font-size: 15px;
+
+	}
+	.mid-sec{
+		width: 100%;
+		float: left;
+	}
+	.counter_sec {
+	    float: left;
+	    width: 101px;
+	    display: table;
+	    vertical-align: middle;
+	    border: 1px solid #afafaf;
+	    border-radius: 5px;
+	    color: #626262;
+	}
+
+	.counter_sec input {
+	    width: 33px;
+	    text-align: center;
+	    border-top: none;
+	    border-bottom: none;
+	    border-left: 1px solid #afafaf;
+	    border-right: 1px solid #afafaf;
+	    float: left;
+	    vertical-align: middle;
+	    height: 27px;
+	     color: #626262;
+	}
+
+	.counter_sec button {
+	    float: left;
+	    width: 33px;
+	    height: 27px;
+	    margin: 0;
+	    padding: 0;
+	    color: #626262;
+	}
+	.bottom-sec{
+		width: 100%;
+		float: left;
+		margin-bottom: -8px;
+        border-bottom: 1px solid #c1c1c1;
+
+	}
+	.bottom-sec .leftbtn .button{
+		font-size: 12px;
+   	    background-color: #ff563f;
+   	    margin-left: 0;
+   	    margin: 0;
+   	    border-radius: 2px;
+   	    height: 33px;
+   	    width: 85px;
+	}
+	.bottom-sec .cart-sec{
+	    border-radius: 2px;
+	    overflow: hidden;
+	    margin-top: 8px;
+	    float: left;
+	    min-width: 50px;
+	    max-width: 180px;
+	}
+	
+	.bottom-sec .cart-sec h3{
+		font-size: 12px;
+	    width: 100%;
+	    float: left;
+	    height: 33px;
+	    text-align: center;
+	    vertical-align: middle;
+	    margin: auto;
+	    background-color: #3c3c3c;
+	    color: #fff;
+	    display: table;
+	    line-height: 33px;
+	    padding: 0px 10px;
+	}
+	.segment{
+		    background-color: #ffffff;
+            color: #000;
+	}
+	.segment .segment-button{
+		border: none;
+	    color: #000;
+	    max-width: 100%;
+	    width: 100%;
+	    text-transform: uppercase;
+	    font-weight: 700;
+	    font-size: 10px;
+	    margin-top: 0px;
+	   
+	}
+	.segment .segment-button.segment-activated{
+		 border-bottom: 2px solid #f27242;
+		 background-color: #fff;
+		 color: #f27242;
+		  border-radius: 0;
+	}
+	.segment-section{
+		width: 100%;
+	    float: left;
+	    border-top: 1px solid #c1c1c1;
+	    margin-top: 14px;
+	    
+	}
+	.segment-section ul{
+		width: 100%;
+	    float: left;
+	    margin: 6px 0 0 0;
+	    padding: 0;
+	    list-style: none;
+	}
+	.segment-section ul li{
+		width: 100%;
+	    float: left;
+	    font-size: 12px;
+	    color: #010101;
+	    font-weight: 500;
+	}
+}

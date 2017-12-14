@@ -1,0 +1,81 @@
+<!--
+  Generated template for the ChangepwdPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+	<ion-navbar color="theme-header">
+		<ion-title>Change password</ion-title>
+	</ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+	<div class="main">
+		<div class="image">
+			<img src="assets/img/logo.png">
+		</div>
+	</div>
+	<div class="content-sec">
+		<div class="sign">
+			<form class="form-sec" #changepassForm="ngForm" novalidate (submit)="changepassword(changepassForm)">
+				<ion-list>
+
+					<ion-item>
+						<ion-label stacked>Enter your old password</ion-label>
+						<ion-input type="password" [(ngModel)]="data.oldpassword" name="oldpassword" #oldpassword="ngModel" minlength="5" required></ion-input>
+					</ion-item>
+					<div class="alert alert-danger" color="danger">
+						<div *ngIf="oldpassword.errors && (oldpassword.dirty || oldpassword.touched)">
+							<div [hidden]="!oldpassword.errors.required">
+								Old password is required
+							</div>
+							<div [hidden]="!oldpassword.errors.minlength">
+								Old password must be at least 5 digits
+							</div>
+						</div>
+					</div>
+					<ion-item>
+						<ion-label stacked>Enter your new password</ion-label>
+						<ion-input type="password" [(ngModel)]="data.newpassword" name="newpassword" #newpassword="ngModel" minlength="5" required></ion-input>
+					</ion-item>
+					<div class="alert alert-danger" color="danger">
+						<div *ngIf="newpassword.errors && (newpassword.dirty || newpassword.touched)">
+							<div [hidden]="!newpassword.errors.required">
+								New password is required
+							</div>
+							<div [hidden]="!newpassword.errors.minlength">
+								New password must be at least 5 digits
+							</div>
+						</div>
+					</div>
+					<ion-item>
+						<ion-label stacked>Confirm your new password</ion-label>
+						<ion-input type="password" [(ngModel)]="data.cnewpassword" (input)="handleKeyboardEvent($event,data.newpassword,data.cnewpassword)"
+						 name="cnewpassword" #cnewpassword="ngModel" required></ion-input>
+					</ion-item>
+					<div *ngIf="key == false && cnewpassword.errors && (cnewpassword.dirty || cnewpassword.touched)">
+						<div [hidden]="!cnewpassword.errors.required">
+							Confirm password is required
+						</div>
+						
+					</div>
+					<div *ngIf="data.cnewpassword">
+						<div *ngIf="key != true && (cnewpassword.dirty || cnewpassword.touched)">
+
+							<span>Password mismatch </span>
+						</div>
+					</div>
+				</ion-list>
+					<div class="frgtpwd">
+			<button ion-button type="submit" [disabled]="!changepassForm.valid" >Save</button>
+		</div>
+			</form>
+		</div>
+	
+
+	</div>
+</ion-content>
