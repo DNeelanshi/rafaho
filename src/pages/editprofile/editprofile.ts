@@ -43,7 +43,7 @@ export class EditprofilePage {
     public camera: Camera,
      private nativeGeocoder: NativeGeocoder
   ) {
-    alert('tmmtt');
+//    alert('tmmtt');
     this.date = new Date();
    console.log(this.date);
   }
@@ -80,8 +80,15 @@ if(this.address){
     console.log(this.address)
 var adr = this.address
 console.log(adr);
+var Loading = this.loadingCtrl.create({
+          spinner: 'bubbles',
+          cssClass: 'loader'
+        });
+         Loading.present().then(() => {
 this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&addressdetails=1&limit=1&polygon_svg=1',options).map(res => res.json()).subscribe(response => {
-    console.log(response[0]);
+   Loading.dismiss();
+     console.log(response[0]);
+    
     if(response[0] != undefined){
     if(response[0].place_id != ''){
         
@@ -95,10 +102,10 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
    modal.present();
    
    if(response[0].address.road){
-        this.data.address=response[0].place_id+','+response[0].address.road+','+response[0].address.city+','+ response[0].address.postcode+','+response[0].address.state+','+response[0].address.state_district+','+response[0].address.country+','+response[0].address.country_code
+        this.data.address=response[0].place_id+','+response[0].address.road+','+response[0].address.city+','+ response[0].address.postcode+','+response[0].address.state+','+response[0].address.country+','+response[0].address.country_code
         }
         else if(response[0].address.city){
-        this.data.address=response[0].place_id+','+response[0].address.city+','+ response[0].address.postcode+','+response[0].address.state+','+response[0].address.state_district+','+response[0].address.country+','+response[0].address.country_code
+        this.data.address=response[0].place_id+','+response[0].address.city+','+ response[0].address.postcode+','+response[0].address.state+','+response[0].address.country+','+response[0].address.country_code
         }
          else if(response[0].address.state){
             this.data.address=response[0].place_id+','+response[0].address.state+','+response[0].address.country+','+response[0].address.country_code
@@ -123,7 +130,7 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
 //       this.AlertMsg1('Empty response on Nominatim<br>Search via Google maps<br>');
 //        this.openmapmodal();
 //    }
-    
+});
 });
 
 
@@ -149,7 +156,8 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
     this.http.post(this.appsetting.myGlobalVar + 'userinfo', serialized, options).map(res => res.json()).subscribe(data => {
     
       console.log(data.data.latitude+','+data.data.longitude);
-        
+        this.lat=data.data.latitude;
+        this.long=data.data.longitude;
             this.nativeGeocoder.reverseGeocode(parseFloat(data.data.latitude), parseFloat(data.data.longitude))
         .then((result: NativeGeocoderReverseResult) => {console.log(JSON.stringify(result))
             if (result.subThoroughfare){
@@ -162,7 +170,7 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
             }
              this.city = result.locality;
         console.log(this.city);
-        alert(this.city);
+//        alert(this.city);
       })
         .catch((error: any) => console.log(error));
       console.log(data);
@@ -244,7 +252,7 @@ CameraAction() {
             this.srcImage = 'data:image/jpeg;base64,' + imageUri;
             //this.imgTosend = imageUri;
             // this.loading.dismiss();
-            alert('camera');
+//            alert('camera');
                 let headers = new Headers();
             headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
             let options = new RequestOptions({ headers: headers });
@@ -253,7 +261,7 @@ CameraAction() {
               user_id: userid,
               profile_picture: imageUri
             };
-            alert(JSON.stringify(postdata));
+//            alert(JSON.stringify(postdata));
             console.log(postdata);
             
             var serialized = this.serializeObj(postdata);
@@ -265,9 +273,9 @@ CameraAction() {
 this.http.post(this.appsetting.myGlobalVar +'user_profile_pic', postdata).map(res => res.json()).subscribe(data => {
                Loading.dismiss();
 
- alert(JSON.stringify(data));
+// alert(JSON.stringify(data));
               console.log(data)
-              alert("saving image")
+//              alert("saving image")
 
             },(err)=>{
               alert(JSON.stringify(err))
@@ -308,7 +316,7 @@ this.http.post(this.appsetting.myGlobalVar +'user_profile_pic', postdata).map(re
               user_id: userid,
               profile_picture: imageData
             };
-            alert(postdata)
+//            alert(postdata)
             var serialized = this.serializeObj(postdata);
      var Loading = this.loadingCtrl.create({
        spinner: 'bubbles',
@@ -318,14 +326,14 @@ this.http.post(this.appsetting.myGlobalVar +'user_profile_pic', postdata).map(re
             this.http.post(this.appsetting.myGlobalVar +'user_profile_pic', postdata).map(res => res.json()).subscribe(data => {
               Loading.dismiss();
               console.log(data)
-              alert("saving image")
+//              alert("saving image")
 
             },(err)=>{
               console.log(JSON.stringify(err))
               alert(JSON.stringify(err))
             })
      })
-            alert('gallery working');
+//            alert('gallery working');
           }, (err) => {
             // this.loading.dismiss();
             alert(JSON.stringify(err));
@@ -411,9 +419,11 @@ this.http.post(this.appsetting.myGlobalVar +'user_profile_pic', postdata).map(re
     alert.present();
   }
   openmapmodal() {
+       
     let modal = this.modalCtrl.create(MapmodalPage);
+//    Loading.dismiss();
     modal.onDidDismiss(data => {
-      alert(data.address);
+//      alert(data.address);
       this.data.address= data.address;
       console.log(this.data.address)
       console.log(data.lati)
@@ -422,6 +432,7 @@ this.http.post(this.appsetting.myGlobalVar +'user_profile_pic', postdata).map(re
       this.long = data.longi
     });
     modal.present();
-  }
+//  })
 
+}
 }

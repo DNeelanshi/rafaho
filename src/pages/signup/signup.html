@@ -96,13 +96,13 @@
 							    
 							  </ion-select>
 						  </ion-item>
-<!--							<div class="alert alert-danger" color="danger">
+							<div class="alert alert-danger" color="danger">
                   <div *ngIf="city.errors && (city.dirty || city.touched)">
                     <div [hidden]="!city.errors.required">
                       City is required
                     </div>
                   </div>
-                </div>-->
+                </div>
 						</ion-col>                    
                              <ion-col col-12 class="left right">
 						  <div style="position: relative; overflow: hidden;">
@@ -113,7 +113,7 @@
                   width: 50px;
                   height: 50px;
                   /* display: block; */
-                  color: #000;
+                  color: #a6a6a6;
                   z-index: 999; 
                   font-size:26px;
                   "></ion-icon>
@@ -121,7 +121,7 @@
                 <ion-item>
                   <ion-label stacked>ADDRESS </ion-label>
                   
-                  <ion-input type="text" placeholder="type and click search" [(ngModel)]= "data.address" name="address" #address="ngModel" required></ion-input>
+                  <ion-input type="text" placeholder="Type and click search" [(ngModel)]= "data.address" name="address" #address="ngModel" required></ion-input>
                   
                 </ion-item>
               </div>		
@@ -185,7 +185,8 @@
 						<ion-col col-12 class="left right">
 						  <ion-item>
 						    <ion-label stacked>Password</ion-label>
-						    <ion-input type="password" [(ngModel)]="data.password" name="password" #password="ngModel" minlength="6" required></ion-input>
+						    <ion-input type="password" [(ngModel)]="data.password" name="password" #password="ngModel" pattern="(?!^[0-9]*$)(?!^[a-zA-Z@/*/#]*$)(?!^[a-zA-Z0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9@/*/#]{6,30})" required></ion-input>
+                                                                                                                      
 				  </ion-item>
 					 <div *ngIf="password.errors && (password.dirty || password.touched)">
               <div [hidden]="!password.errors.required">
@@ -194,6 +195,10 @@
 							<div [hidden]="!password.errors.minlength">
 								Password must be at least 6 digits
 							</div>
+                                              <div [hidden]="!password.errors.pattern">
+                                       Password is weak(It should be combination of a-z/A-Z,0-9/@*#)
+                                           </div>
+                  
             </div>
 						</ion-col>
 						<ion-col col-12 class="left right">
@@ -223,8 +228,8 @@
 			</div>
 			</form>
 		</div>
-		<div class="frgtpwd" (click)="login()">
-			<h3 class="register">I have an account? <span>Login</span></h3>
+		<div class="frgtpwd" >
+			<h3 class="register">I have an account? <span (click)="login()">Login</span></h3>
 		</div>
 
 	</div>

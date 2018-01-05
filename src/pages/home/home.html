@@ -19,16 +19,7 @@
   </ion-segment>
   </ion-toolbar>
 </div>
-<div class="serch">
-  <ion-searchbar placeholder="Search by chef..." ></ion-searchbar>
-  <div class="option">
-      <img src="assets/img/option.png" (click)="fltr_opn()">
-  </div>
-</div>
-
-
 </ion-header>
-
 <ion-content>
   <div class="banner">
   <img src="assets/img/off.png">
@@ -39,24 +30,23 @@
 
   <div [ngSwitch]="pet">
     <ion-list *ngSwitchCase="'kittens'">
-      <ion-item (click)="detail()">
+        <div class="serch">
+  <ion-searchbar placeholder="Search by chef..." [(ngModel)]="data.dat" name="dat" #dat="ngModel" (input)="search(data.dat)" ></ion-searchbar>
+  <div class="option">
+      <img src="assets/img/option.png" (click)="fltr_opn()">
+  </div>
+</div>
+  <ion-list>
+      <ion-item *ngFor="let dat of array" (click)="detail(dat)">
+          
         <ion-avatar item-start>
-          <img src="assets/img/aron.png">
+             <img *ngIf ="dat?.user_image"  src="{{dat?.user_image}}">
+             <img *ngIf ="!dat?.user_image" src="assets/img/amanda.png">
+         
         </ion-avatar>
-        <h3>Aaron</h3>
-      </ion-item>
-      <ion-item>
-        <ion-avatar item-start>
-          <img src="assets/img/amanda.png">
-        </ion-avatar>
-        <h3>Amanda</h3>
-      </ion-item>
-      <ion-item>
-        <ion-avatar item-start>
-          <img src="assets/img/aron.png">
-        </ion-avatar>
-        <h3>Aaron Franklin</h3>
-        <p><span>Specialities</span>Idli,sambhar, Kerla</p>
+        <h3>{{dat?.firstname}} {{dat?.lastname}}</h3>
+          <div *ngIf="dat?.status == true">
+              <p> <span>Specialities</span><span *ngFor="let spec of dat.specialties">{{spec?.specialties_product}},</span></p>
         <p><span>Experience </span>Private Chef, Personal,</p>
         <div class="rightbtn green" item-end>
           <h3><span> <img src="assets/img/star.png"></span>3/4</h3>
@@ -73,8 +63,10 @@
             Alternative date available
           </button>
         </div>
-      </ion-item>
-      <ion-item>
+          </div>
+      </ion-item> </ion-list>
+
+<!--      <ion-item>
         <ion-avatar item-start>
           <img src="assets/img/arenda.png">
         </ion-avatar>
@@ -96,30 +88,9 @@
             Alternative date available
           </button>
         </div>
-      </ion-item>
-      <ion-item>
-        <ion-avatar item-start>
-          <img src="assets/img/aron.png">
-        </ion-avatar>
-        <h3>Aaron Sanchez</h3>
-        <p><span>Specialities</span>Idli,sambhar, Kerla</p>
-        <p><span>Experience </span>Private Chef, Personal,</p>
-        <div class="rightbtn yellow" item-end>
-          <h3><span> <img src="assets/img/star.png"></span>3/4</h3>
-        </div>
-        <div class="leftbtn">
-          <button ion-button icon-left clear>
-             <ion-icon name="radio-button-on" style="color: #2bb600;"></ion-icon>
-            Available Today
-          </button>
-        </div>
-        <div class="right">
-          <button ion-button icon-left clear>
-             <ion-icon name="radio-button-on" style="color: #dcca00;"></ion-icon>
-            Alternative date available
-          </button>
-        </div>
-      </ion-item>
+      </ion-item>-->
+       <div *ngIf="bit == null"><p style="width: 100%;float: left;padding-left: 12px;color: #949494;">No match found</p></div>
+        <div *ngIf="(arr1 == null)"><p style="width: 100%;float: left;padding-left: 12px;color: #949494;">No chef available on your area or region</p></div>
     </ion-list>
   </div>
 
@@ -130,116 +101,52 @@
   <div [ngSwitch]="pet">
 
   <div class="serch-text" *ngSwitchCase="'puppies'">
-      <ion-list>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/southfod.png">
-        </ion-thumbnail>
+      <div class="serch">
+          <ion-searchbar placeholder="Search by dish..." [(ngModel)]="data.dats" name="dats" #dats="ngModel" (input)="searchdish(data.dats)" style="padding-right:12px !important;" ></ion-searchbar></div>
+  
+      <ion-list *ngIf= "arr != null">
+      <ion-item *ngFor="let dats of arr">
+<!--        <span >-->
+        
+        <ion-thumbnail item-start  >
+            <div *ngFor="let prodds of dats.products">
+              <img  *ngIf="prodds?.bit == 0" src="{{prodds?.product_image0}}">
+                <!--<img *ngIf="!prodds?.bit == 0" src="assets/img/frvttwo.png"">-->
+                </div>
+              </ion-thumbnail>
+      <!--</span>-->
+     
         <div class="main">
-          <div class="image">
-            <img src="assets/img/amanda.png">
+          <div  class="image">
+            <img *ngIf ="dats?.user_image"  src="{{dats?.user_image}}">
+             <img *ngIf ="!dats?.user_image" src="assets/img/amanda.png">
           </div>
-          <h1>Aaron Franklin </h1>
+          <h1>{{dats?.firstname}} {{dats?.lastname}} </h1>
           <div class="right-sec">
             <button ion-button class="rating histry">3/5</button>
           </div>
         </div>
-        <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png">South indian food</h2>
-        <p>Idli,sambhar, Kerla</p>
+      
+<!--        <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png">South indian food</h2>-->
+       <div *ngFor="let prods of dats.products"> <p *ngIf="prods?.bit == 0">{{prods?.product_name}}</p></div>
         <div class="btn-left">
-          <button ion-button outline (click)="prdlist()">
+          <button ion-button outline (click)="prdlist(dats.products)">
             BOOK NOW
           </button>
         </div>
          <div class="btn-rght">
           <button ion-button outline>
-            COCK AT HOME
+            COOK AT HOME
           </button>
         </div>
-         <div class="hor" style="width: 25px; float: left;"><ion-icon name="time"></ion-icon><span>2h</span></div>
+       <div *ngFor="let proods of dats.products">
+          <div class="hor" style="width: 25px; float: left;" *ngIf="proods?.bit == 0" ><ion-icon name="time"></ion-icon><span  >{{proods?.cocking_time_at_user_home}}h</span></div>
+     </div>
       </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/southfod.png">
-        </ion-thumbnail>
-        <div class="main">
-          <div class="image">
-            <img src="assets/img/amanda.png">
-          </div>
-          <h1>Aaron Franklin </h1>
-          <div class="right-sec">
-            <button ion-button class="rating histry">3/5</button>
-          </div>
-        </div>
-        <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png">South indian food</h2>
-        <p>Idli,sambhar, Kerla</p>
-        <div class="btn-left">
-          <button ion-button outline>
-            BOOK NOW
-          </button>
-        </div>
-         <div class="btn-rght">
-          <button ion-button outline>
-            COCK AT HOME
-          </button>
-        </div> 
-         <div class="hor" style="width: 25px; float: left;"><ion-icon name="time"></ion-icon><span>2h</span></div>     
-      </ion-item>
-       <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/southfod.png">
-        </ion-thumbnail>
-        <div class="main">
-          <div class="image">
-            <img src="assets/img/amanda.png">
-          </div>
-          <h1>Aaron Franklin </h1>
-          <div class="right-sec">
-            <button ion-button class="rating histry">3/5</button>
-          </div>
-        </div>
-        <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png">South indian food</h2>
-        <p>Idli,sambhar, Kerla</p>
-        <div class="btn-left">
-          <button ion-button outline (click)="prdlist()">
-            BOOK NOW
-          </button>
-        </div>
-         <div class="btn-rght">
-          <button ion-button outline>
-            COCK AT HOME
-          </button>
-        </div>
-         <div class="hor" style="width: 25px; float: left;"><ion-icon name="time"></ion-icon><span>2h</span></div>
-      </ion-item>
-       <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/southfod.png">
-        </ion-thumbnail>
-        <div class="main">
-          <div class="image">
-            <img src="assets/img/amanda.png">
-          </div>
-          <h1>Aaron Franklin </h1>
-          <div class="right-sec">
-            <button ion-button class="rating histry">3/5</button>
-          </div>
-        </div>
-        <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png">South indian food</h2>
-        <p>Idli,sambhar, Kerla</p>
-        <div class="btn-left">
-          <button ion-button outline (click)="prdlist()">
-            BOOK NOW
-          </button>
-        </div>
-         <div class="btn-rght">
-          <button ion-button outline>
-            COCK AT HOME
-          </button>
-        </div>
-         <div class="hor" style="width: 25px; float: left;"><ion-icon name="time"></ion-icon><span>2h</span></div>
-      </ion-item>
+    
   </ion-list>
+      <div *ngIf="arry == true"><p style="width: 100%;float: left;padding-left: 12px;color: #949494;">Search for result</p></div>
+       <div *ngIf="arry == null"><p style="width: 100%;float: left;padding-left: 12px;color: #949494;">No Match Found</p></div>
   </div>
     <!-- <div class="serch-contant" *ngSwitchCase="'puppies'">
         <div class="image">

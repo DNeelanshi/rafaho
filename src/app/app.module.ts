@@ -2,6 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
+import { Keyboard } from '@ionic-native/keyboard';
 import { MapmodalPage } from '../pages/mapmodal/mapmodal';
 import { NominatimapPage } from '../pages/nominatimap/nominatimap';
 import { ChatPage } from '../pages/chat/chat';
@@ -11,6 +12,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { SigninPage } from '../pages/signin/signin';
 import { SignupPage } from '../pages/signup/signup';
 import { RafahoPage } from '../pages/rafaho/rafaho';
+import { EditprefrencePage } from '../pages/editprefrence/editprefrence'
 import { ProfilePage } from '../pages/profile/profile';
 import { WhyrafahoPage } from '../pages/whyrafaho/whyrafaho';
 import { HelpPage } from '../pages/help/help';
@@ -54,6 +56,7 @@ import { Camera } from '@ionic-native/camera';
     WhyrafahoPage,
     HelpPage,
     TermsPage,
+    EditprefrencePage,
     EditprofilePage,
     AddwalletPage,
     FrequentquestionPage,
@@ -87,6 +90,7 @@ import { Camera } from '@ionic-native/camera';
     HomePage,
     TabsPage,
     SigninPage,
+    EditprefrencePage,
     SignupPage,
     RafahoPage,
     ProfilePage,
@@ -116,6 +120,7 @@ import { Camera } from '@ionic-native/camera';
   providers: [
     StatusBar,
     SplashScreen,
+    Keyboard,
     Appsetting,
     Device,
     Geolocation,

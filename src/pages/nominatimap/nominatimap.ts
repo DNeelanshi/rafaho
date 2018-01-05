@@ -38,7 +38,7 @@ export class NominatimapPage {
    private geolocation: Geolocation,
    private nativeGeocoder: NativeGeocoder,
    public places: ElementRef) {
-   alert('burger');
+//   alert('burger');
   }
 ngOnInit() {
     
@@ -92,11 +92,11 @@ ngOnInit() {
       };
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
          
-       var marker = new google.maps.Marker({
-         position: latLng,
-         draggable: false,
-         map: this.map,
-       });
+//       var marker = new google.maps.Marker({
+//         position: latLng,
+//         draggable: false,
+//         map: this.map,
+//       });
         var marker = new google.maps.Marker({
             map: this.map,
             position: results[1].geometry.location

@@ -1,5 +1,5 @@
 import { Component,ViewChild,OnInit,ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController,Platform,ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController,Platform,ToastController ,LoadingController} from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 //  import {googlemaps} from 'googlemaps';
 import { NativeGeocoder,  NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
@@ -43,6 +43,7 @@ export class MapmodalPage {
   public toastCtrl: ToastController,
    private platform: Platform, 
    private geolocation: Geolocation,
+   private loadCtrl:LoadingController,
    private nativeGeocoder: NativeGeocoder,
    public places: ElementRef) {
     //  this.initMap();
@@ -53,9 +54,17 @@ export class MapmodalPage {
         this.nomi= JSON.parse(localStorage.getItem('NominatimDetail'))
         
     console.log(this.nomi);
+    
     if(this.nomi !=null){
     console.log(this.nomi.lat);
-    console.log(this.nomi.lon);}
+    console.log(this.nomi.lon);
+    this.acService = new google.maps.places.AutocompleteService();      
+    this.infowindow = new google.maps.InfoWindow;  
+    this.autocompleteItems = [];
+    this.autocomplete = {
+    query: ''
+  };  
+    }
     else{
     this.acService = new google.maps.places.AutocompleteService();      
     this.infowindow = new google.maps.InfoWindow;  
@@ -63,7 +72,9 @@ export class MapmodalPage {
     this.autocomplete = {
     query: ''
   };        
-  }}
+  }
+  
+  }
   updateSearch() {
    delete this.crlat;
    delete this.crlng;
@@ -116,17 +127,22 @@ export class MapmodalPage {
     this.platform.ready().then(() => {
       // alert("working");
       // alert(lat+','+long);
+        var Loading = this.loadCtrl.create({
+          spinner: 'bubbles',
+          cssClass: 'loader'
+        });
+        Loading.present().then(() => {
        this.geolocation.getCurrentPosition().then((resp) => {
     this.lat = resp.coords.latitude;
   this.long= resp.coords.longitude;
 
  console.log(resp.coords.latitude);
   console.log(resp.coords.longitude);
-   
+    Loading.dismiss();
   if(this.nomi !=null){
       this.l=this.nomi.lat
       this.lo=this.nomi.lon
-     
+     console.log(this.l,this.lo)
   }
   else{
        this.l=this.lat
@@ -162,21 +178,21 @@ export class MapmodalPage {
     //  alert("mapOptions");
       var marker = new google.maps.Marker({
          position: latLng,
-         draggable: true,
+         draggable: false,
      
          map: this.map,
        });
       //  alert("marker");
         google.maps.event.addListener(marker, 'dragend', ((marker)=>{
       var latLng = marker.latLng; 
-      this.crlat = latLng.lat();
-      this.crlng = latLng.lng();
+      this.lat = latLng.lat();
+      this.long = latLng.lng();
       console.log(marker);
-      console.log(this.crlat)
-      console.log(this.crlng)
+      console.log(this.lat)
+      console.log(this.long)
       //  alert(this.crlat);
       // alert(this.crlng);
-     let latLong = new google.maps.LatLng(this.crlat,this.crlng); 
+     let latLong = new google.maps.LatLng(this.lat,this.long); 
 	 
     this.geocoder.geocode({'latLng': latLong}, ((results, status)=>{
 		  console.log(results);
@@ -193,7 +209,7 @@ export class MapmodalPage {
       // alert("working1");
       }).catch((error) => {
    
-      let latLng = new google.maps.LatLng(this.crlat,this.crlng); 
+      let latLng = new google.maps.LatLng(this.lat,this.long); 
    
       this.geocoder.geocode({'latLng': latLng}, ((results, status)=>{
         if (status == google.maps.GeocoderStatus.OK) {
@@ -216,7 +232,7 @@ export class MapmodalPage {
     //  alert("mapOptions");
       var marker = new google.maps.Marker({
          position: latLng,
-         draggable: true,
+         draggable: false,
          map: this.map,
        });
       //  alert("marker");
@@ -228,7 +244,7 @@ export class MapmodalPage {
       console.log(this.crlng)
       //  alert(this.crlat);
       // alert(this.crlng);
-     let latLong = new google.maps.LatLng(this.crlat,this.crlng); 
+     let latLong = new google.maps.LatLng(this.lat,this.long); 
 	  this.geocoder.geocode({'latLng': latLong}, ((results, status)=>{
 		  console.log(results);
 		   if (status == google.maps.GeocoderStatus.OK) {
@@ -243,7 +259,7 @@ export class MapmodalPage {
    }));
 
        console.log('Error getting location', error);
-     });
+     });})
 
 
 
@@ -277,8 +293,8 @@ watch.subscribe((data) => {
           console.log(results[0])
           this.map.setZoom(17);
           this.map.setCenter(results[0].geometry.location);
-          this.crlat = results[0].geometry.location.lat();
-          this.crlng = results[0].geometry.location.lng();
+          this.lat = results[0].geometry.location.lat();
+          this.long = results[0].geometry.location.lng();
           var marker = new google.maps.Marker({
             map: this.map,
             position: results[0].geometry.location
@@ -308,9 +324,10 @@ clsmodel(){
       console.log(this.autocomplete.query)
       this.viewCtrl.dismiss({
         address:this.autocomplete.query,
-        lati: this.crlat,
-        longi:this.crlng
+        lati: this.lat,
+        longi:this.long
       });
+     
     }
 
   

@@ -169,16 +169,16 @@ page-chefdetials {
 	}
 	.special .item ion-thumbnail {
 		width: 55px !important;
-		
-        
-        min-width: auto;
-        min-height: auto;
+                height: 55px !important;
+                min-height: auto;
+                 min-width: auto;
+                
 
 	}
 	.special .item ion-thumbnail img{
-		width: 100% !important;
+		width:  55px !important;
 		float:left !important;
-		height: auto !important;
+		height: 55px !important;
 	}
 
 	.imgicon{

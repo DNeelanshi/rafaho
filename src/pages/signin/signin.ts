@@ -57,7 +57,8 @@ export class SigninPage {
   var Serialized = this.serializeObj(postdata);
   var Loading = this.loadingCtrl.create({
     spinner: 'bubbles',
-    cssClass: 'loader'
+    cssClass: 'loader',
+  
   });
   Loading.present().then(() => {
   this.http.post(this.appsetting.myGlobalVar+'loginuser',Serialized,options).map(res=>res.json()).subscribe(response=>{
@@ -68,7 +69,28 @@ export class SigninPage {
       console.log(response.userinfo._id);
       localStorage.setItem('UserDetail',JSON.stringify(response.userinfo));
      console.log(response.userinfo.role);
-     this.navCtrl.push(TabsPage);
+     
+//     var a = JSON.parse((localStorage.getItem('Userpref')))
+     
+        if(localStorage.getItem('UserDetail')&&localStorage.getItem('Userpref')){
+         var b = JSON.parse(localStorage.getItem('UserDetail'))._id;
+          var a = JSON.parse(localStorage.getItem('Userpref')).app_user_id;
+      console.log(a,b);
+     
+      if(b==a)
+          {
+          this.navCtrl.push(TabsPage); 
+      }else{
+          this.navCtrl.push(LocationPage); 
+      }
+      
+     }else if(localStorage.getItem('UserDetail')){
+          this.navCtrl.push(LocationPage); 
+     }
+       
+     
+    
+     
     }
     else{
       this.ToastMsg(response.message);
@@ -132,3 +154,4 @@ AlertMsg(msg){
   }
 
 }
+

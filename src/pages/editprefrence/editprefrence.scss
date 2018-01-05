@@ -1,0 +1,111 @@
+page-editprefrence {
+
+	.header .toolbar-background{
+		border-color: #e8dcdc;
+	}
+	.head{
+		width: 100%;
+		float: left;
+		padding: 10px 16px;
+		background-color: #f27241;
+	}
+	.head .item{
+		padding: 0;
+		border: 0;
+		padding: 8px 0;
+		background-color: #f27241;
+		min-height: auto;
+
+	}
+	.upper .searchbar-input{
+		text-transform: uppercase;
+	}
+	.head .item p{
+		width: 100%;
+	    color: #fff;
+	    text-align: center;
+	    font-size: 13px;
+	    line-height: 13px
+	}
+	.head .item .input{
+		background-color: #fff;
+		border-radius: 5px;
+		height: 30px;
+	}
+	.head .item:first-child{
+		border-top: none;
+	}
+	.head .item:last-child{
+		border-bottom: none;
+	}
+	.head .item .item-inner{
+		padding: 0;
+		border:none !important;
+		min-height: auto;
+	}
+	.head .item .item-inner .label{
+		margin: 0;
+	}
+	.head .item .searchbar{
+		padding: 0;
+		background: none;
+	    min-height: auto;
+	}
+	.head .item .label .currentbtn{
+		width: 100%;
+		float: left;
+                background-color: #322723;
+                margin: 0;
+                height: 30px;
+	}
+	.head .item .input .text-input{
+		line-height: 30px;
+		margin: 0;
+                font-size: 14px;
+                padding-left: 8px;
+	}
+        .datetime{
+            width: 100%;
+            background-color: #fff;
+            border-radius: 5px;
+            height: 30px;
+            padding: 0px 8px;
+        }
+        .datetime-text{
+            font-size: 14px;
+            line-height: 30px;
+        }
+	/*.content-sec{
+		width: 100%;
+		float: left;
+	}
+	.content-sec h3{
+	    width: 100%;
+	    float: left;
+	    color: #909090;
+	    font-size: 14px;
+	    font-weight: 700;
+	    padding-left: 16px;
+	    margin: 5px 0 0 0;
+	}
+	.content-sec .item{
+		border-bottom: 0.55px solid #c8c7cc;
+	}
+	.content-sec .item:first-child{
+		border-top: none;
+	}
+	.content-sec .item p{
+		color: #313131;
+		font-size: 12px;
+		font-weight: 500;
+		color: #313131;
+		width: 100%;
+		float: left;
+	}
+	.content-sec .item .item-inner{
+		border: none !important;
+
+	}*/
+
+
+}

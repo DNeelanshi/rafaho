@@ -130,6 +130,9 @@ page-rafaho {
 	    color: #f27242;
 	    font-weight: 700;
 	    line-height: 20px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 	.item .main .image{
 		position: absolute;

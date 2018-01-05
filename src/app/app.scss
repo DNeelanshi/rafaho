@@ -19,6 +19,9 @@
 .back-button-text.back-button-text-ios{
 	display: none;
 }
+.ion-md-arrow-back:before{
+    content: "\f3cf";
+}
 .button.activated{
     background-color: #e24f3b;
     color: #fff;
@@ -39,4 +42,47 @@
 }
 .tabs-md .tab-button[aria-selected=true] .tab-button-icon{
 	color: #f27241;
+}
+// android css include here
+ion-header .toolbar-content.toolbar-content-md{
+    width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    height: fit-content;
+}
+.header ion-toolbar .toolbar-content-md{
+    position: relative;
+}
+ion-toolbar .title{position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: fit-content;
+    margin: auto;
+    left: 0;
+    right: 0;
+    padding: 0 23px;
+}
+.back-button-md{
+    z-index: 9999;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    min-width: 20px;
+}
+.back-button-icon-md{
+    font-size: 3.4rem;
+}
+.segment-sec .toolbar-content.toolbar-content-md{
+    position: static !important;
+}
+.col{
+    position: initial !important;
+}
+.footer .toolbar-md{
+    min-height: 30px;
 }

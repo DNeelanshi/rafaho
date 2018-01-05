@@ -62,7 +62,7 @@ export class ChangepwdPage {
             console.log(response);
             Loading.dismiss();
             if (response.status == true) {
-              localStorage.clear();
+                localStorage.removeItem('UserDetail');
               this.ToastMsg('Password updated successfully');
               this.navCtrl.push(SigninPage);
             } else {
@@ -108,7 +108,7 @@ export class ChangepwdPage {
   ToastMsg(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
-      duration: 3000,
+      duration: 5000,
       position: 'middle'
     });
     toast.present();

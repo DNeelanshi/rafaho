@@ -52,7 +52,7 @@ public data:any = {}
     console.log(response);
     Loading.dismiss();
     if(response.status == true){
-         this.ToastMsg(response.message);
+         this.ToastMsg('Check you email to reset password');
       //this.ToastMsg('Login successfully');
       this.navCtrl.push(SigninPage);
     }else{
@@ -86,7 +86,7 @@ console.log('ionViewDidLoad ForgtpwdPage');
 ToastMsg(msg){
   let toast = this.toastCtrl.create({
     message: msg,
-    duration: 3000,
+    duration: 5000,
     position: 'top'
   });
   toast.present();

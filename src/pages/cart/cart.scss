@@ -165,10 +165,12 @@ page-cart {
 	    border-radius: 0px;
 	    padding: 2px 13px;
 	    padding-left: 25px;
+		-webkit-box-shadow: none !important;
+		box-shadow:none !important;
 	    
 	}
 	.content-sec .item .rghtbtn .button:before{
-	    background: #fff none repeat scroll 0 0;
+	    background: #f9f9f9 none repeat scroll 0 0;
 	    content: "";
 	    height: 108px;
 	    position: absolute;
@@ -176,6 +178,7 @@ page-cart {
 	    transform: skew(38deg);
 	    width: 50px;
 	    margin: 0;
+		top: 0;
 	}
 	.content-sec .item{
 		width: 100%;

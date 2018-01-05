@@ -12,7 +12,7 @@ import { SigninPage } from '../pages/signin/signin';
 */
 @Injectable()
 export class Appsetting {
-
+cart:any=[];
  myGlobalVar: string = 'http://rafao.us-west-2.elasticbeanstalk.com/api/';//'http://ec2-13-59-151-198.us-east-2.compute.amazonaws.com/api/';//'http://fashapp.io/api/';
   constructor(
     public http: Http,

@@ -8,7 +8,7 @@
 
    <ion-navbar color="theme-header">
     <ion-title>
-      Chimichurri Steak & Potato Salad
+      {{splarr.specialties_product}}
       <p>Online Chef list</p>
     </ion-title>
 
@@ -26,39 +26,39 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content >
 
 	<div class="banner">
 		<div class="main-img">
-			<img src="assets/img/prbg.png">
+			<img src="{{splarr.product_image0}}">
 		</div>
 		<div class="heart">
 			<img src="assets/img/redhrt.png">
 		</div>
 		<div class="text">
-			<h1>Chimichurri Steak & Potato Salad</h1>
+			<h1>{{splarr.product_name}}</h1>
 		</div>
 	</div>
 	<div class="content-sec">
 		<div class="top-sec" style="background-color: #fff; padding: 0 16px; padding-top: 12px;">
-			<h3>Chimichurri Steak & Potato Salad</h3>
-			<p>wild arugula, radishes, verde sauce</p>
+			<h3>{{splarr.product_name}}</h3>
+			<p>{{splarr.product_ingredients}}</p>
 		</div>
 	<div class="mid-sec" style="background-color: #fff; padding: 0 16px;">
-		<h3 style="width: auto; float: left; font-size: 14px; margin: 7px 25px 0px 0px; color: #f27242;">Reg <span>$16.25</span></h3>
+		<h3 style="width: auto; float: left; font-size: 14px; margin: 7px 25px 0px 0px; color: #f27242;">Reg <span>${{splarr.product_price}}</span></h3>
 		<div class="counter_sec">
-			   <button ion-button clear><ion-icon name="remove"></ion-icon></button>
-			   <input type="text" value="0">
-			   <button ion-button clear><ion-icon name="add"></ion-icon></button>
+			   <button ion-button clear (click)="remove(quantity)"><ion-icon name="remove"></ion-icon></button>
+			   <input type="text" value="{{quantity}}" >
+			   <button ion-button clear (click)="add(quantity)"><ion-icon name="add"></ion-icon></button>
 		</div>
 	</div>
 	<div class="bottom-sec" style="background-color: #fff; padding: 0 16px 14px 16px;">
 		<div class="leftbtn" style="width: 85px; float: left; margin-right: 10px; margin-top: 8px; overflow: hidden;">
-			<button ion-button>Add To Cart</button>
+			<button ion-button (click)="crt(splarr)">Add To Cart</button>
 		</div>
 		<div class="cart-sec">
 			
-			<h3>5 x $10.00 = $50.00</h3>
+			<h3>{{quantity}} x ${{splarr.product_price}} = ${{quantity * splarr.product_price}}</h3>
 		</div>
 	</div>
 	
@@ -79,21 +79,19 @@
 		
 	<div [ngSwitch]="pet">
 		<div class="head"  *ngSwitchCase="'Ingreditent'">
-			<ul>
-				<li>Grilled Teres Major Beef</li>
-				<li>Red Onion</li>
+			<ul *ngFor="let ingr of ar" >
+				<li>{{ingr}}</li>
+<!--				<li>Red Onion</li>
 				<li>Piquillo Peppers</li>
 				<li>Radicchio</li>
 				<li>Parmesan Cheese</li>
 				<li>Arugula</li>
-				<li>Blended Oil (canola oil, olive oil)</li>
+				<li>Blended Oil (canola oil, olive oil)</li>-->
 			</ul>
 		</div>
 		<div class="head"  *ngSwitchCase="'Description'">
 			<ul>
-				<li>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </li>
-				<li>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</li>
-				<li>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour,</li>
+				<li>{{splarr.product_description}} </li>
 				
 				
 			</ul>

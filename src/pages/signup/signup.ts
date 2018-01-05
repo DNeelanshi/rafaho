@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, AlertController, LoadingController ,ModalController} from 'ionic-angular';
 import * as moment from 'moment';
 import { TabsPage } from '../tabs/tabs';
 import { SigninPage } from "../signin/signin";
 import { LocationPage } from "../location/location";
-import { NativeGeocoder, NativeGeocoderReverseResult } from '@ionic-native/native-geocoder';
+import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
 import { MapmodalPage } from "../mapmodal/mapmodal";
 import { Appsetting } from "../../providers/appsetting";
 //import { Geolocation } from '@ionic-native/geolocation';
@@ -28,6 +28,8 @@ export class SignupPage {
   key: boolean = false;
   date: any;
   arr;
+  slat:any;
+  slong:any;
   address:any;
   number: boolean=false;
   public data: any = {};
@@ -59,12 +61,36 @@ export class SignupPage {
            console.log(response.data);
            this.arr = response.data;
            console.log(this.arr)
+          
        });
   }
+ 
   lupap(){
-//      localStorage.removeItem('NominatimDetail');
+      
+      console.log(this.data.city);
+    if(this.data.city){
+        this.nativeGeocoder.forwardGeocode(this.data.city)
+  .then((coordinates: NativeGeocoderForwardResult) => {console.log('The coordinates are latitude=' + coordinates.latitude + ' and longitude=' + coordinates.longitude)
+     this.slat =coordinates.latitude;
+     this.slong = coordinates.longitude;
+     console.log(this.slat);
+     console.log(this.slong);
+     localStorage.setItem('city', JSON.stringify(this.slat,this.slong))
+      })
+  .catch((error: any) => console.log(error));
+  
+    console.log();
+    }
       this.address = this.data.address;
       console.log(this.address);
+       if(this.address==''){
+            this.AlertMsg3('Please fill the address');
+//          this.openmapmodal();
+      }
+      if(this.address==undefined){
+            this.AlertMsg3('Please fill the address');
+//          this.openmapmodal();
+      } else{
       var matches = this.address.match(/\d+/g);
 if (matches != null) {
 //    console.log('number');
@@ -76,7 +102,7 @@ if (matches != null) {
 
 if(this.number ==true){
    console.log('yes it is having number');
-   this.openmapmodal();
+   this.AlertMsg2('Empty response on Nominatim<br>Search via Google maps<br>');
    
 }else{
    console.log('false');
@@ -98,15 +124,15 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
 //        this.navCtrl.push(NominatimapPage);
          let modal = this.modalCtrl.create(NominatimapPage);
     modal.onDidDismiss(data => { 
-   
+      this.AlertMsg4('Your Location has been saved')
   });
    modal.present();
    
    if(response[0].address.road){
-        this.data.address=response[0].place_id+','+response[0].address.road+','+response[0].address.city+','+ response[0].address.postcode+','+response[0].address.state+','+response[0].address.state_district+','+response[0].address.country+','+response[0].address.country_code
+        this.data.address=response[0].place_id+','+response[0].address.road+','+response[0].address.city+','+ response[0].address.postcode+','+response[0].address.state+','+response[0].address.country+','+response[0].address.country_code
         }
         else if(response[0].address.city){
-        this.data.address=response[0].place_id+','+response[0].address.city+','+ response[0].address.postcode+','+response[0].address.state+','+response[0].address.state_district+','+response[0].address.country+','+response[0].address.country_code
+        this.data.address=response[0].place_id+','+response[0].address.city+','+ response[0].address.postcode+','+response[0].address.state+','+response[0].address.country+','+response[0].address.country_code
         }
          else if(response[0].address.state){
             this.data.address=response[0].place_id+','+response[0].address.state+','+response[0].address.country+','+response[0].address.country_code
@@ -138,13 +164,14 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
 }
 }
 
-
-
+      
+  }
   }
   Registration(register) {
     console.log('registration');
     console.log(register.value);
-    alert(JSON.stringify(register.value));
+    console.log(register.value.address);
+//    alert(JSON.stringify(register.value));
     console.log(this.lat, this.long);
     let headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
@@ -167,6 +194,7 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
           phone: register.value.phone,
           emailid: register.value.email,
           password: register.value.password,
+          address: register.value.address,
           lat: this.lat,
           long: this.long,
           role: 'user',
@@ -189,14 +217,14 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
               this.ToastMsg('You have succesfully registered');
               
                 localStorage.setItem('UserDetail',JSON.stringify(response.data));
-                  this.navCtrl.push(TabsPage);
+                  this.navCtrl.push(LocationPage);
             } else{
                  this.AlertMsg1(response.message);
             }
           })
         })
       }else{
-           this.AlertMsg1('Address must be validated by some webservice');
+           this.AlertMsg('Click Search icon to validate the address by webservice');
       }}
     }
 
@@ -283,6 +311,24 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
     });
     alert.present();
   }
+   AlertMsg3(msg){
+    let alert = this.alertCtrl.create({
+      title: 'RAFAHO',
+      message: msg,
+      buttons: [
+        {
+          text: 'OK',
+          role: 'submit',
+          handler: () => {
+            console.log('ok clicked');
+//            this.openmapmodal();
+            // this.navCtrl.push(ProcessingformPage);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
    AlertMsg2(msg){
     let alert = this.alertCtrl.create({
       title: 'RAFAHO',
@@ -301,21 +347,32 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
     });
     alert.present();
   }
-  AlertMsg(msg){
+     AlertMsg4(msg){
     let alert = this.alertCtrl.create({
       title: 'RAFAHO',
       message: msg,
       buttons: [
         {
-          text: 'CANCEL',
-          role: 'cancel',
+          text: 'OK',
+          role: 'submit',
           handler: () => {
-            console.log('Cancel clicked');
-            // this.navCtrl.push(RegisterPage)
+            console.log('ok clicked');
+//            this.openmapmodal();
+            // this.navCtrl.push(ProcessingformPage);
           }
-        },
+        }
+      ]
+    });
+    alert.present();
+  }
+  AlertMsg(msg){
+    let alert = this.alertCtrl.create({
+      title: 'RAFAHO',
+      message: msg,
+      buttons: [
+        
         {
-          text: 'Continue',
+          text: 'OK',
           role: 'submit',
           handler: () => {
             console.log('Continue clicked');
@@ -350,6 +407,7 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
     console.log(data.longi)
     this.lat = data.lati
     this.long = data.longi
+    this.AlertMsg4('Your Location has been saved')
   });
     modal.present();
   }

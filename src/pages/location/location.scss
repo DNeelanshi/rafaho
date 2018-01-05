@@ -2,6 +2,9 @@ page-location {
 	.header .toolbar-background{
 		border-color: #e8dcdc;
 	}
+        .back-button{
+            display: none !important;
+        }
 	.head{
 		width: 100%;
 		float: left;
@@ -53,16 +56,27 @@ page-location {
 	.head .item .label .currentbtn{
 		width: 100%;
 		float: left;
-	    background-color: #322723;
-	    margin: 0;
-	    height: 30px;
+                background-color: #322723;
+                margin: 0;
+                height: 30px;
 	}
 	.head .item .input .text-input{
 		line-height: 30px;
 		margin: 0;
-	    font-size: 14px;
-	    padding-left: 8px;
+                font-size: 14px;
+                padding-left: 8px;
 	}
+        .datetime{
+            width: 100%;
+            background-color: #fff;
+            border-radius: 5px;
+            height: 30px;
+            padding: 0px 8px;
+        }
+        .datetime-text{
+            font-size: 14px;
+            line-height: 30px;
+        }
 	/*.content-sec{
 		width: 100%;
 		float: left;

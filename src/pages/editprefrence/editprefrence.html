@@ -1,0 +1,104 @@
+<!--
+  Generated template for the EditprefrencePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="theme-header">
+    <ion-title>Edit Preference</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+	<div class="head">
+            <div class="form-sec">
+  		<form #preference="ngForm" novalidate>
+  	<ion-list style="margin: 0 !important;">
+           
+   
+  		<ion-item>
+                   
+<!--                
+-->                         <ion-datetime placeholder="MMM/DD/YYYY    HH:MM" displayFormat="MMM/DD/YYYY HH:mm" pickerFormat="MMM DD YYYY HH mm" min="{{date}}" max="3000"  [(ngModel)]= "data.datetime" name="datetime" #datetime="ngModel" required></ion-datetime>
+                        
+                </ion-item>
+
+           
+          
+  		<ion-item style="padding: 0;">
+  			<p>OR</p>
+                         
+  		</ion-item>
+            <ion-item style="padding:0;">
+                <p style="text-align: left;">Alternative date and time</p>
+            </ion-item>
+   
+  		<ion-item>
+                   
+  			<!--<p style="text-align: left;">Alternative date and time</p>-->
+  			<ion-datetime placeholder="MMM/DD/YYYY HH:MM" displayFormat="MMM/DD/YYYY HH:mm" pickerFormat="MMM DD YYYY HH mm"   min="{{date}}" max="3000" [(ngModel)]= "data.altdate" name="altdate" #altdate="ngModel"  ></ion-datetime>
+                </ion-item>
+<!--                <ion-item>
+                    <ion-input type="text" [(ngModel)]="data.dat" name="dat" #dat="ngModel"></ion-input>
+  		 </ion-item>-->
+           
+            <!--"-->
+  		<ion-item (click)="GetLocation()">
+  			<button ion-button icon-left class="currentbtn" >
+			  <ion-icon name="paper-plane"  ></ion-icon>
+			  Use my current location
+			</button>
+<!--[(ngModel)]="data.current" name="current" #current="ngModel"-->
+  		</ion-item>
+  		<ion-item style="padding: 0;">
+  			<p>OR</p>
+  		</ion-item>
+  		<ion-item>
+  			<ion-input type="text" placeholder="Saved Address" [readonly]="isReadonly()" [(ngModel)]="data.aaddress" name="aaddress" #aaddress="ngModel" ></ion-input>
+  		</ion-item>
+  		<ion-item style="padding: 0;">
+  			<p>OR</p>
+  		</ion-item>
+            <div style="position: relative; overflow: hidden;">
+    <ion-icon ios="ios-search-outline" md="md-search" (click)="lupap()" style="position: absolute;
+      top: 15px;left:8px;color: #000;z-index: 999;font-size:17px;font-weight: 700;"></ion-icon>
+  		<ion-item>
+  			<ion-input placeholder="Other Address" type="text"  [(ngModel)]= "data.otheraddress" name="otheraddress" #otheraddress="ngModel" style="padding-left:20px;" ></ion-input>
+                </ion-item>
+            </div>
+  	</ion-list>
+ 
+
+    <div>
+          <button ion-button type="submit"  [disabled]="!preference.valid" (click)="submitinfo(preference)" style="width: 100%;background-color: #322723;height: 30px;margin-top: 10px;">Submit</button>
+    </div>
+                    </form>
+        </div></div>
+<!--	 <div class="content-sec">
+		<h3>Popular City</h3>
+		<ion-list style="margin: 0 !important;">
+			<ion-item>
+				<p>New York City</p>
+			</ion-item>
+			<ion-item>
+				<p>Chicago,Illinois</p>
+			</ion-item>
+			<ion-item>
+				<p>Charleston,South Carolina</p>
+			</ion-item>
+			<ion-item>
+				<p>Las Vegas,Nevada</p>
+			</ion-item>
+			<ion-item>
+				<p>Seattle,Washington</p>
+			</ion-item>
+			<ion-item>
+				<p>San,Francisco,California</p>
+			</ion-item>
+		</ion-list>-->
+	<!--</div>--> 
+</ion-content>

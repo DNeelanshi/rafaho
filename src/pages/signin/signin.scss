@@ -54,14 +54,16 @@ page-signin {
 		
 		float: left;
 		position: absolute;
-		    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-    background-color: #fff;
-    top: 119px;
-    left: 106px;
-    text-align: center;
-    box-shadow: 0 0 20px #656565;
+		width: 110px;
+		height: 110px;
+		border-radius: 50%;
+		background-color: #fff;
+		left: 0;
+		right: 0;
+		margin: auto;
+		bottom: 5px;
+		text-align: center;
+		box-shadow: 0 0 20px #656565;
 	}
 	.content .main .logo img{
 		width: 69%;

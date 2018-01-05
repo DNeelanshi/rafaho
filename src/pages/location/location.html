@@ -6,52 +6,78 @@
 -->
 <ion-header>
 
-  <ion-navbar color="theme-header">
-    <ion-title>Select Location</ion-title>
-  </ion-navbar>
+  <ion-toolbar color="theme-header">
+     <button style="height:28px; color: #fff; padding: 0 0 0 3px; font-size: 2.7rem; z-index: 9999" start ion-button clear (click)="backtosignin()"><ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon></button>
+          <ion-title>Select Location</ion-title>
+  </ion-toolbar>
   
 </ion-header>
 
 
 <ion-content>
 	<div class="head">
+            <div class="form-sec">
+  		<form #preference="ngForm" novalidate >
   	<ion-list style="margin: 0 !important;">
+           
+          
   		<ion-item>
-  			<ion-searchbar  type="date" class="upper" ></ion-searchbar>
-  		</ion-item>
+                   
+<!--                
+-->                         <ion-datetime placeholder="MMM/DD/YYYY HH:MM" displayFormat="MMM/DD/YYYY HH:mm" pickerFormat="MMM DD YYYY HH mm" min="{{date}}" max="3000" [(ngModel)]= "data.datetime" name="datetime" #datetime="ngModel" required></ion-datetime>
+                        
+                </ion-item>
+
+           
+          
   		<ion-item style="padding: 0;">
   			<p>OR</p>
+                         
   		</ion-item>
+            <ion-item style="padding:0;">
+                <p style="text-align: left;">Alternative date and time</p>
+            </ion-item>
+            
+   
   		<ion-item>
-  			<p style="text-align: left;">Alternative date and time</p>
-  			<ion-searchbar  type="date" class="upper" ></ion-searchbar>
-  		</ion-item>
+  			<!--<p style="text-align: left;">Alternative date and time</p>-->
+  			<ion-datetime placeholder="MMM/DD/YYYY       HH:MM" displayFormat="MMM/DD/YYYY HH:mm" pickerFormat="MMM DD YYYY HH mm"   min="{{date}}" max="3000" [(ngModel)]= "data.altdate" name="altdate" #altdate="ngModel"  ></ion-datetime>
+                </ion-item>
+           
+            <!--"-->
   		<ion-item>
-  			<button ion-button icon-left class="currentbtn"  (click)="Tabpage()" >
+  			<button ion-button icon-left class="currentbtn"  (click)="GetLocation()"  >
 			  <ion-icon name="paper-plane"  ></ion-icon>
 			  Use my current location
 			</button>
-
+<!--[(ngModel)]="data.current" name="current" #current="ngModel"-->
   		</ion-item>
   		<ion-item style="padding: 0;">
   			<p>OR</p>
   		</ion-item>
   		<ion-item>
-  			<ion-input type="text" placeholder="Saved Address"   ></ion-input>
+  			<ion-input type="text" placeholder="Saved Address" [readonly]="isReadonly()" [(ngModel)]="data.aaddress" name="aaddress" #aaddress="ngModel" ></ion-input>
   		</ion-item>
   		<ion-item style="padding: 0;">
   			<p>OR</p>
   		</ion-item>
+            <div style="position: relative; overflow: hidden;">
+    <ion-icon ios="ios-search-outline" md="md-search" (click)="lupap()" style="position: absolute;
+      top: 15px;left:8px;color: #000;z-index: 999;font-size:17px;font-weight: 700;"></ion-icon>
   		<ion-item>
-  			<ion-searchbar placeholder="Other Address"  (click)="openmapmodal()"  ></ion-searchbar>
-  		</ion-item>
+  			<ion-input placeholder="Other Address" type="text"  [(ngModel)]= "data.otheraddress" name="otheraddress" #otheraddress="ngModel" style="padding-left:20px;"></ion-input>
+                </ion-item>
+            </div>
   	</ion-list>
-  </div>
+ 
 
     <div>
-          <button ion-button type="submit" (click)="Tabpage()">Submit</button>
+          <button ion-button  [disabled]="!preference.valid" (click)="submitinfo(preference)"
+          style="width: 100%;background-color: #322723;height: 30px;margin-top: 10px;">Submit</button>
     </div>
-	<!-- <div class="content-sec">
+                    </form>
+        </div></div>
+<!--	 <div class="content-sec">
 		<h3>Popular City</h3>
 		<ion-list style="margin: 0 !important;">
 			<ion-item>
@@ -72,6 +98,6 @@
 			<ion-item>
 				<p>San,Francisco,California</p>
 			</ion-item>
-		</ion-list>
-	</div> -->
+		</ion-list>-->
+	<!--</div>--> 
 </ion-content>

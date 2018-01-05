@@ -4,6 +4,7 @@ import { WhyrafahoPage } from '../whyrafaho/whyrafaho';
 import { HelpPage } from '../help/help';
 import { TermsPage } from '../terms/terms';
 import { EditprofilePage } from '../editprofile/editprofile';
+import { EditprefrencePage } from '../editprefrence/editprefrence';
 import { AddwalletPage } from '../addwallet/addwallet';
 import { FrequentquestionPage } from '../frequentquestion/frequentquestion';
 import { FeedbackPage } from '../feedback/feedback';
@@ -68,13 +69,13 @@ data:any={};
         })
   }
   geo(lat,long){
-      alert('working');
+//      alert('working');
         this.nativeGeocoder.reverseGeocode(lat, long)
       .then((result: NativeGeocoderReverseResult) => {
         // alert(JSON.stringify(result));
         this.city=result.locality;
         console.log(this.city);
-        alert(this.city);
+//        alert(this.city);
         //  alert(this.data.result +'Neelanshi');
       }).catch((error: any) => console.log(error));
   }
@@ -85,7 +86,9 @@ data:any={};
 
     return result.join("&");
   }
-
+editpr(){
+    this.navCtrl.push(EditprefrencePage);
+}
   whyrafaha() {
     this.navCtrl.push(WhyrafahoPage);
   }
