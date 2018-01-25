@@ -70,6 +70,7 @@ data:any={};
   }
   geo(lat,long){
 //      alert('working');
+      console.log(lat,long);
         this.nativeGeocoder.reverseGeocode(lat, long)
       .then((result: NativeGeocoderReverseResult) => {
         // alert(JSON.stringify(result));

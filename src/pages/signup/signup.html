@@ -29,7 +29,7 @@
 	<div class="content-sec">
 		<div class="sign">
 			<form class="form-sec" #registrationForm="ngForm" novalidate (submit)="Registration(registrationForm)">
-				<ion-list>
+				<ion-list >
 			      <ion-grid>
 			      	<ion-row>
 			      		<ion-col col-6 class="left">
@@ -88,7 +88,7 @@
                 </div>
 						</ion-col>
                                     
-                <ion-col col-12 class="right gender">
+<!--                <ion-col col-12 class="right gender">
 							<ion-label>ENTER CITY</ion-label>
 						  <ion-item>
 							  <ion-select [(ngModel)]="data.city" name="city" #city="ngModel" required>
@@ -103,11 +103,15 @@
                     </div>
                   </div>
                 </div>
-						</ion-col>                    
-                             <ion-col col-12 class="left right">
+						</ion-col>   
+-->
+
+<button color='dark' ion-button full type="button" (click)="openmapmodal()" ><ion-icon style="margin-right: 5px;" name="pin"></ion-icon>ADD ADDRESS</button>
+
+<!--                             <ion-col col-12 class="left right">
 						  <div style="position: relative; overflow: hidden;">
 
-                  <ion-icon ios="ios-search-outline" md="md-search" (click)="lupap()" style="position: absolute;
+                  <ion-icon ios="ios-search-outline" md="md-search" (click)="openmapmodal()" style="position: absolute;
                   top: 4px;
                   right: -24px;
                   width: 50px;
@@ -117,15 +121,16 @@
                   z-index: 999; 
                   font-size:26px;
                   "></ion-icon>
+                  <button>click here</button>
 
                 <ion-item>
                   <ion-label stacked>ADDRESS </ion-label>
                   
-                  <ion-input type="text" placeholder="Type and click search" [(ngModel)]= "data.address" name="address" #address="ngModel" required></ion-input>
+                  <ion-input type="text" placeholder="Type and click search"  [(ngModel)]= "data.address" name="address" #address="ngModel" required></ion-input>
                   
                 </ion-item>
               </div>		
-                                                </ion-col>       
+                                                </ion-col>       -->
                                     
                                     
 <!--						<ion-col col-12 class="left right">
@@ -183,11 +188,14 @@
           </div>
 						</ion-col>
 						<ion-col col-12 class="left right">
+                                                    <div class="itemouter">
 						  <ion-item>
 						    <ion-label stacked>Password</ion-label>
-						    <ion-input type="password" [(ngModel)]="data.password" name="password" #password="ngModel" pattern="(?!^[0-9]*$)(?!^[a-zA-Z@/*/#]*$)(?!^[a-zA-Z0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9@/*/#]{6,30})" required></ion-input>
-                                                                                                                      
+						    <ion-input type="{{ptype}}" [(ngModel)]="data.password" name="password" #password="ngModel" pattern="(?!^[0-9]*$)(?!^[0-9@/*/-/#/&/^/$/\/|/;/_/~/?/!/./''/`/%/:/()/+/=]*$)(?!^[a-zA-Z@/*/#/&/^/$/;/_/~/?/\/|/''/-/`/./\/!/%/:/()/+/=]*$)(?!^[a-zA-Z0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9@/*/#/&/$/;/_/%/:/^/?/~/`/''/|/-/!/\/./()/+/=]{6,30})" required></ion-input>
+                                          
+                                                   
 				  </ion-item>
+                                             <ion-icon name="{{iconname}}" (click)="showPassword()" ></ion-icon>        
 					 <div *ngIf="password.errors && (password.dirty || password.touched)">
               <div [hidden]="!password.errors.required">
                 Password is required
@@ -200,12 +208,18 @@
                                            </div>
                   
             </div>
+                                             
+                                                    </div>
 						</ion-col>
+
 						<ion-col col-12 class="left right">
+                                                    <div class="itemouter">
 						  <ion-item>
 						    <ion-label stacked>Confirm Password</ion-label>
-						    <ion-input type="password" [(ngModel)]="data.cpassword" (input)="handleKeyboardEvent($event,data.password,data.cpassword)" name="cpassword" #cpassword="ngModel" required></ion-input>
-						  </ion-item>
+						    <ion-input type="{{Ctype}}" [(ngModel)]="data.cpassword" (input)="handleKeyboardEvent($event,data.password,data.cpassword)" name="cpassword" #cpassword="ngModel" required></ion-input>
+						 
+                                                  </ion-item>
+                                                    <ion-icon name="{{iconname1}}" (click)="showCPassword()"></ion-icon>
 						
 							 <div *ngIf="key == false && cpassword.errors && (cpassword.dirty || cpassword.touched)">
               <div [hidden]="!cpassword.errors.required">
@@ -219,6 +233,7 @@
 						 <span>Password mismatch </span> 
 						 </div>
 						 </div>
+                                                    </div>
 						</ion-col>
 					</ion-row>
 				  </ion-grid>

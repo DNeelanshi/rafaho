@@ -35,31 +35,37 @@
 				  <ion-item>
 				    <ion-label stacked>EMAIL</ion-label>
 				    <ion-input type="email" [(ngModel)]="data.email" name="email" #email="ngModel" pattern="^[a-z0-9]+(\.[_a-z0-9]+)+([@{1}])+(\.[a-z0-9-]+)+([.{1}])(\.[a-z]{1,15})$"  required></ion-input>
-				  </ion-item>
-					 <div class="alert alert-danger" color="danger">
-            <div *ngIf="email.errors && (email.dirty || email.touched)">
-              <div [hidden]="!email.errors.required">
-                Email is required
-              </div>
-              <div [hidden]="!email.errors.pattern">
-                Invalid email
-              </div>
-            </div>
-          </div>
+                                  </ion-item> 
+                                    <div class="alert alert-danger" color="danger">
+                                           <div *ngIf="email.errors && (email.dirty || email.touched)">
+                                             <div [hidden]="!email.errors.required">
+                                               Email is required
+                                             </div>
+                                             <div [hidden]="!email.errors.pattern">
+                                               Invalid email
+                                             </div>
+                                           </div>
+                                        </div>
                                     
+                                      <div class="itemouter">
 				  <ion-item>
 				    <ion-label stacked>PASSWORD</ion-label>
-				    <ion-input type="password" [(ngModel)]="data.password" name="password" #password="ngModel" minlength="5" required></ion-input>
-				  </ion-item>
-					 <div *ngIf="password.errors && (password.dirty || password.touched)">
-              <div [hidden]="!password.errors.required">
-                Password is required
-              </div>
-								<div [hidden]="!password.errors.minlength">
-								Password must be at least 5 digits
-							</div>
-            </div>
-				</ion-list>
+				    <ion-input type="{{ptype}}" [(ngModel)]="data.password" name="password" #password="ngModel" minlength="6" required></ion-input>
+                                    
+                                  </ion-item>
+                                    <div *ngIf="password.errors && (password.dirty || password.touched)">
+                                     <div [hidden]="!password.errors.required">
+                                       Password is required
+                                      </div>
+                                       <div [hidden]="!password.errors.minlength">
+                                      Password must be at least 6 digits
+                                       </div>
+                                   </div>
+                                    <ion-icon name="{{iconname}}" (click)="showPassword()" ></ion-icon>
+					 
+                                 </div>
+                            
+                            </ion-list>
 					<div class="frgtpwd">
 					<div class="btn-sec">
 			<button ion-button full type="submit" [disabled]="!SigninForm.valid">Sign In</button>

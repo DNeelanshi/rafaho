@@ -377,7 +377,7 @@ page-home {
 	    float: right;
 	    width: 8px;
 	}
-	.searchbar-md{
+	.serch .searchbar-md{
 		padding-right: 55px !important;
 	}
 	.searchbar-md .searchbar-search-icon{
@@ -387,7 +387,141 @@ page-home {
 		padding: 6px 40px;
 		padding-right: 10px;
 	}
+        
+        
+/*===============================================*/
+/*==================Search Sction================*/
+/*===============================================*/
+        
+input.searchbar-input {
+    box-shadow: none !important;
+    border: 1px solid #ddd;
+}
+.searchbar{
+    margin: 0 !important;
+    padding-bottom: 0;
+}
+.select {
+    box-shadow: none !important;
+    border: 1px solid #ddd;
+}
+.text-input {
+    box-shadow: none !important;
+    border: 1px solid #ddd;
+    margin: 0px;
+    padding: 8px 10px;
+    background: #fff;
+    width: 100%;
+}
+
+.searchbar-input{
+    padding: 3px 55px !important;
+    margin-bottom: 3px;
+    font-size: 14px !important;
+}
+
+.toolbar_top .toolbar-background{
+    background: #fff;
+}
+.searchouter {
+    width: 100%;
+/*    padding-right: 50px;*/
+    position: relative;
+}
+.favbtn {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    background: no-repeat;
+    box-shadow: none;
+    border: 1px solid #ddd;
+    color: #f27242;
+}
+.searchouter .list {
+    margin: 0;
+}
 	
-		
+.datetimesec {
+    float: left;
+    width: 100%;
+    padding: 0 8px 0;
+}
+.dateleft {
+    float: left;
+    width: 50%;
+}	
+
+.dateleftr {
+    float: left;
+    width: 50%;
+}
+.datetimesec p {
+    margin: 0 0 5px 0;
+    padding: 0;
+}
+
+.datetimesec .datetime {
+    border: 1px solid #ccc;
+    padding: 8px;
+    font-size: 13px;
+}
+.segment-sec .segment .segment-button{
+    margin-top: 0;
+    padding-bottom: 0;
+}
+
+.listitm {
+    background: #fff;
+    position: absolute;
+    z-index: 999;
+    width: 100%;
+    border: 1px solid #ddd;
+    float: left;
+    box-shadow: 0 6px 6px #ddd;
+}
+
+.listitm .item {
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.datetime {
+    border: 1px solid #ddd;
+    padding: 11px 15px;
+    font-size: 12px;
+    background: #fff;
+}
+.dateleftr p {
+    margin: 0;
+    font-size: 12px;
+    padding: 3px;
+}
+.dateleft p {
+    margin: 0;
+    font-size: 12px;
+    padding: 3px;
+}
+.toolbar-content {
+    padding: 0 6px 0 1px;
+}
+
+.blurbg .overlayn {
+    position: absolute;
+    z-index: 9;
+    background: rgba(0,0,0,0.2);
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.blurbg{
+    -webkit-filter: blur(3px);
+  -moz-filter: blur(3px);
+  -o-filter: blur(3px);
+  -ms-filter: blur(3px);
+  filter: blur(3px);
+}
+.blurbg1 .overlayn{
+    display: none;
+}
 	
 }

@@ -86,3 +86,22 @@ ion-toolbar .title{position: absolute;
 .footer .toolbar-md{
     min-height: 30px;
 }
+
+
+
+.loadimg {
+    width: 100%;
+    min-height: 40vh;
+    position: relative;
+    text-align: center;
+    float: left;
+}
+
+.loadimg img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}

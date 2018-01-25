@@ -53,93 +53,93 @@ export class EditprofilePage {
     console.log(this.date);
    
  }
-   lupap(){
-//      localStorage.removeItem('NominatimDetail');
-      this.address = this.data.address;
-      console.log(this.address);
-      var matches = this.address.match(/\d+/g);
-if (matches != null) {
-//    console.log('number');
-    this.number = true;
-    
-}else{
-    this.number = false;
-}
-
-if(this.number ==true){
-   console.log('yes it is having number');
-   this.openmapmodal();
-   
-}else{
-   console.log('false');
-let headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
-let options = new RequestOptions({ headers: headers})
-if(this.address){
-    this.address = this.address.replace(/" "/g, '%20');
-    console.log(this.address)
-var adr = this.address
-console.log(adr);
-var Loading = this.loadingCtrl.create({
-          spinner: 'bubbles',
-          cssClass: 'loader'
-        });
-         Loading.present().then(() => {
-this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&addressdetails=1&limit=1&polygon_svg=1',options).map(res => res.json()).subscribe(response => {
-   Loading.dismiss();
-     console.log(response[0]);
-    
-    if(response[0] != undefined){
-    if(response[0].place_id != ''){
-        
-        console.log('working');
-         localStorage.setItem('NominatimDetail',JSON.stringify(response[0]));
-//        this.navCtrl.push(NominatimapPage);
-         let modal = this.modalCtrl.create(NominatimapPage);
-    modal.onDidDismiss(data => { 
-   
-  });
-   modal.present();
-   
-   if(response[0].address.road){
-        this.data.address=response[0].place_id+','+response[0].address.road+','+response[0].address.city+','+ response[0].address.postcode+','+response[0].address.state+','+response[0].address.country+','+response[0].address.country_code
-        }
-        else if(response[0].address.city){
-        this.data.address=response[0].place_id+','+response[0].address.city+','+ response[0].address.postcode+','+response[0].address.state+','+response[0].address.country+','+response[0].address.country_code
-        }
-         else if(response[0].address.state){
-            this.data.address=response[0].place_id+','+response[0].address.state+','+response[0].address.country+','+response[0].address.country_code
-        }
-        else if(response[0].address.state_district){
-            this.data.address=response[0].place_id+','+response[0].address.state+','+response[0].address.state_district+','+response[0].address.country+','+response[0].address.country_code
-        }
-       else if(response[0].address.country){
-            this.data.address=response[0].place_id+','+response[0].address.country+','+response[0].address.country_code
-        }
-     this.lat = response[0].lat
-    this.long = response[0].lon
-      console.log(this.lat,this.long)  
-    }}
-    else{
-        console.log('neelanshi');
-         this.AlertMsg2('Empty response on Nominatim<br>Search via Google maps<br>');
-       
-    }
-//    else
-//        {
-//       this.AlertMsg1('Empty response on Nominatim<br>Search via Google maps<br>');
-//        this.openmapmodal();
+//   lupap(){
+////      localStorage.removeItem('NominatimDetail');
+//      this.address = this.data.address;
+//      console.log(this.address);
+//      var matches = this.address.match(/\d+/g);
+//if (matches != null) {
+////    console.log('number');
+//    this.number = true;
+//    
+//}else{
+//    this.number = false;
+//}
+//
+//if(this.number ==true){
+//   console.log('yes it is having number');
+//   this.openmapmodal();
+//   
+//}else{
+//   console.log('false');
+//let headers = new Headers();
+//    headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
+//let options = new RequestOptions({ headers: headers})
+//if(this.address){
+//    this.address = this.address.replace(/" "/g, '%20');
+//    console.log(this.address)
+//var adr = this.address
+//console.log(adr);
+//var Loading = this.loadingCtrl.create({
+//          spinner: 'bubbles',
+//          cssClass: 'loader'
+//        });
+//         Loading.present().then(() => {
+//this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&addressdetails=1&limit=1&polygon_svg=1',options).map(res => res.json()).subscribe(response => {
+//   Loading.dismiss();
+//     console.log(response[0]);
+//    
+//    if(response[0] != undefined){
+//    if(response[0].place_id != ''){
+//        
+//        console.log('working');
+//         localStorage.setItem('NominatimDetail',JSON.stringify(response[0]));
+////        this.navCtrl.push(NominatimapPage);
+//         let modal = this.modalCtrl.create(NominatimapPage);
+//    modal.onDidDismiss(data => { 
+//   
+//  });
+//   modal.present();
+//   
+//   if(response[0].address.road){
+//        this.data.address=response[0].place_id+','+response[0].address.road+','+response[0].address.city+','+ response[0].address.postcode+','+response[0].address.state+','+response[0].address.country+','+response[0].address.country_code
+//        }
+//        else if(response[0].address.city){
+//        this.data.address=response[0].place_id+','+response[0].address.city+','+ response[0].address.postcode+','+response[0].address.state+','+response[0].address.country+','+response[0].address.country_code
+//        }
+//         else if(response[0].address.state){
+//            this.data.address=response[0].place_id+','+response[0].address.state+','+response[0].address.country+','+response[0].address.country_code
+//        }
+//        else if(response[0].address.state_district){
+//            this.data.address=response[0].place_id+','+response[0].address.state+','+response[0].address.state_district+','+response[0].address.country+','+response[0].address.country_code
+//        }
+//       else if(response[0].address.country){
+//            this.data.address=response[0].place_id+','+response[0].address.country+','+response[0].address.country_code
+//        }
+//     this.lat = response[0].lat
+//    this.long = response[0].lon
+//      console.log(this.lat,this.long)  
+//    }}
+//    else{
+//        console.log('neelanshi');
+//         this.AlertMsg2('Empty response on Nominatim<br>Search via Google maps<br>');
+//       
 //    }
-});
-});
-
-
-}
-}
-
-
-
-  }
+////    else
+////        {
+////       this.AlertMsg1('Empty response on Nominatim<br>Search via Google maps<br>');
+////        this.openmapmodal();
+////    }
+//});
+//});
+//
+//
+//}
+//}
+//
+//
+//
+//  }
   Userprofile() {
     let headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
@@ -202,7 +202,7 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
         phone: editinfo.value.phone,
         dob: editinfo.value.dob,
         gender: editinfo.value.gender,
-        address: editinfo.value.address,
+        address: this.data.address,
         id: userid,
          lat:this.lat,
       long:this.long,
@@ -219,6 +219,11 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
         .subscribe(data => {
           console.log(data);
           if (data.status == true) {
+                  localStorage.setItem('UserDetail',JSON.stringify(data.data));
+                  console.log(data.data.address);
+                  this.appsetting.svd.push(data.data.address);
+                    localStorage.setItem('Svedaddress',JSON.stringify(this.appsetting.svd));
+                    console.log(this.appsetting.svd);
             Loading.dismiss();
             let toast = this.toastCtrl.create({
               message: "Profile is updated",
@@ -227,6 +232,7 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
             });
             toast.present();
             this.navCtrl.push(ProfilePage)
+            console.log(this.navCtrl);
           }
         })
         })
@@ -430,9 +436,28 @@ this.http.post(this.appsetting.myGlobalVar +'user_profile_pic', postdata).map(re
       console.log(data.longi)
       this.lat = data.lati
       this.long = data.longi
+       this.AlertMsg4('Your Location:'+this.data.address+' '+' is  updated')
     });
     modal.present();
 //  })
 
 }
+    AlertMsg4(msg){
+    let alert = this.alertCtrl.create({
+      title: 'RAFAHO',
+      message: msg,
+      buttons: [
+        {
+          text: 'OK',
+          role: 'submit',
+          handler: () => {
+            console.log('ok clicked');
+//            this.openmapmodal();
+            // this.navCtrl.push(ProcessingformPage);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
 }

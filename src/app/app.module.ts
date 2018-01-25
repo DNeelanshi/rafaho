@@ -1,6 +1,7 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+//import { NavController} from 'ionic-angular';
 import { MyApp } from './app.component';
 import { Keyboard } from '@ionic-native/keyboard';
 import { MapmodalPage } from '../pages/mapmodal/mapmodal';
@@ -42,6 +43,7 @@ import { Device } from '@ionic-native/device';
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
 import { Camera } from '@ionic-native/camera';
+import { Service } from '../providers/service';
 @NgModule({
   declarations: [
     MyApp,
@@ -78,6 +80,7 @@ import { Camera } from '@ionic-native/camera';
   ],
   imports: [
     BrowserModule,
+  
     HttpModule,
     MomentModule,
     IonicModule.forRoot(MyApp)
@@ -121,8 +124,9 @@ import { Camera } from '@ionic-native/camera';
     StatusBar,
     SplashScreen,
     Keyboard,
+    Service,
     Appsetting,
-    Device,
+     Device,
     Geolocation,
     NativeGeocoder,
     Camera,

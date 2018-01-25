@@ -6,8 +6,61 @@
     </ion-title>
     
   </ion-navbar>
+    
+    
+    
+<div class="searchouter">
+<ion-searchbar placeholder="Fill Address..." (click)="openlist()" [(ngModel)]="chefsearch.search" name="search" #search="ngModel" >
+ </ion-searchbar>
+
+    <div class="listout">  
+<ion-list class="listitm" style="margin:0 !important; padding:0;" *ngIf="openllist == 1" >
+     
+     <ion-list-header style="background: #f2f2f2; margin: 0;"> Saved Addresses: </ion-list-header>
+     
+    <ion-item *ngFor ="let opt of searcharray;let i = index"
+        (click)="getItem(opt)">
+        {{opt}}
+        <ion-icon name="close" small item-end (click)="del(i)"></ion-icon>
+    </ion-item>
+     
+      <ion-list-header style="background: #f2f2f2; margin: 0;"> Favourite Addresses: </ion-list-header>
+      
+       <ion-item *ngFor ="let opt1 of searcharray1;let i = index" 
+        (click)="getItem(opt1)">
+        {{opt1}}
+        <ion-icon name="close" small item-end (click)="del1(i)"></ion-icon>
+    </ion-item>
+       
+     <ion-item>
+         <button (click)= "openmapmodal()" outline ion-button color="dark" icon-right round>Go To Other Address <ion-icon name="navigate"></ion-icon> </button>
+         <button ion-button color="danger" outline round icon-right  (click)="cancellist()"> Cancel <ion-icon name="close"></ion-icon></button>
+     </ion-item>
+     
+       
+</ion-list> 
+    </div>
+       
+</div>
+    
+
+    
+
+
+  <ion-toolbar class="dateleft">
+      <p>Main Date</p>
+            <ion-datetime placeholder="MMM/DD/YYYY HH:MM" displayFormat="MMM/DD/YYYY HH:mm" pickerFormat="MMM DD YYYY HH mm" min="{{date}}" max="3000" [(ngModel)]= "data.datetime" name="datetime" #datetime="ngModel" ></ion-datetime>
+  </ion-toolbar>
+      
+    <ion-toolbar class="dateleftr">
+        <p>Alternative Date</p>
+            <ion-datetime placeholder="MMM/DD/YYYY HH:MM" displayFormat="MMM/DD/YYYY HH:mm" pickerFormat="MMM DD YYYY HH mm" min="{{date}}" max="3000" [(ngModel)]= "data.altdate" name="altdate" #altdate="ngModel" ></ion-datetime>
+            
+    </ion-toolbar> 
+    
 
   <div class="segment-sec">
+      
   <ion-toolbar>
   <ion-segment [(ngModel)]="pet">
     <ion-segment-button value="kittens">
@@ -20,7 +73,10 @@
   </ion-toolbar>
 </div>
 </ion-header>
-<ion-content>
+<ion-content  class="{{blurclass}}" style="padding: 0;">
+
+    <div class="overlayn" (click)="cancellist()" ></div>
+    
   <div class="banner">
   <img src="assets/img/off.png">
 </div>
@@ -31,7 +87,7 @@
   <div [ngSwitch]="pet">
     <ion-list *ngSwitchCase="'kittens'">
         <div class="serch">
-  <ion-searchbar placeholder="Search by chef..." [(ngModel)]="data.dat" name="dat" #dat="ngModel" (input)="search(data.dat)" ></ion-searchbar>
+  <ion-searchbar placeholder="Search by chef..." [(ngModel)]="data.dat" name="dat" #dat="ngModel" (input)="searchaa(data.dat)" ></ion-searchbar>
   <div class="option">
       <img src="assets/img/option.png" (click)="fltr_opn()">
   </div>
@@ -89,8 +145,8 @@
           </button>
         </div>
       </ion-item>-->
-       <div *ngIf="bit == null"><p style="width: 100%;float: left;padding-left: 12px;color: #949494;">No match found</p></div>
-        <div *ngIf="(arr1 == null)"><p style="width: 100%;float: left;padding-left: 12px;color: #949494;">No chef available on your area or region</p></div>
+<div *ngIf="bit == null"><div class="loadimg"><img width="220px" src="assets/img/RafahoLogo-03.png"></div></div>
+<div *ngIf="arr1 == null"><div class="loadimg"><img width="220px" src="assets/img/RafahoLogo-02.png"></div></div>
     </ion-list>
   </div>
 
@@ -145,8 +201,8 @@
       </ion-item>
     
   </ion-list>
-      <div *ngIf="arry == true"><p style="width: 100%;float: left;padding-left: 12px;color: #949494;">Search for result</p></div>
-       <div *ngIf="arry == null"><p style="width: 100%;float: left;padding-left: 12px;color: #949494;">No Match Found</p></div>
+      <div *ngIf="arry == true"><div class="loadimg"><img width="120px" src="assets/img/srchimg.png"></div></div>
+      <div *ngIf="arry == null"><div class="loadimg"><img width="220px" src="assets/img/RafahoLogo-03.png"></div></div>
   </div>
     <!-- <div class="serch-contant" *ngSwitchCase="'puppies'">
         <div class="image">

@@ -19,6 +19,15 @@ import { SigninPage } from "../signin/signin";
 export class ChangepwdPage {
   key: boolean = false;;
   public data: any = {};
+   public ptype = 'password';
+  public iconname = 'eye';
+   public showpass:boolean = false;
+    public ptype1 = 'password';
+  public iconname1 = 'eye';
+   public showpass1:boolean = false;
+    public ptype2 = 'password';
+  public iconname2 = 'eye';
+   public showpass2:boolean = false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -82,6 +91,43 @@ export class ChangepwdPage {
 
     }
   }
+    showPassword() {    
+   console.log('showpassword');   
+    this.showpass = !this.showpass;   
+     if(this.showpass){    
+       this.ptype = 'text';  
+           this.iconname = 'eye-off';  
+             } else {    
+               this.ptype = 'password';   
+                  this.iconname = 'eye';    } 
+                   }
+               
+                    
+   showPassword1() {    
+   console.log('showpassword');   
+    this.showpass1 = !this.showpass1;   
+     if(this.showpass1){    
+       this.ptype1 = 'text';  
+           this.iconname1 = 'eye-off';  
+             } else {    
+               this.ptype1 = 'password';   
+                  this.iconname1 = 'eye';    } 
+                   }
+                  
+                   
+                       
+     showPassword2() {    
+   console.log('showpassword');   
+    this.showpass2 = !this.showpass2;   
+     if(this.showpass2){    
+       this.ptype2 = 'text';  
+           this.iconname2 = 'eye-off';  
+             } else {    
+               this.ptype2 = 'password';   
+                  this.iconname2 = 'eye';    }  
+                  }
+                  
+                  
   handleKeyboardEvent(event: KeyboardEvent, pass, cpass) {
     console.log(event.key);
     console.log(event);

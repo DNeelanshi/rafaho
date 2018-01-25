@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ToastController, AlertController, 
 import * as moment from 'moment';
 import { TabsPage } from '../tabs/tabs';
 import { SigninPage } from "../signin/signin";
+import { HomePage } from "../home/home";
 import { LocationPage } from "../location/location";
 import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
 import { MapmodalPage } from "../mapmodal/mapmodal";
@@ -30,10 +31,17 @@ export class SignupPage {
   arr;
   slat:any;
   slong:any;
+  savd:any=[];
   address:any;
+  public Ctype = 'password';
+  public iconname1 = 'eye';
+   public ptype = 'password';
+  public iconname = 'eye';
   number: boolean=false;
   public data: any = {};
   public lat: number;
+  public showCpass:boolean = false;
+   public showpass:boolean = false;
   public long: number;
   public validateEqual: string
   constructor(public navCtrl: NavController,
@@ -49,38 +57,38 @@ export class SignupPage {
     public modalCtrl: ModalController
   ) {
 
- this.GetLocation();
- this.cities()
+// this.GetLocation();
+// this.cities()
  
   }
-  cities(){
-     let headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
-//    let options = new RequestOptions({ headers: headers });
-       this.http.get('http://rafao.us-west-2.elasticbeanstalk.com/api/allcity').map(res => res.json()).subscribe(response => {
-           console.log(response.data);
-           this.arr = response.data;
-           console.log(this.arr)
-          
-       });
-  }
+//  cities(){
+//     let headers = new Headers();
+//    headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
+////    let options = new RequestOptions({ headers: headers });
+//       this.http.get('http://rafao.us-west-2.elasticbeanstalk.com/api/allcity').map(res => res.json()).subscribe(response => {
+//           console.log(response.data);
+//           this.arr = response.data;
+//           console.log(this.arr)
+//          
+//       });
+//  }
  
   lupap(){
       
       console.log(this.data.city);
-    if(this.data.city){
-        this.nativeGeocoder.forwardGeocode(this.data.city)
-  .then((coordinates: NativeGeocoderForwardResult) => {console.log('The coordinates are latitude=' + coordinates.latitude + ' and longitude=' + coordinates.longitude)
-     this.slat =coordinates.latitude;
-     this.slong = coordinates.longitude;
-     console.log(this.slat);
-     console.log(this.slong);
-     localStorage.setItem('city', JSON.stringify(this.slat,this.slong))
-      })
-  .catch((error: any) => console.log(error));
-  
-    console.log();
-    }
+//    if(this.data.city){
+//        this.nativeGeocoder.forwardGeocode(this.data.city)
+//  .then((coordinates: NativeGeocoderForwardResult) => {console.log('The coordinates are latitude=' + coordinates.latitude + ' and longitude=' + coordinates.longitude)
+//     this.slat =coordinates.latitude;
+//     this.slong = coordinates.longitude;
+//     console.log(this.slat);
+//     console.log(this.slong);
+//     localStorage.setItem('city', JSON.stringify(this.slat,this.slong))
+//      })
+//  .catch((error: any) => console.log(error));
+//  
+//    console.log();
+//    }
       this.address = this.data.address;
       console.log(this.address);
        if(this.address==''){
@@ -105,7 +113,8 @@ if(this.number ==true){
    this.AlertMsg2('Empty response on Nominatim<br>Search via Google maps<br>');
    
 }else{
-   console.log('false');
+
+      console.log('false');
 let headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
 let options = new RequestOptions({ headers: headers})
@@ -167,6 +176,25 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
       
   }
   }
+    showPassword() {    
+   console.log('showpassword');   
+    this.showpass = !this.showpass;   
+     if(this.showpass){    
+       this.ptype = 'text';  
+           this.iconname = 'eye-off';  
+             } else {    
+               this.ptype = 'password';   
+                  this.iconname = 'eye';    }  }
+                  
+  showCPassword() {    
+   console.log('showCpassword');   
+    this.showCpass = !this.showCpass;   
+     if(this.showCpass){    
+       this.Ctype = 'text';  
+           this.iconname1 = 'eye-off';  
+             } else {    
+               this.Ctype = 'password';   
+                  this.iconname1 = 'eye';    }  }
   Registration(register) {
     console.log('registration');
     console.log(register.value);
@@ -194,7 +222,7 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
           phone: register.value.phone,
           emailid: register.value.email,
           password: register.value.password,
-          address: register.value.address,
+          address:   this.data.address,
           lat: this.lat,
           long: this.long,
           role: 'user',
@@ -217,14 +245,16 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
               this.ToastMsg('You have succesfully registered');
               
                 localStorage.setItem('UserDetail',JSON.stringify(response.data));
-                  this.navCtrl.push(LocationPage);
+                 this.appsetting.svd.push(response.data.address);
+                    localStorage.setItem('Svedaddress',JSON.stringify(this.appsetting.svd));
+                  this.navCtrl.push(TabsPage);
             } else{
                  this.AlertMsg1(response.message);
             }
           })
         })
       }else{
-           this.AlertMsg('Click Search icon to validate the address by webservice');
+           this.AlertMsg('Please add address');
       }}
     }
 
@@ -232,12 +262,22 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
 
   /*************function for get user corrent location (latitude and longitude) and get address from lat long ************/
   GetLocation(){
+    
+        var Loading = this.loadingCtrl.create({
+          spinner: 'bubbles',
+          cssClass: 'loader',
+          content:'Connecting..Make sure your location is on'
+        });
+        Loading.present().then(() => {
     this.geolocation.getCurrentPosition().then((resp) => {
+        
       // resp.coords.latitude
+      //
       // resp.coords.longitude
       console.log('latitude:'+resp.coords.latitude+'longitude:'+resp.coords.longitude);
       // this.lat = resp.coords.latitude;
-      // this.long = resp.coords.longitude;
+      // this.long = resp.coords.longitud
+      Loading.dismiss();
       this.nativeGeocoder.reverseGeocode(resp.coords.latitude, resp.coords.longitude)
       .then((result: NativeGeocoderReverseResult) => {
         // alert(JSON.stringify(result));
@@ -254,6 +294,7 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
      }).catch((error) => {
        console.log('Error getting location', error);
        this.ToastMsg1('Please enable your location');
+     });
      });
   }
 
@@ -373,10 +414,11 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
         
         {
           text: 'OK',
-          role: 'submit',
+          role: 'CANCEL',
           handler: () => {
-            console.log('Continue clicked');
-            this.navCtrl.push(LocationPage);
+            console.log('OK clicked');
+            this.openmapmodal();
+//            this.navCtrl.push(LocationPage);
           }
         }
       ]
@@ -407,7 +449,7 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
     console.log(data.longi)
     this.lat = data.lati
     this.long = data.longi
-    this.AlertMsg4('Your Location has been saved')
+    this.AlertMsg4('Your Location:'+this.data.address+' '+' is  saved')
   });
     modal.present();
   }

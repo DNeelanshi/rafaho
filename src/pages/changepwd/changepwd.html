@@ -23,11 +23,12 @@
 		<div class="sign">
 			<form class="form-sec" #changepassForm="ngForm" novalidate (submit)="changepassword(changepassForm)">
 				<ion-list>
-
+                                <div class="itemouter">
 					<ion-item>
 						<ion-label stacked>Enter your old password</ion-label>
-						<ion-input type="password" [(ngModel)]="data.oldpassword" name="oldpassword" #oldpassword="ngModel" minlength="6" pattern="(?!^[0-9]*$)(?!^[a-zA-Z@/*/#]*$)(?!^[a-zA-Z0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9@/*/#]{6,30})" required></ion-input>
+						<ion-input type="{{ptype}}" [(ngModel)]="data.oldpassword" name="oldpassword" #oldpassword="ngModel" minlength="6" pattern="(?!^[0-9]*$)(?!^[0-9@/*/-/#/&/^/$/\/|/;/_/~/?/!/./''/`/%/:/()/+/=]*$)(?!^[a-zA-Z@/*/#/&/^/$/;/_/~/?/\/|/''/-/`/./\/!/%/:/()/+/=]*$)(?!^[a-zA-Z0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9@/*/#/&/$/;/_/%/:/^/?/~/`/''/|/-/!/\/./()/+/=]{6,30})" required></ion-input>
 					</ion-item>
+                                    
 					<div class="alert alert-danger" color="danger">
 						<div *ngIf="oldpassword.errors && (oldpassword.dirty || oldpassword.touched)">
 							<div [hidden]="!oldpassword.errors.required">
@@ -41,11 +42,16 @@
                                            </div>
                   
 						</div>
-					</div>
-					<ion-item>
+					</div> 
+                                <ion-icon name="{{iconname}}" (click)="showPassword()" ></ion-icon>
+                                </div>
+					
+                                    <div class="itemouter">
+                                    <ion-item>
 						<ion-label stacked>Enter your new password</ion-label>
-						<ion-input type="password" [(ngModel)]="data.newpassword" name="newpassword" #newpassword="ngModel" minlength="6" pattern="(?!^[0-9]*$)(?!^[a-zA-Z@/*/#]*$)(?!^[a-zA-Z0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9@/*/#]{6,30})" required></ion-input>
+						<ion-input type="{{ptype}}" [(ngModel)]="data.newpassword" name="newpassword" #newpassword="ngModel" minlength="6" pattern="(?!^[0-9]*$)(?!^[0-9@/*/-/#/&/^/$/\/|/;/_/~/?/!/./''/`/%/:/()/+/=]*$)(?!^[a-zA-Z@/*/#/&/^/$/;/_/~/?/\/|/''/-/`/./\/!/%/:/()/+/=]*$)(?!^[a-zA-Z0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9@/*/#/&/$/;/_/%/:/^/?/~/`/''/|/-/!/\/./()/+/=]{6,30})" required></ion-input>
 					</ion-item>
+                                    
 					<div class="alert alert-danger" color="danger">
 						<div *ngIf="newpassword.errors && (newpassword.dirty || newpassword.touched)">
 							<div [hidden]="!newpassword.errors.required">
@@ -58,12 +64,18 @@
                                        Password is weak(It should be combination of a-z/A-Z,0-9/@*#)
                                            </div>
 						</div>
-					</div>
+                                        </div>
+                                           <ion-icon name="{{iconname1}}" (click)="showPassword1()" ></ion-icon> 
+                                        
+                                    </div>
+                                    
+                                    <div class="itemouter">
 					<ion-item>
 						<ion-label stacked>Confirm your new password</ion-label>
-						<ion-input type="password" [(ngModel)]="data.cnewpassword" (input)="handleKeyboardEvent($event,data.newpassword,data.cnewpassword)"
+						<ion-input type="{{ptype}}" [(ngModel)]="data.cnewpassword" (input)="handleKeyboardEvent($event,data.newpassword,data.cnewpassword)"
 						 name="cnewpassword" #cnewpassword="ngModel"  required></ion-input>
 					</ion-item>
+                                    
 					<div *ngIf="key == false && cnewpassword.errors && (cnewpassword.dirty || cnewpassword.touched)">
 						<div [hidden]="!cnewpassword.errors.required">
 							Confirm password is required
@@ -75,7 +87,9 @@
 
 							<span>Password mismatch </span>
 						</div>
-					</div>
+                                        </div>
+                                    <ion-icon name="{{iconname2}}" (click)="showPassword2()" ></ion-icon>
+                                    </div>
 				</ion-list>
 					<div class="frgtpwd">
 			<button ion-button type="submit" [disabled]="!changepassForm.valid" >Save</button>

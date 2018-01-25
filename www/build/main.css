@@ -51346,6 +51346,23 @@ ion-toolbar .title {
   min-height: 30px;
 }
 
+.loadimg {
+  width: 100%;
+  min-height: 40vh;
+  position: relative;
+  text-align: center;
+  float: left;
+}
+
+.loadimg img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
 page-addwallet .title .toolbar-title p {
   margin: 0;
   font-size: 12px;
@@ -51866,6 +51883,10 @@ page-cart .imgbtn {
   padding: 0px;
 }
 
+page-cart .cartouter .datetime-text {
+  font-size: 13px;
+}
+
 page-changepwd .content-sec {
   width: 100%;
   -webkit-box-flex: left;
@@ -51986,6 +52007,19 @@ page-changepwd .main .image {
 page-changepwd .main .image img {
   width: 34%;
   margin-top: 12px;
+}
+
+page-changepwd .itemouter {
+  position: relative;
+  width: 100%;
+  float: left;
+}
+
+page-changepwd .itemouter .icon {
+  position: absolute;
+  right: 0;
+  top: 21px;
+  color: #484848;
 }
 
 page-chat .segment-sec {
@@ -53206,6 +53240,12 @@ page-help .content .main p {
   line-height: 19px;
 }
 
+page-home {
+  /*===============================================*/
+  /*==================Search Sction================*/
+  /*===============================================*/
+}
+
 page-home .title .toolbar-title p {
   margin: 0;
   font-size: 12px;
@@ -53636,7 +53676,7 @@ page-home .hor span {
   width: 8px;
 }
 
-page-home .searchbar-md {
+page-home .serch .searchbar-md {
   padding-right: 55px !important;
 }
 
@@ -53647,6 +53687,156 @@ page-home .searchbar-md .searchbar-search-icon {
 page-home .searchbar-md .searchbar-input {
   padding: 6px 40px;
   padding-right: 10px;
+}
+
+page-home input.searchbar-input {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: 1px solid #ddd;
+}
+
+page-home .searchbar {
+  margin: 0 !important;
+  padding-bottom: 0;
+}
+
+page-home .select {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: 1px solid #ddd;
+}
+
+page-home .text-input {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: 1px solid #ddd;
+  margin: 0px;
+  padding: 8px 10px;
+  background: #fff;
+  width: 100%;
+}
+
+page-home .searchbar-input {
+  padding: 3px 55px !important;
+  margin-bottom: 3px;
+  font-size: 14px !important;
+}
+
+page-home .toolbar_top .toolbar-background {
+  background: #fff;
+}
+
+page-home .searchouter {
+  width: 100%;
+  /*    padding-right: 50px;*/
+  position: relative;
+}
+
+page-home .favbtn {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  background: no-repeat;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: 1px solid #ddd;
+  color: #f27242;
+}
+
+page-home .searchouter .list {
+  margin: 0;
+}
+
+page-home .datetimesec {
+  float: left;
+  width: 100%;
+  padding: 0 8px 0;
+}
+
+page-home .dateleft {
+  float: left;
+  width: 50%;
+}
+
+page-home .dateleftr {
+  float: left;
+  width: 50%;
+}
+
+page-home .datetimesec p {
+  margin: 0 0 5px 0;
+  padding: 0;
+}
+
+page-home .datetimesec .datetime {
+  border: 1px solid #ccc;
+  padding: 8px;
+  font-size: 13px;
+}
+
+page-home .segment-sec .segment .segment-button {
+  margin-top: 0;
+  padding-bottom: 0;
+}
+
+page-home .listitm {
+  background: #fff;
+  position: absolute;
+  z-index: 999;
+  width: 100%;
+  border: 1px solid #ddd;
+  float: left;
+  -webkit-box-shadow: 0 6px 6px #ddd;
+  box-shadow: 0 6px 6px #ddd;
+}
+
+page-home .listitm .item {
+  font-size: 13px;
+  font-weight: 400;
+}
+
+page-home .datetime {
+  border: 1px solid #ddd;
+  padding: 11px 15px;
+  font-size: 12px;
+  background: #fff;
+}
+
+page-home .dateleftr p {
+  margin: 0;
+  font-size: 12px;
+  padding: 3px;
+}
+
+page-home .dateleft p {
+  margin: 0;
+  font-size: 12px;
+  padding: 3px;
+}
+
+page-home .toolbar-content {
+  padding: 0 6px 0 1px;
+}
+
+page-home .blurbg .overlayn {
+  position: absolute;
+  z-index: 9;
+  background: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+page-home .blurbg {
+  -webkit-filter: blur(3px);
+  -moz-filter: blur(3px);
+  -o-filter: blur(3px);
+  -ms-filter: blur(3px);
+  filter: blur(3px);
+}
+
+page-home .blurbg1 .overlayn {
+  display: none;
 }
 
 page-location {
@@ -53777,7 +53967,7 @@ page-location .datetime-text {
 }
 
 page-mapmodal #map {
-  height: 92%;
+  height: 100%;
   width: 100%;
 }
 
@@ -53790,6 +53980,66 @@ page-mapmodal .list-ios {
   margin: -1px 0 32px;
   position: absolute;
   z-index: 9999;
+}
+
+page-mapmodal input.searchbar-input {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: 1px solid #ddd;
+}
+
+page-mapmodal .searchbar {
+  margin: 0 !important;
+  padding-bottom: 0;
+}
+
+page-mapmodal .select {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: 1px solid #ddd;
+}
+
+page-mapmodal .text-input {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: 1px solid #ddd;
+  margin: 0px;
+  padding: 8px 10px;
+  background: #fff;
+  width: 100%;
+}
+
+page-mapmodal .searchbar-input {
+  padding: 3px 55px !important;
+  margin-bottom: 3px;
+  font-size: 14px !important;
+}
+
+page-mapmodal .toolbar_top .toolbar-background {
+  background: #fff;
+}
+
+page-mapmodal .searchouter {
+  width: 100%;
+  padding-right: 50px;
+  position: relative;
+}
+
+page-mapmodal .favbtn {
+  position: absolute;
+  right: 5px;
+  top: 15px;
+  background: no-repeat;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: 1px solid #ddd;
+  color: #f27242;
+  margin-top: -6px;
+  width: 43px;
+}
+
+page-mapmodal .searchouter .list {
+  margin: 0;
 }
 
 page-nominatimap #map {
@@ -55300,6 +55550,19 @@ page-signin .content-sec .frgtpwd .register span {
   color: #000000;
 }
 
+page-signin .itemouter {
+  position: relative;
+  width: 100%;
+  float: left;
+}
+
+page-signin .itemouter .icon {
+  position: absolute;
+  right: 0;
+  top: 21px;
+  color: #484848;
+}
+
 page-signup .content {
   width: 100%;
   float: left;
@@ -55533,6 +55796,39 @@ page-signup .datetime {
 
 page-signup .select-text {
   line-height: 20px;
+}
+
+page-signup viewpass {
+  margin: 0;
+  bottom: 0px;
+  font-size: 22px;
+  position: relative;
+  min-height: auto;
+  right: 4px;
+}
+
+page-signup .viewpass.button {
+  margin: 0;
+  padding: 0;
+  font-size: 17px;
+  color: #9e9e9e;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding-right: 5px;
+  background-color: transparent;
+}
+
+page-signup .itemouter {
+  position: relative;
+  width: 100%;
+}
+
+page-signup .itemouter .icon {
+  position: absolute;
+  right: 0;
+  top: 8px;
+  color: #484848;
 }
 
 page-terms .content {

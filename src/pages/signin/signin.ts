@@ -21,6 +21,9 @@ import { TabsPage } from "../tabs/tabs";
 })
 export class SigninPage {
   public data: any = {};
+  public ptype = 'password';
+  public iconname = 'eye';
+   public showpass:boolean = false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -32,7 +35,15 @@ export class SigninPage {
     
     ) {
   }
-
+   showPassword() {    
+   console.log('showpassword');   
+    this.showpass = !this.showpass;   
+     if(this.showpass){    
+       this.ptype = 'text';  
+           this.iconname = 'eye-off';  
+             } else {    
+               this.ptype = 'password';   
+                  this.iconname = 'eye';    }  }
  Signin(logindata){
   console.log('login');
   console.log(logindata.value);
@@ -72,22 +83,24 @@ export class SigninPage {
      
 //     var a = JSON.parse((localStorage.getItem('Userpref')))
      
-        if(localStorage.getItem('UserDetail')&&localStorage.getItem('Userpref')){
-         var b = JSON.parse(localStorage.getItem('UserDetail'))._id;
-          var a = JSON.parse(localStorage.getItem('Userpref')).app_user_id;
-      console.log(a,b);
-     
-      if(b==a)
-          {
-          this.navCtrl.push(TabsPage); 
-      }else{
-          this.navCtrl.push(LocationPage); 
-      }
-      
-     }else if(localStorage.getItem('UserDetail')){
-          this.navCtrl.push(LocationPage); 
-     }
-       
+//        if(localStorage.getItem('UserDetail')&&localStorage.getItem('Userpref')){
+//         var b = JSON.parse(localStorage.getItem('UserDetail'))._id;
+//          var a = JSON.parse(localStorage.getItem('Userpref')).app_user_id;
+//      console.log(a,b);
+//     
+//      if(b==a)
+//          {
+//          this.navCtrl.push(TabsPage); 
+//      }else{
+//          this.navCtrl.push(LocationPage); 
+//      }
+//      
+//     }else if(localStorage.getItem('UserDetail')){
+//          this.navCtrl.push(LocationPage); 
+//     }
+       if(localStorage.getItem('UserDetail')){
+           this.navCtrl.push(TabsPage);  
+       }
      
     
      
