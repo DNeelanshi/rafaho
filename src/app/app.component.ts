@@ -21,7 +21,7 @@ import { LocationPage } from '../pages/location/location';
   templateUrl: 'app.html'
 })
 export class MyApp {
-    @ViewChild(Nav) nav: Nav;
+    @ViewChild(NavController) nav: NavController
  alert:any;
   public rootPage:any = '';
 
@@ -35,13 +35,13 @@ export class MyApp {
             
    platform.ready().then(() => {
 
-           
- platform.registerBackButtonAction(()=>{
-//     if (this.navCtrl.canGoBack()){
-//                  this.navCtrl.pop();
-//                }else{
- this.myHandlerFunction()
- });
+//           
+// platform.registerBackButtonAction(()=>{
+////     if (this.navCtrl.canGoBack()){
+////                  this.navCtrl.pop();
+////                }else{
+// this.myHandlerFunction()
+// });
          
     
        statusBar.overlaysWebView(true);
@@ -77,7 +77,7 @@ export class MyApp {
 //                  this.platform.exitApp();
                     alert('hello')
                     console.log(this.nav);
-                    this.nav.pop();
+                    this.nav.pop(this.rootPage);
 //                    this.nav.config.plt.backButton.observers.pop()
                 }
               }

@@ -69,6 +69,7 @@ export class SigninPage {
   var Loading = this.loadingCtrl.create({
     spinner: 'bubbles',
     cssClass: 'loader',
+    dismissOnPageChange: true
   
   });
   Loading.present().then(() => {

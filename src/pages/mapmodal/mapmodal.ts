@@ -27,6 +27,7 @@ export class MapmodalPage{
   public globalshape : any;   
   autocompleteItems: any;
   omega:any = 0;
+  Loading:any;
   number:boolean = true;
  isenabled:boolean=false;
   autocomplete: any;
@@ -179,7 +180,12 @@ else{
                 this.autocompleteItems.push(this.description);
                 console.log(this.autocompleteItems);}
             }
-            });}
+            },(err)=>{
+                this.ToastMsg('Something went Wrong');
+            });
+            
+            
+            }
   }
   fav(auto){
      console.log("place")
@@ -191,7 +197,7 @@ else{
          console.log('new')
       let alert1 = this.alertCtrl.create({
       title: 'RAFAHO',
-      message: 'Deselct as Favourite',
+      message: 'Remove from Favourite',
       buttons: [
      {
             text: 'Cancel',
@@ -314,7 +320,7 @@ if(this.number == true){
     //types:  ['geocode'], // other types available in the API: 'establishment', 'regions', and 'cities'
     input: this.autocomplete.query, 
 //    componentRestrictions: {  } 
-    componentRestrictions: {country: 'co'}
+//    componentRestrictions: {country: 'co'}
     }
     this.acService.getPlacePredictions(config, ((predictions, status)=> {
     console.log('modal > getPlacePredictions > status > ', status);
@@ -366,8 +372,36 @@ if(!this.number){
 this.http.post('https://nominatim.openstreetmap.org/search/'+adr+'?format=json&addressdetails=1&limit=1&polygon_svg=1',options).map(res => res.json()).subscribe(response => {
     console.log(response[0] );
     if( (response[0]== undefined)){
-//    if(response[0].code == 2){
-        this.ToastMsg('Location not found')
+            
+    let config = { 
+    //types:  ['geocode'], // other types available in the API: 'establishment', 'regions', and 'cities'
+    input: this.autocomplete.query, 
+//    componentRestrictions: {  } 
+//    componentRestrictions: {country: 'co'}
+    }
+    this.acService.getPlacePredictions(config, ((predictions, status)=> {
+    console.log('modal > getPlacePredictions > status > ', status);
+    if(status == 'ZERO_RESULTS'){
+        
+       this.ToastMsg('Location not found')
+        this.omega = 1;
+         this.autocompleteItems = [];   
+    }else{
+      this.omega = 0;
+    this.autocompleteItems = [];   
+    console.log(predictions)         
+    predictions.forEach(((prediction)=> {   
+      console.log("abc")           
+    this.autocompleteItems.push(prediction);
+   
+    })
+   
+   ); }
+   // return false;
+    })
+    
+   );
+
     }else{
     if(response[0] != undefined){
     if(response[0].place_id != ''){
@@ -385,21 +419,25 @@ this.http.post('https://nominatim.openstreetmap.org/search/'+adr+'?format=json&a
 //  });
 //   modal.present();
 ////   
+            if(response[0].address.mall){
+        
+        this.nomaddress=response[0].address.mall+','+response[0].address.city+','+ response[0].address.postcode+','+response[0].address.state+','+response[0].address.country+','+response[0].address.country_code
+        }
    if(response[0].address.road){
         
-        this.nomaddress=response[0].place_id+','+response[0].address.road+','+response[0].address.city+','+ response[0].address.postcode+','+response[0].address.state+','+response[0].address.country+','+response[0].address.country_code
+        this.nomaddress=response[0].address.road+','+response[0].address.city+','+ response[0].address.postcode+','+response[0].address.state+','+response[0].address.country+','+response[0].address.country_code
         }
         else if(response[0].address.city){
-       this.nomaddress=response[0].place_id+','+response[0].address.city+','+ response[0].address.postcode+','+response[0].address.state+','+response[0].address.country+','+response[0].address.country_code
+       this.nomaddress=response[0].address.city+','+ response[0].address.postcode+','+response[0].address.state+','+response[0].address.country+','+response[0].address.country_code
         }
          else if(response[0].address.state){
-             this.nomaddress=response[0].place_id+','+response[0].address.state+','+response[0].address.country+','+response[0].address.country_code
+             this.nomaddress=response[0].address.state+','+response[0].address.country+','+response[0].address.country_code
         }
         else if(response[0].address.state_district){
-           this.nomaddress=response[0].place_id+','+response[0].address.state+','+response[0].address.state_district+','+response[0].address.country+','+response[0].address.country_code
+           this.nomaddress=response[0].address.state+','+response[0].address.state_district+','+response[0].address.country+','+response[0].address.country_code
         }
        else if(response[0].address.country){
-            this.nomaddress=response[0].place_id+','+response[0].address.country+','+response[0].address.country_code
+            this.nomaddress=response[0].address.country+','+response[0].address.country_code
         }
         
         console.log(this.nomaddress);
@@ -451,12 +489,16 @@ this.http.post('https://nominatim.openstreetmap.org/search/'+adr+'?format=json&a
     
  
     this.platform.ready().then(() => {
+        let headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
+    let options = new RequestOptions({ headers: headers });
       // alert("working");
       // alert(lat+','+long);
         var Loading = this.loadCtrl.create({
           spinner: 'bubbles',
           cssClass: 'loader',
-          content:'Loading'
+          content:'Loading',
+          dismissOnPageChange: true
         });
         Loading.present().then(() => {
        this.geolocation.getCurrentPosition().then((resp) => {
@@ -481,8 +523,20 @@ this.http.post('https://nominatim.openstreetmap.org/search/'+adr+'?format=json&a
   
    console.log(this.data.city);
    
-      // alert('lat and long:'+latLng);
-      
+      var postdata = {
+           lat:this.l,
+           long:this.lo
+        }
+           var Serialized = this.serializeObj(postdata);
+    this.http.post('  http://rafao.us-west-2.elasticbeanstalk.com/api/home/reverse_geocoding', Serialized, options).map(res => res.json()).subscribe(response => {
+            console.log(response.data == '{"message":"Result not found"}');
+                    var resso = JSON.parse(response.data)
+            console.log(resso.response)
+//            console.log(resso.response.properties.address);
+           
+            if((response.data == '{"message":"Result not found"}')||(resso.response.properties.address == null)){
+        
+        
        this.geocoder.geocode({'location': latLng}, ((results, status)=>{
 		if (status == google.maps.GeocoderStatus.OK) {
                     if(results == ''){
@@ -511,7 +565,62 @@ this.http.post('https://nominatim.openstreetmap.org/search/'+adr+'?format=json&a
                 }   }
 //		
 	   })
-	   )
+	   )   
+            }  else{
+//                var resso = JSON.parse(response.data)
+            console.log(resso.response.message)
+          if(resso.response.message == "Result not found"){
+                      this.ToastMsg('Not found');
+                 this.lat = '';
+                       this.long= '';
+                         this.infowindow.setContent('Error');
+          this.infowindow.open(this.map, marker);
+          }
+          else{
+                 var addr= resso.response.properties.address
+                 console.log(resso.response)
+                 if(addr == null){
+                     
+                 }
+                   this.autocomplete.query= addr;
+                   this.data.city = resso.response.properties.city ;
+                 console.log(this.data.city);
+                   console.log(this.autocomplete.query);
+          this.infowindow.setContent(addr);
+          this.infowindow.open(this.map, marker);
+          }
+    }
+               });
+//      
+//       this.geocoder.geocode({'location': latLng}, ((results, status)=>{
+//		if (status == google.maps.GeocoderStatus.OK) {
+//                    if(results == ''){
+//                        this.ToastMsg('Invalid Location')
+//                        this.lat =  '';
+//                       this.long= '';
+//                       this.infowindow.setContent('Error');
+//          this.infowindow.open(this.map, marker);
+//                    }else{
+//                    if(results[0]){
+//              console.log(results[0].place_id);          
+//                         console.log(results[0].formatted_address);
+//    this.infowindow.setContent(results[0].formatted_address);
+////    
+//          this.infowindow.open(this.map, marker1);
+//          this.autocomplete.query= results[0].formatted_address;
+//                    }
+//   else if (results[1]) {
+//    this.autocomplete.query= results[1].formatted_address;
+//    console.log(results[1].formatted_address);
+//    this.infowindow.setContent(results[1].formatted_address);
+//    
+//          this.infowindow.open(this.map, marker1);
+//           this.autocomplete.query= results[1].formatted_address;
+//                    }
+//                }   }
+////		
+//	   })
+//	   )
    
 
        this.MapBounds = new google.maps.LatLngBounds(
@@ -544,16 +653,16 @@ this.http.post('https://nominatim.openstreetmap.org/search/'+adr+'?format=json&a
 this.lastPosition = new google.maps.LatLng(4.624335, -74.063644);
 this.boundsSet = false;
 
-   google.maps.event.addListener(this.map, 'bounds_changed', function () {
-//    console.log(mapp)
-   console.log(this.boundsSet)
-    console.log(this.MapBounds)
-    if (!this.boundsSet) {
-        this.MapBounds = this.MapBounds;
-        this.boundsSet = true;
-        console.log(this.MapBounds);
-    }
-});
+//   google.maps.event.addListener(this.map, 'bounds_changed', function () {
+////    console.log(mapp)
+//   console.log(this.boundsSet)
+//    console.log(this.MapBounds)
+//    if (!this.boundsSet) {
+//        this.MapBounds = this.MapBounds;
+//        this.boundsSet = true;
+//        console.log(this.MapBounds);
+//    }
+//});
       
     
 
@@ -561,48 +670,6 @@ this.boundsSet = false;
     console.log(mapOptions)
 
 
-//    google.maps.event.addListener(this.map, 'dragend', function ()
-//    {
-//        
-//        if (MapBounds.contains(mapOptions.center))
-//        {
-//            return;
-//        }
-//        else
-//        {
-//            mapOptions.center.lat(4.624335);
-//            mapOptions.center.lng(-74.063644);
-////            this.map.Center(this.map.LatLng( 4.624335, -74.063644));
-//        }
-//    });
-//       google.maps.event.addListener(this.map, 'dragend', function() {
-//           console.log(mapOptions.center)
-//     if (MapBounds.contains(mapOptions.center.lat(4.624335))){
-//         console.log(mapOptions.center.lat(),mapOptions.center.lng())
-//           return;
-//           
-//           }else{
-//
-//     // We're out of bounds - Move the map back within the bounds
-//
-//     var c = mapOptions.center,
-//         x = c.lng(),
-//         y = c.lat(),
-//         maxX = MapBounds.getNorthEast().lng(),
-//         maxY = MapBounds.getNorthEast().lat(),
-//         minX = MapBounds.getSouthWest().lng(),
-//         minY = MapBounds.getSouthWest().lat();
-//
-//     if (x < minX) x = minX;
-//     if (x > maxX) x = maxX;
-//     if (y < minY) y = minY;
-//     if (y > maxY) y = maxY;
-//     
-//     mapOptions.center.lat(y);
-//      mapOptions.center.lat(x)
-//      console.log(mapOptions.center.lat(),mapOptions.center.lng())}
-////     map.setCenter(new google.maps.LatLng(y, x));
-//   });
 
     
       var polygoncoords = [
@@ -617,10 +684,7 @@ this.boundsSet = false;
           {lng: -73.911947, lat: 4.858758},
           {lng: -74.126181, lat: 4.908702}, 
           {lng: -74.245657, lat: 4.823864}
-//          {lat: 25.774, lng: -80.190},
-//          {lat: 18.466, lng: -66.118},
-//          {lat: 32.321, lng: -64.757},
-//          {lat: 25.774, lng: -80.190}
+
         ]
         
             var bogotapoly = new google.maps.Polygon({
@@ -631,83 +695,46 @@ this.boundsSet = false;
           fillColor: '#FF0000',
           fillOpacity: 0.05
         });
-       bogotapoly.setMap(this.map);
+//       bogotapoly.setMap(this.map);
     //  alert("mapOptions");
       let marker1 = new google.maps.Marker({
          position: latLng,
 //         position:new google.maps.LatLng(4.624335, -74.063644),
          draggable: false,
-          icon: 'https://raw.githubusercontent.com/googlemaps/v3-utility-library/4c926fc74d724fe4360e4189e7c926842884614e/markerclusterer/images/m1.png',
+          icon: 'assets/img/location32.png',
          map: this.map,
        }
        );
+       map = this.map
+//         this.map.addListener('click', function(event) {  
+//          latLng = event.latLng
+//          console.log(map);
+//           console.log(this.markers)
+//     var marker = new google.maps.Marker({  
+//    position: latLng, 
+//    draggable:true,
+//    icon: 'assets/img/location.png',
+//    map: map  
+//  }); 
+//    
+//    
+//     this.markers=[];
+//        this.markers.push(marker);
+//        
+//  });
 
- 
         let marker = new google.maps.Marker({
          position: latLng,
-     
-//             position:new google.maps.LatLng(4.624335, -74.063644),
          draggable: true,
          icon: 'assets/img/location.png',
          map: this.map,
-//     icon: image,
          
        }
        );
+       
           this.markers=[];
         this.markers.push(marker);
-         google.maps.event.addListener(marker,'click', ((marker121) =>{
-             let latLng1 = marker121.latLng;
-             this.lat = latLng1.lat();
-      this.long = latLng1.lng();
-        console.log(marker121);
-        console.log(this.lat)
-      console.log(this.long)
-      
-      
-      
-        let latLong = new google.maps.LatLng(this.lat,this.long); 
-      	 
-    this.geocoder.geocode({'location': latLong}, ((results, status)=>{
-		  console.log(results);
-                  if(results == ''){
-                      this.ToastMsg('Invalid Location');
-                       this.lat =  '';
-                       this.long= '';
-                       this.infowindow.setContent('Error');
-          this.infowindow.open(this.map, marker);
-                  }else{
-		   if (status == google.maps.GeocoderStatus.OK) {
-             if (results[0]) {
-              console.log(results[0].place_id);
-          this.autocomplete.query = results[1].formatted_address;
-          console.log(this.autocomplete.query)
-          
-//          this.infowindow=new google.maps.InfoWindow({
-//              content: results[1].formatted_address,
-//          }); 
-          this.infowindow.setContent(results[0].formatted_address);
-          this.infowindow.open(this.map, marker);
-                    }          
-          else if (results[1]) {
-              console.log(results[1].place_id);
-          this.autocomplete.query= results[1].formatted_address;
-          console.log(this.autocomplete.query)
-//          this.infowindow=new google.maps.InfoWindow({
-//              content: results[1].formatted_address,
-//          }); 
-          this.infowindow.setContent(results[1].formatted_address);
-          this.infowindow.open(this.map, marker);
-         
-                    }
-                }}
-		   
-	   }))
-         }))
 
-       this.markers=[];
-        this.markers.push(marker);
-      //  alert("marker");
        google.maps.event.addListener(marker, 'dragend', ((marker12)=>{
         
         this.iconname = 'star-outline';
@@ -718,21 +745,33 @@ this.boundsSet = false;
       console.log(marker12);
       console.log(this.lat)
       console.log(this.long)
-      var pposition = new google.maps.LatLng(this.lat, this.long)
-      console.log(this.MapBounds)
-      console.log(pposition.lat(),pposition.lng())
-//       MapBounds.contains(position) ? lastPosition = position : marker.setPosition(lastPosition);
-       if( this.MapBounds.contains(pposition)){
-           this.lastPosition = pposition
-       }else{
-        this.lastPosition = pposition
-           console.log('no sertvice available');
-       }
-       console.log(this.lastPosition.lat(),this.lastPosition.lng())
-    ;
+//      var pposition = new google.maps.LatLng(this.lat, this.long)
+//      console.log(this.MapBounds)
+//      console.log(pposition.lat(),pposition.lng())
+////       MapBounds.contains(position) ? lastPosition = position : marker.setPosition(lastPosition);
+//       if( this.MapBounds.contains(pposition)){
+//           this.lastPosition = pposition
+//       }else{
+//        this.lastPosition = pposition
+//           console.log('no sertvice available');
+//       }
+//       console.log(this.lastPosition.lat(),this.lastPosition.lng())
+//    ;
      let latLong = new google.maps.LatLng(this.lat,this.long); 
-	 
-    this.geocoder.geocode({'location': latLong}, ((results, status)=>{
+	  var postdata = {
+           lat:this.lat,
+           long:this.long
+        }
+           var Serialized = this.serializeObj(postdata);
+    this.http.post('  http://rafao.us-west-2.elasticbeanstalk.com/api/home/reverse_geocoding', Serialized, options).map(res => res.json()).subscribe(response => {
+            console.log(response.data == '{"message":"Result not found"}');
+                    var resso = JSON.parse(response.data)
+            console.log(resso.response)
+//            console.log(resso.response.properties.address);
+           
+            if((response.data == '{"message":"Result not found"}')||(resso.response.properties.address == null)){
+        
+                 this.geocoder.geocode({'location': latLong}, ((results, status)=>{
 		  console.log(results);
                   if(results == ''){
                       this.ToastMsg('Invalid Location');
@@ -771,7 +810,72 @@ this.boundsSet = false;
            
    
            
-	   )
+	   )   
+            }  else{
+//                var resso = JSON.parse(response.data)
+            console.log(resso.response.message)
+          if(resso.response.message == "Result not found"){
+                      this.ToastMsg('Not found');
+                 this.lat = '';
+                       this.long= '';
+                         this.infowindow.setContent('Error');
+          this.infowindow.open(this.map, marker);
+          }
+          else{
+                 var addr= resso.response.properties.address
+                 console.log(resso.response)
+                 if(addr == null){
+                     
+                 }
+                   this.autocomplete.query= addr;
+                   this.data.city = resso.response.properties.city ;
+                 console.log(this.data.city);
+                   console.log(this.autocomplete.query);
+          this.infowindow.setContent(addr);
+          this.infowindow.open(this.map, marker);
+          }
+    }
+               });
+//    this.geocoder.geocode({'location': latLong}, ((results, status)=>{
+//		  console.log(results);
+//                  if(results == ''){
+//                      this.ToastMsg('Invalid Location');
+//                       this.lat =  '';
+//                       this.long= '';
+//                       this.infowindow.setContent('Error');
+//          this.infowindow.open(this.map, marker);
+//                  }else{
+//		   if (status == google.maps.GeocoderStatus.OK) {
+//             if (results[0]) {
+//              console.log(results[0].place_id);
+//          this.autocomplete.query = results[1].formatted_address;
+//          console.log(this.autocomplete.query)
+//          
+////          this.infowindow=new google.maps.InfoWindow({
+////              content: results[1].formatted_address,
+////          }); 
+//          this.infowindow.setContent(results[0].formatted_address);
+//          this.infowindow.open(this.map, marker);
+//                    }          
+//          else if (results[1]) {
+//              console.log(results[1].place_id);
+//          this.autocomplete.query= results[1].formatted_address;
+//          console.log(this.autocomplete.query)
+////          this.infowindow=new google.maps.InfoWindow({
+////              content: results[1].formatted_address,
+////          }); 
+//          this.infowindow.setContent(results[1].formatted_address);
+//          this.infowindow.open(this.map, marker);
+//         
+//                    }
+//                }}
+//		   
+//	   })
+//           
+//           
+//   
+//           
+//	   )
    })); 
       // alert("working1");
       }).catch((error) => {
@@ -943,10 +1047,13 @@ watch.subscribe((data) => {
     ToastMsg(msg){
     let toast = this.toastCtrl.create({
       message: msg,
-      duration: 2000,
-      position: 'top'
+      duration: 5000,
+      position: 'middle'
+      
     });
-    toast.present();
+     toast.present();
+ 
+   
   }
   chooseItem1(){
       this.number = true
@@ -1000,8 +1107,8 @@ watch.subscribe((data) => {
             console.log(response);
             var resso = JSON.parse(response.data)
             console.log(resso.response)
-            console.log(resso.response.properties.address);
-            if(resso.response.properties.address == null){
+//            console.log(resso.response.properties.address);
+            if((resso.response.properties.address == null)||(response.data == '{"message":"Result not found"}')){
                 console.log(resso.response.properties);
 //                this.AlertMsg1('Sorry we cannot provide our services for this location')
 //                 this.autocomplete.query= '';
@@ -1063,26 +1170,13 @@ watch.subscribe((data) => {
   }
     chooseItem2(){
       console.log(this.glob_item)
-    //this.autocomplete.query=item;
-//    console.log(JSON.parse(item))
-//    var str = this.glob_item.split(",",1);
-//    console.log(str[0])
+      let headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
+    let options = new RequestOptions({ headers: headers });
+
     var latlng = {lat: parseFloat(this.lat), lng: parseFloat(this.long)}
     console.log(latlng);
-//      var service = new google.maps.places.PlacesService(this.map);
-//  service.textSearch(str[1], callback);
-//function callback(results, status) {
-//  if (status == google.maps.places.PlacesServiceStatus.OK) {
-//      console.log(results[0].place_id)
-//    var marker = new google.maps.Marker({
-//      map: this.map,
-//      place: {
-//        placeId: results[0].place_id,
-//        location: results[0].geometry.location
-//      }
-//    });
-//  }
-//}
+
 
     this.geocoder.geocode({'location': latlng}, ((results, status)=>{
         console.log(status)
@@ -1122,45 +1216,83 @@ console.log(this.data.city);
       // alert(this.crlng);
        this.markers=[];
        this.markers.push(marker);
-            var pposition = new google.maps.LatLng(this.crlat, this.crlng)
-      console.log(this.MapBounds)
-      console.log(pposition.lat(),pposition.lng())
-//       MapBounds.contains(position) ? lastPosition = position : marker.setPosition(lastPosition);
-       if( this.MapBounds.contains(pposition)){
-           this.lastPosition = pposition
-       }else{
-        this.lastPosition = pposition
-           console.log('no sertvice available');
-       }
-       console.log(this.lastPosition.lat(),this.lastPosition.lng())
-    ;
+            
      let latLong = new google.maps.LatLng(this.crlat, this.crlng); 
-	  this.geocoder.geocode({'latLng': latLng}, ((results, status)=>{
+     
+     
+  var postdata = {
+           lat:this.crlat,
+           long:this.crlng
+        }
+           var Serialized = this.serializeObj(postdata);
+    this.http.post('  http://rafao.us-west-2.elasticbeanstalk.com/api/home/reverse_geocoding', Serialized, options).map(res => res.json()).subscribe(response => {
+            console.log(response.data == '{"message":"Result not found"}');
+           var resso = JSON.parse(response.data)
+            console.log(resso.response)
+//            console.log(resso.response.properties.address);
+            if((resso.response.properties.address == null)||(response.data == '{"message":"Result not found"}')){
+                 this.geocoder.geocode({'location': latLong}, ((results, status)=>{
 		  console.log(results);
                   if(results == ''){
                       this.ToastMsg('Invalid Location');
-                       this.autocomplete.query= 'Error';
-                 this.lat = '';
+                       this.lat =  '';
                        this.long= '';
-                         this.infowindow.setContent('Error');
+                       this.infowindow.setContent('Error');
           this.infowindow.open(this.map, marker);
                   }else{
 		   if (status == google.maps.GeocoderStatus.OK) {
-          if (results[0]) {
-          this.autocomplete.query= results[0].formatted_address;
-          console.log(this.autocomplete.query);
-        if(this.data.city == undefined){
-    this.data.city='Bogota'
-}
-             console.log(this.data.city);
+             if (results[0]) {
+              console.log(results[0].place_id);
+          this.autocomplete.query = results[1].formatted_address;
+          console.log(this.autocomplete.query)
+          
+//          this.infowindow=new google.maps.InfoWindow({
+//              content: results[1].formatted_address,
+//          }); 
           this.infowindow.setContent(results[0].formatted_address);
           this.infowindow.open(this.map, marker);
-          
+                    }          
+          else if (results[1]) {
+              console.log(results[1].place_id);
+          this.autocomplete.query= results[1].formatted_address;
+          console.log(this.autocomplete.query)
+//          this.infowindow=new google.maps.InfoWindow({
+//              content: results[1].formatted_address,
+//          }); 
+          this.infowindow.setContent(results[1].formatted_address);
+          this.infowindow.open(this.map, marker);
+         
                     }
                 }}
 		   
 	   })
-	   ) 
+           
+           
+   
+           
+	   )   
+            }       else{
+                var resso = JSON.parse(response.data)
+            console.log(resso.response.message)
+          if(resso.response.message == "Result not found"){
+                      this.ToastMsg('Not found');
+                 this.lat = '';
+                       this.long= '';
+                         this.infowindow.setContent('Error');
+          this.infowindow.open(this.map, marker);
+          }
+          else{
+                 var addr= resso.response.properties.address
+                 console.log(resso.response)
+                   this.autocomplete.query= addr;
+                   this.data.city = resso.response.properties.city ;
+                 console.log(this.data.city);
+                   console.log(this.autocomplete.query);
+          this.infowindow.setContent(addr);
+          this.infowindow.open(this.map, marker);
+          }
+    }
+               }); 
    }));
           console.log('hello');
           this.infowindow.setContent(results[0].formatted_address);
@@ -1209,6 +1341,9 @@ this.autocompleteItems = [];
      
  }
     chooseItem(){
+        let headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
+    let options = new RequestOptions({ headers: headers });
         this.number = true
         this.lat='';
         this.long='';
@@ -1218,6 +1353,9 @@ this.autocompleteItems = [];
     if (this.glob_item.terms[2].value == 'Bogota'){
         this.data.city = 'Bogota';
     }
+    console.log(this.glob_item.lat)
+     console.log(this.glob_item.lng)
+    
     this.geocoder.geocode({'placeId': this.glob_item.place_id}, ((results, status)=>{
       if (status === 'OK') {
         if (results[0]) {
@@ -1251,51 +1389,132 @@ this.autocompleteItems = [];
       // alert(this.crlng);
        this.markers=[];
        this.markers.push(marker);
-            var pposition = new google.maps.LatLng(this.crlat, this.crlng)
-      console.log(this.MapBounds)
-      console.log(pposition.lat(),pposition.lng())
-//       MapBounds.contains(position) ? lastPosition = position : marker.setPosition(lastPosition);
-       if( this.MapBounds.contains(pposition)){
-           this.lastPosition = pposition
-       }else{
-        this.lastPosition = pposition
-           console.log('no sertvice available');
-       }
-       console.log(this.lastPosition.lat(),this.lastPosition.lng())
-    ;
-     let latLong = new google.maps.LatLng(this.crlat, this.crlng); 
-	  this.geocoder.geocode({'latLng': latLng}, ((results, status)=>{
+       let latLong = new google.maps.LatLng(this.crlat, this.crlng); 
+        var postdata = {
+           lat:this.crlat,
+           long:this.crlng
+        }
+           var Serialized = this.serializeObj(postdata);
+    this.http.post('  http://rafao.us-west-2.elasticbeanstalk.com/api/home/reverse_geocoding', Serialized, options).map(res => res.json()).subscribe(response => {
+            console.log(response.data == '{"message":"Result not found"}');
+           var resso = JSON.parse(response.data)
+            console.log(resso.response)
+//            console.log(resso.response.properties.address);
+            if((resso.response.properties.address == null)||(response.data == '{"message":"Result not found"}')){
+                 this.geocoder.geocode({'location': latLong}, ((results, status)=>{
 		  console.log(results);
                   if(results == ''){
                       this.ToastMsg('Invalid Location');
-                       this.autocomplete.query= 'error';
-                 this.lat = '';
+                       this.lat =  '';
                        this.long= '';
-                         this.infowindow.setContent('Error');
+                       this.infowindow.setContent('Error');
           this.infowindow.open(this.map, marker);
                   }else{
 		   if (status == google.maps.GeocoderStatus.OK) {
-          if (results[0]) {
-          this.autocomplete.query= results[0].formatted_address;
+             if (results[0]) {
+              console.log(results[0].place_id);
+          this.autocomplete.query = results[1].formatted_address;
+          console.log(this.autocomplete.query)
           
-       if(this.data.city == undefined){
-    this.data.city='Bogota'
-}else if(this.data.city != results[4].formatted_address ){
-     this.data.city=results[4].formatted_address
-}
-          
-          console.log(this.data.city);
-          console.log(this.autocomplete.query);
+//          this.infowindow=new google.maps.InfoWindow({
+//              content: results[1].formatted_address,
+//          }); 
           this.infowindow.setContent(results[0].formatted_address);
           this.infowindow.open(this.map, marker);
-          this.goglat = this.crlat;
+                    }          
+          else if (results[1]) {
+              console.log(results[1].place_id);
+          this.autocomplete.query= results[1].formatted_address;
+          console.log(this.autocomplete.query)
+//          this.infowindow=new google.maps.InfoWindow({
+//              content: results[1].formatted_address,
+//          }); 
+          this.infowindow.setContent(results[1].formatted_address);
+          this.infowindow.open(this.map, marker);
+           this.goglat = this.crlat;
           this.goglong = this.crlng;
-          
+         
                     }
                 }}
 		   
 	   })
-	   ) 
+           
+           
+   
+           
+	   )   
+            }       else{
+                var resso = JSON.parse(response.data)
+            console.log(resso.response.message)
+          if(resso.response.message == "Result not found"){
+                      this.ToastMsg('Not found');
+                 this.lat = '';
+                       this.long= '';
+                         this.infowindow.setContent('Error');
+          this.infowindow.open(this.map, marker);
+          }
+          else{
+                 var addr= resso.response.properties.address
+                 console.log(resso.response)
+                   this.autocomplete.query= addr;
+                   this.data.city = resso.response.properties.city ;
+                 console.log(this.data.city);
+                   console.log(this.autocomplete.query);
+          this.infowindow.setContent(addr);
+          this.infowindow.open(this.map, marker);
+          this.goglat = this.crlat;
+          this.goglong = this.crlng;
+          }
+    }
+               });
+       
+       
+//            var pposition = new google.maps.LatLng(this.crlat, this.crlng)
+//      console.log(this.MapBounds)
+//      console.log(pposition.lat(),pposition.lng())
+////       MapBounds.contains(position) ? lastPosition = position : marker.setPosition(lastPosition);
+//       if( this.MapBounds.contains(pposition)){
+//           this.lastPosition = pposition
+//       }else{
+//        this.lastPosition = pposition
+//           console.log('no sertvice available');
+//       }
+//       console.log(this.lastPosition.lat(),this.lastPosition.lng())
+//    ;
+//     let latLong = new google.maps.LatLng(this.crlat, this.crlng); 
+//     
+//	  this.geocoder.geocode({'latLng': latLng}, ((results, status)=>{
+//		  console.log(results);
+//                  if(results == ''){
+//                      this.ToastMsg('Invalid Location');
+//                       this.autocomplete.query= 'error';
+//                 this.lat = '';
+//                       this.long= '';
+//                         this.infowindow.setContent('Error');
+//          this.infowindow.open(this.map, marker);
+//                  }else{
+//		   if (status == google.maps.GeocoderStatus.OK) {
+//          if (results[0]) {
+//          this.autocomplete.query= results[0].formatted_address;
+//          
+//       if(this.data.city == undefined){
+//    this.data.city='Bogota'
+//}else if(this.data.city != results[4].formatted_address ){
+//     this.data.city=results[4].formatted_address
+//}
+//          
+//          console.log(this.data.city);
+//          console.log(this.autocomplete.query);
+//          this.infowindow.setContent(results[0].formatted_address);
+//          this.infowindow.open(this.map, marker);
+//          this.goglat = this.crlat;
+//          this.goglong = this.crlng;
+//          
+//                    }
+//                }}
+//		   
+//	   })
+//	   ) 
    }));
           console.log('hello');
           this.infowindow.setContent(results[0].formatted_address);

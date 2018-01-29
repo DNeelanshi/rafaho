@@ -52,7 +52,8 @@ data:any={};
     console.log(postdata);
      var Loading = this.loadingCtrl.create({
           spinner: 'bubbles',
-          cssClass: 'loader'
+          cssClass: 'loader',
+          dismissOnPageChange: true
         });
         Loading.present().then(() => {
     this.http.post(this.appsetting.myGlobalVar + 'userinfo', serialized, options).map(res => res.json()).subscribe(data => {
@@ -65,9 +66,12 @@ data:any={};
 //      this.city = this.data.city;
       console.log(this.profile.firstname);
 
-    })
+    },(err)=>{
+                this.ToastMsg('Something went Wrong');
+            })
         })
   }
+ 
   geo(lat,long){
 //      alert('working');
       console.log(lat,long);
@@ -87,6 +91,14 @@ data:any={};
 
     return result.join("&");
   }
+ToastMsg(msg){
+  let toast = this.toastCtrl.create({
+    message: msg,
+    duration: 3000,
+    position: 'middle'
+  });
+  toast.present();
+}
 editpr(){
     this.navCtrl.push(EditprefrencePage);
 }

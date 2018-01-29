@@ -106,7 +106,8 @@ let options = new RequestOptions({ headers: headers})
     var Serialized = this.serializeObj(postdata);
      var Loading = this.loadingCtrl.create({
           spinner: 'bubbles',
-          cssClass: 'loader'
+          cssClass: 'loader',
+          dismissOnPageChange: true
         });
            Loading.present().then(() => {
   this.http.post(this.appsetting.myGlobalVar + 'add_to_cart', Serialized, options).map(res => res.json()).subscribe(response => {

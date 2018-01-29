@@ -31,6 +31,7 @@ export class SignupPage {
   arr;
   slat:any;
   slong:any;
+  Loading:any;
   savd:any=[];
   address:any;
   public Ctype = 'password';
@@ -251,7 +252,9 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
             } else{
                  this.AlertMsg1(response.message);
             }
-          })
+          },(err)=>{
+                this.ToastMsg('Something went Wrong');
+            })
         })
       }else{
            this.AlertMsg('Please add address');
@@ -266,34 +269,42 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
         var Loading = this.loadingCtrl.create({
           spinner: 'bubbles',
           cssClass: 'loader',
-          content:'Connecting..Make sure your location is on'
+          content:'Connecting..Make sure your location is on',
+          dismissOnPageChange: true
         });
-        Loading.present().then(() => {
+         Loading.present().then(() => {
     this.geolocation.getCurrentPosition().then((resp) => {
-        
+         
       // resp.coords.latitude
       //
       // resp.coords.longitude
       console.log('latitude:'+resp.coords.latitude+'longitude:'+resp.coords.longitude);
       // this.lat = resp.coords.latitude;
       // this.long = resp.coords.longitud
-      Loading.dismiss();
-      this.nativeGeocoder.reverseGeocode(resp.coords.latitude, resp.coords.longitude)
-      .then((result: NativeGeocoderReverseResult) => {
-        // alert(JSON.stringify(result));
-          if (result.subThoroughfare){
-        this.data.address=result.subThoroughfare+','+result.thoroughfare+','+ result.subLocality+','+result.locality+','+result.postalCode+','+result.countryName;
-            } else if (result.thoroughfare){
-                 this.data.address=result.thoroughfare+','+ result.subLocality+','+result.locality+','+result.postalCode+','+result.countryName;
-            }
-            else {
-                 this.data.address= result.subLocality+','+result.locality+','+result.postalCode+','+result.countryName;
-            }
-        //  alert(this.data.result +'Neelanshi');
-      }).catch((error: any) => console.log(error));
+//      let timerId = setInterval(() =>  Loading.dismiss(), 5000);
+// setTimeout(() => { clearInterval(timerId);  let toast = this.toastCtrl.create({
+//        message: 'Something Went Wrong',
+//        duration: 3000,
+//        position: 'top'
+//      });
+//      toast.present(); }, 7000);
+  Loading.dismiss();
+//      this.nativeGeocoder.reverseGeocode(resp.coords.latitude, resp.coords.longitude)
+//      .then((result: NativeGeocoderReverseResult) => {
+//        // alert(JSON.stringify(result));
+//          if (result.subThoroughfare){
+//        this.data.address=result.subThoroughfare+','+result.thoroughfare+','+ result.subLocality+','+result.locality+','+result.postalCode+','+result.countryName;
+//            } else if (result.thoroughfare){
+//                 this.data.address=result.thoroughfare+','+ result.subLocality+','+result.locality+','+result.postalCode+','+result.countryName;
+//            }
+//            else {
+//                 this.data.address= result.subLocality+','+result.locality+','+result.postalCode+','+result.countryName;
+//            }
+//        //  alert(this.data.result +'Neelanshi');
+//      }).catch((error: any) => console.log(error));
      }).catch((error) => {
        console.log('Error getting location', error);
-       this.ToastMsg1('Please enable your location');
+       this.ToastMsg('Please enable your location');
      });
      });
   }
@@ -307,7 +318,7 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
-    console.log('Rahul Maurya');
+    console.log('Neelanshi');
     console.log(window.navigator.onLine);
     if (window.navigator.onLine == true) {
     } else {
@@ -330,10 +341,12 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
     ToastMsg1(msg){
     let toast = this.toastCtrl.create({
       message: msg,
-      duration: 3000,
-      position: 'top'
+      duration: 5000,
+      position: 'middle'
     });
     toast.present();
+
+    
   }
  AlertMsg1(msg){
     let alert = this.alertCtrl.create({

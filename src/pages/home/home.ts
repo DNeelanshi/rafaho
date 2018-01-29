@@ -171,7 +171,8 @@ searcharray1:any=[];
 //     alert(postdata);
 var Loading = this.loadingCtrl.create({
           spinner: 'bubbles',
-          cssClass: 'loader'
+          cssClass: 'loader',
+          dismissOnPageChange: true
         });
         Loading.present().then(() => {
     this.http.post(this.appsetting.myGlobalVar +'getchefsbyprefrence', serialized, options).map(res => res.json()).subscribe(data => {
@@ -197,11 +198,21 @@ var Loading = this.loadingCtrl.create({
      
      
 
-    },(err)=>{console.log(err)});
+    },(err)=>{
+    this.ToastMsg('Something went wrong');
+    console.log(err)});
         })}else{
         this.bit = null;
         this.arr1 = 2;
         }
+}
+ToastMsg(msg){
+  let toast = this.toastCtrl.create({
+    message: msg,
+    duration: 3000,
+    position: 'middle'
+  });
+  toast.present();
 }
 searchaa(val){
     console.log(val);
@@ -246,6 +257,7 @@ searchaa(val){
           this.arr1 = 1;
       }
     },(err)=>{
+        this.ToastMsg('Something went wrong');
     console.log('error');
    // console.log(err);
     
@@ -316,7 +328,9 @@ searchdish(vali){
           this.arry = null;
           this.arr = null;
       }
-    },(err)=>{console.log(err)});
+    },(err)=>{
+        this.ToastMsg('Something went wrong')
+    console.log(err)});
     }else{
         this.arr = null;
         this.arry = true;

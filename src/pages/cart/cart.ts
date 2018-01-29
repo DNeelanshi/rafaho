@@ -24,9 +24,11 @@ export class CartPage {
  user:any=[];
  getcrt:any=[];
  str:any;
+ total1:any=0;
  str1:any;
  str2:any;
  bookdt:any;
+ datetosend:any;
  date:any;
  bookalt:any;
  test:any;
@@ -40,6 +42,7 @@ subtotal:any=[];
        public navParams: NavParams) {
       this.get();
       this.getcart();
+//      this.total();
       
   }
 
@@ -49,6 +52,7 @@ get(){
      this.user = JSON.parse(localStorage.getItem('UserDetail'))
     console.log(this.user);
     this.bookdt =  JSON.parse(localStorage.getItem('Bookingdatetime'))
+    this.datetosend = this.bookdt
     console.log( this.bookdt);
 
     this.bookdt = this.bookdt.split(":00Z",1);
@@ -86,6 +90,12 @@ let options = new RequestOptions({ headers: headers})
       console.log(response.data[0].products);
       this.getcrt = response.data[0].products;
       console.log(this.getcrt)
+      this.appsetting.cart = this.getcrt;
+    
+      localStorage.setItem('Cartlist',JSON.stringify( this.appsetting.cart));
+        this.subtotal = JSON.parse(localStorage.getItem('Cartlist'));
+        console.log(this.subtotal);
+         this.total();
 //      if(response.status == true){
 //      this.navCtrl.push(CartPage);
 //      }else{
@@ -117,11 +127,11 @@ let options = new RequestOptions({ headers: headers})
    if(flag==1){
        qnt = parseFloat(qnt)+1;
           this.getcrt[index].quantity = qnt;
-//          console.log( this.getcrt.quantity)
-          console.log(this.getcrt);
-//          console.log( this.appsetting.cart[index].quantity)
-//    localStorage.setItem('Cartlist',JSON.stringify( this.appsetting.cart));
-//    this.getcart();
+          this.appsetting.cart[index].quantity = qnt;
+         
+          console.log( this.appsetting.cart[index].quantity)
+    localStorage.setItem('Cartlist',JSON.stringify( this.appsetting.cart));
+    this.total();
 //    this.total(id,index);
        return false;
    }
@@ -145,7 +155,11 @@ let options = new RequestOptions({ headers: headers})
              
                    this.getcrt[index].quantity = qntity;
      console.log(this.getcrt);
-//    this.getcart();
+     this.appsetting.cart[index].quantity = qntity;
+         
+          console.log(this.appsetting.cart[index].quantity)
+    localStorage.setItem('Cartlist',JSON.stringify(this.appsetting.cart));
+    this.total();
 
    
       }
@@ -187,19 +201,73 @@ let options = new RequestOptions({ headers: headers})
     });
     toast.present();
   } 
-total(id,index){
-    
-    console.log(id,index);
-    this.productsamount =  (this.appsetting.cart[index].Quantity * this.appsetting.cart[index].product_price)
-    console.log( this.productsamount);
-   this.subtotal.push(this.productsamount);
-   console.log(this.subtotal);
-   
-}
+  total(){
+       this.subtotal = JSON.parse(localStorage.getItem('Cartlist'));
+      console.log(this.subtotal);
+      this.total1 = 0; 
+      for(var x = 0;x<this.subtotal.length;x++){
+          
+          this.total1 = this.total1 + (this.subtotal[x].quantity * this.subtotal[x].price_per_plate)
+      }
+  }
+//total(id,index){
+//    
+//    console.log(id,index);
+//    this.productsamount =  this.getcrt[index].quantity * this.getcrt[index].price_per_plate
+//    console.log( this.productsamount);
+//   this.subtotal.push(this.productsamount);
+//   console.log(this.subtotal);
+//   
+//}
   ionViewDidLoad() {
     console.log('ionViewDidLoad CartPage');
   }
    pyment() {
+       var proid:any=[];
+        var proname:any=[];
+         var proquant:any=[];
+         console.log(this.data.bookdt.length);
+       if(this.data.bookdt.length < 17){
+           console.log('this.datetosend')
+       }else{
+           this.datetosend=this.data.bookdt
+            console.log('this.datetosend')
+       }
+      
+        
+      console.log(this.datetosend);
+       console.log(this.getcrt);
+       console.log(this.chef);
+       console.log(this.user);
+//       console.log(this.bookdt);
+       let headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
+let options = new RequestOptions({ headers: headers}) 
+for(var j =0;j<this.getcrt.length;j++){
+    proid.push(this.getcrt[j].product_id)
+    proname.push(this.getcrt[j].product_name)
+    proquant.push(this.getcrt[j].quantity)
+}
+console.log(proid,proname,proquant);
+        proid = proid.join(':');
+        proname = proname.join(':');
+        proquant = proquant.join(':');
+        console.log(proid,proname,proquant);
+ var postdata = {
+  chef_id:this.chef._id,
+  user_id:this.user._id,
+customer_address:this.user.address,
+booking_datetime:this.datetosend,
+total_order_amount:this.total1,
+products_id:proid,
+products_quantity: proquant,
+products_name:proname
+       }
+       console.log(postdata);
+ var Serialized = this.serializeObj(postdata);
+  this.http.post(this.appsetting.myGlobalVar + 'order/addorder', Serialized, options).map(res => res.json()).subscribe(response => {
+      console.log(response);
+  });
     this.navCtrl.push(PaymentPage);
   }
    loct() {

@@ -28,6 +28,7 @@ export class EditprofilePage {
   public data: any = {};
   lat:any;
   long:any;
+  Loading:any;
   city:any;
   date:any;
   constructor(
@@ -184,8 +185,18 @@ export class EditprofilePage {
 
       console.log(this.data.firstname);
 
+    },(err)=>{
+        this.ToastMsg('Something went wrong');
     })
   }
+  ToastMsg(msg){
+  let toast = this.toastCtrl.create({
+    message: msg,
+    duration: 3000,
+    position: 'middle'
+  });
+  toast.present();
+}
   submitinfo(editinfo) {
     console.log(editinfo.value);
     let headers = new Headers();
@@ -209,11 +220,12 @@ export class EditprofilePage {
       }
       console.log(this.data);
       var serialized = this.serializeObj(this.data);
-       var Loading = this.loadingCtrl.create({
+       this.Loading = this.loadingCtrl.create({
           spinner: 'bubbles',
-          cssClass: 'loader'
+          cssClass: 'loader',
+          dismissOnPageChange: true
         });
-        Loading.present().then(() => {
+        this.Loading.present().then(() => {
       this.http.post(this.appsetting.myGlobalVar + 'user_data_update', serialized, options)
         .map(res => res.json())
         .subscribe(data => {
@@ -224,14 +236,15 @@ export class EditprofilePage {
                   this.appsetting.svd.push(data.data.address);
                     localStorage.setItem('Svedaddress',JSON.stringify(this.appsetting.svd));
                     console.log(this.appsetting.svd);
-            Loading.dismiss();
+            this.Loading.dismiss();
             let toast = this.toastCtrl.create({
               message: "Profile is updated",
               duration: 3000,
               position: 'middle'
             });
             toast.present();
-            this.navCtrl.push(ProfilePage)
+
+            this.navCtrl.pop();
             console.log(this.navCtrl);
           }
         })
@@ -275,9 +288,9 @@ CameraAction() {
        spinner: 'bubbles',
        cssClass: 'loader'
      });
-     Loading.present().then(() => {
+     this.Loading.present().then(() => {
 this.http.post(this.appsetting.myGlobalVar +'user_profile_pic', postdata).map(res => res.json()).subscribe(data => {
-               Loading.dismiss();
+               this.Loading.dismiss();
 
 // alert(JSON.stringify(data));
               console.log(data)
@@ -324,13 +337,13 @@ this.http.post(this.appsetting.myGlobalVar +'user_profile_pic', postdata).map(re
             };
 //            alert(postdata)
             var serialized = this.serializeObj(postdata);
-     var Loading = this.loadingCtrl.create({
+     this.Loading = this.loadingCtrl.create({
        spinner: 'bubbles',
        cssClass: 'loader'
      });
-     Loading.present().then(() => {
+     this.Loading.present().then(() => {
             this.http.post(this.appsetting.myGlobalVar +'user_profile_pic', postdata).map(res => res.json()).subscribe(data => {
-              Loading.dismiss();
+              this.Loading.dismiss();
               console.log(data)
 //              alert("saving image")
 

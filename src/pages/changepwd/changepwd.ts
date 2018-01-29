@@ -64,7 +64,8 @@ export class ChangepwdPage {
         var Serialized = this.serializeObj(postdata);
         var Loading = this.loadingCtrl.create({
           spinner: 'bubbles',
-          cssClass: 'loader'
+          cssClass: 'loader',
+          dismissOnPageChange: true
         });
         Loading.present().then(() => {
           this.http.post(this.appsetting.myGlobalVar + 'changepwd', Serialized, options).map(res => res.json()).subscribe(response => {
