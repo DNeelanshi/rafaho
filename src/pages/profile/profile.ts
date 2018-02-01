@@ -68,6 +68,7 @@ data:any={};
 
     },(err)=>{
                 this.ToastMsg('Something went Wrong');
+                Loading.dismissAll();
             })
         })
   }

@@ -31,7 +31,7 @@ export class SignupPage {
   arr;
   slat:any;
   slong:any;
-  Loading:any;
+  
   savd:any=[];
   address:any;
   public Ctype = 'password';
@@ -77,19 +77,7 @@ export class SignupPage {
   lupap(){
       
       console.log(this.data.city);
-//    if(this.data.city){
-//        this.nativeGeocoder.forwardGeocode(this.data.city)
-//  .then((coordinates: NativeGeocoderForwardResult) => {console.log('The coordinates are latitude=' + coordinates.latitude + ' and longitude=' + coordinates.longitude)
-//     this.slat =coordinates.latitude;
-//     this.slong = coordinates.longitude;
-//     console.log(this.slat);
-//     console.log(this.slong);
-//     localStorage.setItem('city', JSON.stringify(this.slat,this.slong))
-//      })
-//  .catch((error: any) => console.log(error));
-//  
-//    console.log();
-//    }
+
       this.address = this.data.address;
       console.log(this.address);
        if(this.address==''){
@@ -254,6 +242,7 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
             }
           },(err)=>{
                 this.ToastMsg('Something went Wrong');
+                Loading.dismissAll();
             })
         })
       }else{
@@ -305,6 +294,7 @@ this.http.post('http://nominatim.openstreetmap.org/search/'+adr+'?format=json&ad
      }).catch((error) => {
        console.log('Error getting location', error);
        this.ToastMsg('Please enable your location');
+       Loading.dismissAll();
      });
      });
   }

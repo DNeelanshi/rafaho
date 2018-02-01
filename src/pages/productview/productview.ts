@@ -123,6 +123,8 @@ let options = new RequestOptions({ headers: headers})
         this.navCtrl.push(CartPage);
       }
   },(err)=>{
+     this.ToastMsg('Something went wrong');
+      Loading.dismissAll();
       console.log(err);
   });    })
   }
@@ -210,7 +212,14 @@ let options = new RequestOptions({ headers: headers})
 //  updateArray(newitem){
 //    this.appsetting.cart.items[this.resultant._id] = this.resultant
 //  }
-  
+  ToastMsg(msg){
+  let toast = this.toastCtrl.create({
+    message: msg,
+    duration: 3000,
+    position: 'middle'
+  });
+  toast.present();
+}
     serializeObj(obj) {
     var result = [];
     for (var property in obj)

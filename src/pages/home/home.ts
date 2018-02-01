@@ -200,6 +200,7 @@ var Loading = this.loadingCtrl.create({
 
     },(err)=>{
     this.ToastMsg('Something went wrong');
+    Loading.dismissAll();
     console.log(err)});
         })}else{
         this.bit = null;

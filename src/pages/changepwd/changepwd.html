@@ -26,7 +26,7 @@
                                 <div class="itemouter">
 					<ion-item>
 						<ion-label stacked>Enter your old password</ion-label>
-						<ion-input type="{{ptype}}" [(ngModel)]="data.oldpassword" name="oldpassword" #oldpassword="ngModel" minlength="6" pattern="(?!^[0-9]*$)(?!^[0-9@/*/-/#/&/^/[]/{}/$/\/|/;/_/,/~/?/!/./''/`/%/:/()/+/=]*$)(?!^[a-zA-Z@/*/#/&/^/$/;/_/,/~/?/\/|/''/-/[]/{}/`/./\/!/%/:/()/+/=]*$)(?!^[a-zA-Z0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9@/*/#/&/$/;/_/%/:/^/?/~/`/''/|/,/-/[]/{}/!/\/./()/+/=]{6,30})" required></ion-input>
+						<ion-input type="{{ptype}}" [(ngModel)]="data.oldpassword" name="oldpassword" #oldpassword="ngModel" minlength="6"  pattern="(?!^[0-9]*$)(?!^[0-9@/*/-/#/&/^/$/\/|/;/_/,/~/?/!/./''/`/<>/%/:/{}/()/+/=]*$)(?!^[a-zA-Z@/*/#/&/^/$/;/_/,/~/?/\/|/''/-/`/./\/!/<>/%/:/()/{}/+/=]*$)(?!^[a-zA-Z0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9@/*/#/&/$/;/_/{}/%/:/^/?/~/`/''/|/,/-/<>/!/\/./()/+/=]{6,30})"  required></ion-input>
 					</ion-item>
                                     
 					<div class="alert alert-danger" color="danger">
@@ -49,7 +49,7 @@
                                     <div class="itemouter">
                                     <ion-item>
 						<ion-label stacked>Enter your new password</ion-label>
-						<ion-input type="{{ptype}}" [(ngModel)]="data.newpassword" name="newpassword" #newpassword="ngModel" minlength="6" pattern="(?!^[0-9]*$)(?!^[0-9@/*/-/#/&/^/[]/{}/$/\/|/;/_/,/~/?/!/./''/`/%/:/()/+/=]*$)(?!^[a-zA-Z@/*/#/&/^/$/;/_/,/~/?/\/|/''/-/[]/{}/`/./\/!/%/:/()/+/=]*$)(?!^[a-zA-Z0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9@/*/#/&/$/;/_/%/:/^/?/~/`/''/|/,/-/[]/{}/!/\/./()/+/=]{6,30})" required></ion-input>
+						<ion-input type="{{ptype}}" [(ngModel)]="data.newpassword" name="newpassword" #newpassword="ngModel" minlength="6"  pattern="(?!^[0-9]*$)(?!^[0-9@/*/-/#/&/^/$/\/|/;/_/,/~/?/!/./''/`/<>/%/:/{}/()/+/=]*$)(?!^[a-zA-Z@/*/#/&/^/$/;/_/,/~/?/\/|/''/-/`/./\/!/<>/%/:/()/{}/+/=]*$)(?!^[a-zA-Z0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9@/*/#/&/$/;/_/{}/%/:/^/?/~/`/''/|/,/-/<>/!/\/./()/+/=]{6,30})"  required></ion-input>
 					</ion-item>
                                     
 					<div class="alert alert-danger" color="danger">

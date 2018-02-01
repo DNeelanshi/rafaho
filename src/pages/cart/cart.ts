@@ -5,6 +5,7 @@ import { PaymentPage } from '../payment/payment';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Appsetting } from '../../providers/appsetting';
 import { LocationPage } from '../location/location';
+import { TabsPage } from '../tabs/tabs';
 import * as moment from 'moment';
 
 /**
@@ -37,6 +38,7 @@ subtotal:any=[];
  productsamount:any = [];
   constructor(public navCtrl: NavController, 
   public toastCtrl: ToastController, 
+  public loadingCtrl: LoadingController,
        public appsetting: Appsetting,
         public http: Http,
        public navParams: NavParams) {
@@ -83,8 +85,15 @@ let options = new RequestOptions({ headers: headers})
         user_id:a._id
        }
     var Serialized = this.serializeObj(postdata);
+        var Loading = this.loadingCtrl.create({
+          spinner: 'bubbles',
+          cssClass: 'loader',
+          dismissOnPageChange: true
+        });
+        Loading.present().then(() => {
   this.http.post(this.appsetting.myGlobalVar + 'get_cart_data', Serialized, options).map(res => res.json()).subscribe(response => {
       console.log(response)
+      Loading.dismiss();
       console.log(response.data[0]._id);
       this.appsetting.cartid = response.data[0]._id;
       console.log(response.data[0].products);
@@ -102,8 +111,10 @@ let options = new RequestOptions({ headers: headers})
 //          console.log('error');
 //      }
   },(err)=>{
+      this.ToastMsg('Something went wrong')
+      Loading.dismissAll();
       console.log(err);
-  });
+  }); })
      
    }
     serializeObj(obj) {
@@ -265,10 +276,24 @@ products_name:proname
        }
        console.log(postdata);
  var Serialized = this.serializeObj(postdata);
+  var Serialized = this.serializeObj(postdata);
+        var Loading = this.loadingCtrl.create({
+          spinner: 'bubbles',
+          cssClass: 'loader',
+          dismissOnPageChange: true
+        });
+        Loading.present().then(() => {
   this.http.post(this.appsetting.myGlobalVar + 'order/addorder', Serialized, options).map(res => res.json()).subscribe(response => {
       console.log(response);
-  });
-    this.navCtrl.push(PaymentPage);
+       this.ToastMsg('Order placed successfuly')
+        this.navCtrl.push(TabsPage);
+  },(err)=>{
+      this.ToastMsg('Something went wrong');
+      Loading.dismissAll();
+  });})
+  
+   
+   
   }
    loct() {
     this.navCtrl.push(LocationPage);

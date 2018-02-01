@@ -13,7 +13,7 @@
     </ion-title>
 
 
-     <ion-buttons end (click)="crt()">
+     <ion-buttons end >
       <button ion-button icon-only class="btnprofile">
       <div class="iconprf">
           <img src="assets/img/whitestore.png">
@@ -24,7 +24,7 @@
   </ion-navbar>
 
 </ion-header>
-
+<!--(click)="crt()"-->
 
 <ion-content >
 
@@ -42,7 +42,7 @@
 	<div class="content-sec">
 		<div class="top-sec" style="background-color: #fff; padding: 0 16px; padding-top: 12px;">
 			<h3>{{splarr.product_name}}</h3>
-			<p>{{splarr.product_ingredients}}</p>
+<!--			<p>{{splarr.product_ingredients}}</p>-->
 		</div>
 	<div class="mid-sec" style="background-color: #fff; padding: 0 16px;">
 		<h3 style="width: auto; float: left; font-size: 14px; margin: 7px 25px 0px 0px; color: #f27242;">Reg <span>${{splarr.product_price}}</span></h3>
@@ -91,16 +91,15 @@
 		</div>
 		<div class="head"  *ngSwitchCase="'Description'">
 			<ul>
-				<li>{{splarr.product_description}} </li>
+				<li [innerHTML]="splarr.product_description"></li>
 				
 				
 			</ul>
 		</div>
 		<div class="head"  *ngSwitchCase="'Restriction'">
 			<ul>
-				<li>t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</li>
-				<li>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.</li>
-				<li>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.</li>
+				<li [innerHTML]="splarr.diet_restriction"></li>
+				
 				
 				
 			</ul>

@@ -27,7 +27,7 @@ export class MapmodalPage{
   public globalshape : any;   
   autocompleteItems: any;
   omega:any = 0;
-  Loading:any;
+ 
   number:boolean = true;
  isenabled:boolean=false;
   autocomplete: any;
@@ -529,7 +529,7 @@ this.http.post('https://nominatim.openstreetmap.org/search/'+adr+'?format=json&a
         }
            var Serialized = this.serializeObj(postdata);
     this.http.post('  http://rafao.us-west-2.elasticbeanstalk.com/api/home/reverse_geocoding', Serialized, options).map(res => res.json()).subscribe(response => {
-            console.log(response.data == '{"message":"Result not found"}');
+            console.log(response.data);
                     var resso = JSON.parse(response.data)
             console.log(resso.response)
 //            console.log(resso.response.properties.address);
@@ -881,6 +881,7 @@ this.boundsSet = false;
       }).catch((error) => {
     console.log('Error getting location', error);
     this.ToastMsg('Error getting location'+','+error);
+    Loading.dismissAll();
       let latLng = new google.maps.LatLng(this.lat,this.long); 
    
       this.geocoder.geocode({'latLng': latLng}, ((results, status)=>{

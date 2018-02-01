@@ -158,11 +158,11 @@
 
   <div class="serch-text" *ngSwitchCase="'puppies'">
       <div class="serch">
-          <ion-searchbar placeholder="Search by dish..." [(ngModel)]="data.dats" name="dats" #dats="ngModel" (input)="searchdish(data.dats)" style="padding-right:12px !important;" ></ion-searchbar>
+          <ion-searchbar placeholder="Search by dish..." [(ngModel)]="data.dats" name="dats" #dats="ngModel" (input)="searchdish(data.dats)" ></ion-searchbar>
       <div class="option">
       <img src="assets/img/option.png" (click)="fltr_opn()">
-  </div>
       </div>
+     </div>
   
       <ion-list *ngIf= "arr != null">
       <ion-item *ngFor="let dats of arr">
