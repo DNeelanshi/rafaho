@@ -561,6 +561,8 @@ FavoritesPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__orderdetial_orderdetial__ = __webpack_require__(116);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__selectdish_selectdish__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_appsetting__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -570,6 +572,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
+
+
 
 
 
@@ -582,11 +587,226 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var RafahoPage = (function () {
-    function RafahoPage(navCtrl, navParams, modalCtrl) {
+    function RafahoPage(navCtrl, navParams, alertCtrl, loadCtrl, appsetting, toastCtrl, http, modalCtrl) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.alertCtrl = alertCtrl;
+        this.loadCtrl = loadCtrl;
+        this.appsetting = appsetting;
+        this.toastCtrl = toastCtrl;
+        this.http = http;
         this.modalCtrl = modalCtrl;
+        this.show = 0;
+        this.show1 = 0;
+        this.show2 = 0;
+        this.show3 = 0;
+        this.activeorders();
+        this.pendingorders();
+        this.historycompleted();
+        this.historycanceled();
+        this.pet = "kittens";
     }
+    /******************************************************************ACTIVE ORDERS*****************************************************************/
+    RafahoPage.prototype.activeorders = function () {
+        var _this = this;
+        var headers = new __WEBPACK_IMPORTED_MODULE_4__angular_http__["a" /* Headers */]();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
+        var options = new __WEBPACK_IMPORTED_MODULE_4__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        this.user = JSON.parse(localStorage.getItem('UserDetail'));
+        console.log(this.user);
+        var postdata = {
+            order_status: 2,
+            app_user_id: this.user._id
+        };
+        var serialized = this.serializeObj(postdata);
+        var Loading = this.loadCtrl.create({
+            spinner: 'bubbles',
+            cssClass: 'loader',
+            dismissOnPageChange: true
+        });
+        Loading.present().then(function () {
+            _this.http.post(_this.appsetting.myGlobalVar + 'order/getorders', serialized, options).map(function (res) { return res.json(); }).subscribe(function (data1) {
+                console.log(data1);
+                Loading.dismiss();
+                if (data1.status == true) {
+                    _this.show = 0;
+                    _this.activeorder = data1.data;
+                    _this.getchefinfo();
+                }
+                else {
+                    _this.show = 1;
+                }
+            });
+        });
+    };
+    RafahoPage.prototype.getchefinfo = function () {
+        var temp = this;
+        var headers = new __WEBPACK_IMPORTED_MODULE_4__angular_http__["a" /* Headers */]();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
+        var options = new __WEBPACK_IMPORTED_MODULE_4__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        this.activeorder.forEach(function (value, key) {
+            var chef = value.chef_id;
+            console.log(chef);
+            var postdata1 = {
+                id: chef
+            };
+            var serialized = temp.serializeObj(postdata1);
+            temp.http.post(temp.appsetting.myGlobalVar + 'userinfo', serialized, options).map(function (res) { return res.json(); }).subscribe(function (res) {
+                console.log(res);
+                console.log(value);
+                value.chefname = res.data.firstname;
+                value.userimage = res.data.user_image;
+                value.products.forEach(function (prodvalue, prodkey) {
+                    res.data.products.forEach(function (prod1value, prod1key) {
+                        if (prodvalue.product_id == prod1value._id) {
+                            prodvalue.image = prod1value.product_image0;
+                            prodvalue.minorder = prod1value.minimum_order;
+                            prodvalue.productprice = prod1value.product_price;
+                        }
+                    });
+                });
+            });
+        });
+        console.log(this.activeorder);
+    };
+    /******************************************************************PENDING ORDERS*************************************************************/
+    RafahoPage.prototype.pendingorders = function () {
+        var _this = this;
+        var headers = new __WEBPACK_IMPORTED_MODULE_4__angular_http__["a" /* Headers */]();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
+        var options = new __WEBPACK_IMPORTED_MODULE_4__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        this.user = JSON.parse(localStorage.getItem('UserDetail'));
+        console.log(this.user);
+        var postdata = {
+            order_status: 1,
+            app_user_id: this.user._id
+        };
+        var serialized = this.serializeObj(postdata);
+        var Loading = this.loadCtrl.create({
+            spinner: 'bubbles',
+            cssClass: 'loader',
+            dismissOnPageChange: true
+        });
+        Loading.present().then(function () {
+            _this.http.post(_this.appsetting.myGlobalVar + 'order/getorders', serialized, options).map(function (res) { return res.json(); }).subscribe(function (data2) {
+                console.log(data2);
+                Loading.dismiss();
+                if (data2.status == true) {
+                    _this.show1 = 0;
+                    _this.pendingorder = data2.data;
+                    _this.pendingorder.forEach(function (value, key) {
+                        value.user_data.forEach(function (value1, key1) {
+                            value.products.forEach(function (value2, key2) {
+                                value1.products.forEach(function (value3, key3) {
+                                    value2.image = value3.product_image0;
+                                    value2.minimumorder = value3.minimum_order;
+                                    value2.productprice = value3.product_price;
+                                });
+                            });
+                        });
+                    });
+                }
+                else {
+                    _this.show1 = 1;
+                }
+                console.log(_this.pendingorder);
+            });
+        });
+    };
+    /******************************************************************COMPLETED HISTORY ORDERS*************************************************************/
+    RafahoPage.prototype.historycompleted = function () {
+        var _this = this;
+        var headers = new __WEBPACK_IMPORTED_MODULE_4__angular_http__["a" /* Headers */]();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
+        var options = new __WEBPACK_IMPORTED_MODULE_4__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        this.user = JSON.parse(localStorage.getItem('UserDetail'));
+        console.log(this.user);
+        var postdata = {
+            order_status: 0,
+            app_user_id: this.user._id
+        };
+        var serialized = this.serializeObj(postdata);
+        var Loading = this.loadCtrl.create({
+            spinner: 'bubbles',
+            cssClass: 'loader',
+            dismissOnPageChange: true
+        });
+        Loading.present().then(function () {
+            _this.http.post(_this.appsetting.myGlobalVar + 'order/getorders', serialized, options).map(function (res) { return res.json(); }).subscribe(function (data3) {
+                console.log(data3);
+                Loading.dismiss();
+                if (data3.status == true) {
+                    _this.show2 = 0;
+                    _this.completedorders = data3.data;
+                    _this.completedorders.forEach(function (value, key) {
+                        value.user_data.forEach(function (value1, key1) {
+                            value.products.forEach(function (value2, key2) {
+                                value1.products.forEach(function (value3, key3) {
+                                    value2.image = value3.product_image0;
+                                    value2.minimumorder = value3.minimum_order;
+                                    value2.productprice = value3.product_price;
+                                });
+                            });
+                        });
+                    });
+                }
+                else {
+                    _this.show2 = 1;
+                }
+                console.log(_this.completedorders);
+            });
+        });
+    };
+    /******************************************************************COMPLETED HISTORY ORDERS*************************************************************/
+    RafahoPage.prototype.historycanceled = function () {
+        var _this = this;
+        var headers = new __WEBPACK_IMPORTED_MODULE_4__angular_http__["a" /* Headers */]();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
+        var options = new __WEBPACK_IMPORTED_MODULE_4__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        this.user = JSON.parse(localStorage.getItem('UserDetail'));
+        console.log(this.user);
+        var postdata = {
+            order_status: 5,
+            app_user_id: this.user._id
+        };
+        var serialized = this.serializeObj(postdata);
+        var Loading = this.loadCtrl.create({
+            spinner: 'bubbles',
+            cssClass: 'loader',
+            dismissOnPageChange: true
+        });
+        Loading.present().then(function () {
+            _this.http.post(_this.appsetting.myGlobalVar + 'order/getorders', serialized, options).map(function (res) { return res.json(); }).subscribe(function (data4) {
+                console.log(data4);
+                Loading.dismiss();
+                if (data4.status == true) {
+                    _this.show3 = 0;
+                    _this.canceledorders = data4.data;
+                    _this.canceledorders.forEach(function (value, key) {
+                        value.user_data.forEach(function (value1, key1) {
+                            value.products.forEach(function (value2, key2) {
+                                value1.products.forEach(function (value3, key3) {
+                                    value2.image = value3.product_image0;
+                                    value2.minimumorder = value3.minimum_order;
+                                    value2.productprice = value3.product_price;
+                                });
+                            });
+                        });
+                    });
+                }
+                else {
+                    _this.show3 = 1;
+                }
+                console.log(_this.canceledorders);
+            });
+        });
+    };
+    RafahoPage.prototype.serializeObj = function (obj) {
+        var result = [];
+        for (var property in obj)
+            result.push(encodeURIComponent(property) + "=" + encodeURIComponent(obj[property]));
+        return result.join("&");
+    };
     RafahoPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad RafahoPage');
     };
@@ -594,18 +814,20 @@ var RafahoPage = (function () {
         var modal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_3__selectdish_selectdish__["a" /* SelectdishPage */]);
         modal.present();
     };
-    RafahoPage.prototype.order = function () {
+    RafahoPage.prototype.order = function (orderdetails) {
+        localStorage.setItem('Ordersdetails', JSON.stringify(orderdetails));
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__orderdetial_orderdetial__["a" /* OrderdetialPage */]);
     };
     return RafahoPage;
 }());
 RafahoPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-rafaho',template:/*ion-inline-start:"D:\rafaho\rafaho\src\pages\rafaho\rafaho.html"*/'<!--\n  Generated template for the RafahoPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar  color="theme-header" >\n    <ion-title>Rafaho</ion-title>\n  </ion-navbar>\n <div class="segment-sec">\n  <ion-toolbar>\n  <ion-segment color="theme-header" [(ngModel)]="pet">\n    <ion-segment-button value="kittens" style="border-right: none;">\n     Active Order\n    </ion-segment-button>\n    <ion-segment-button value="puppies" style="border-left: none; border-right: none;">\n      Pending Order\n    </ion-segment-button>\n    <ion-segment-button value="History" style="border-left: none;">\n      Order History\n    </ion-segment-button>\n  </ion-segment>\n  </ion-toolbar>\n</div>\n\n</ion-header>\n\n\n<ion-content>\n<div class="content-sec">\n	<div [ngSwitch]="pet">\n	<!-- pending order include hear -->\n	  <ion-list *ngSwitchCase="\'puppies\'">\n	    <ion-item>\n	      <ion-thumbnail item-start>\n	        <img src="assets/img/southfod.png">\n	      </ion-thumbnail>\n	      <div class="main">\n	      	<div class="image">\n	      		<img src="assets/img/amanda.png">\n	      	</div>\n	      	<h1>Aaron Franklin</h1>\n	      	<div class="right-sec">\n	      		<button ion-button class="rating">3/5</button>\n	      		<button ion-button clear class="imgbtn" style="background-image:url(\'assets/img/phon.png\'); background-size:cover"></button>\n	      		<button ion-button clear class="imgbtn" style="background-image:url(\'assets/img/chat.png\'); background-size:cover; width: 18px;"></button>\n	      	</div>\n	      </div>\n	      <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png" (click)="order()">South indian food</h2>\n	      <p>Idli,sambhar, Kerla</p>\n	      <h3>Per plate $40.00</h3>\n	      <h3>Number of plate 5 x $40<span style="float: right;">$200.00</span></h3>\n	    </ion-item>\n	   <ion-item>\n	      <ion-thumbnail item-start>\n	        <img src="assets/img/southfod.png">\n	      </ion-thumbnail>\n	      <div class="main">\n	      	<div class="image">\n	      		<img src="assets/img/amanda.png">\n	      	</div>\n	      	<h1>Aaron Franklin</h1>\n	      	<div class="right-sec">\n	      		<button ion-button class="rating">3/5</button>\n	      		<button ion-button clear class="imgbtn" style="background-image:url(\'assets/img/phon.png\'); background-size:cover"></button>\n	      		<button ion-button clear class="imgbtn" style="background-image:url(\'assets/img/chat.png\'); background-size:cover; width: 18px;"></button>\n	      	</div>\n	      </div>\n	      <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png" (click)="order()">South indian food</h2>\n	      <p>Idli,sambhar, Kerla</p>\n	      <h3>Per plate $40.00</h3>\n	      <h3>Number of plate 5 x $40<span style="float: right;">$200.00</span></h3>\n	    </ion-item>\n	    <ion-item>\n	      <ion-thumbnail item-start>\n	        <img src="assets/img/southfod.png">\n	      </ion-thumbnail>\n	      <div class="main">\n	      	<div class="image">\n	      		<img src="assets/img/amanda.png">\n	      	</div>\n	      	<h1>Aaron Franklin</h1>\n	      	<div class="right-sec">\n	      		<button ion-button class="rating">3/5</button>\n	      		<button ion-button clear class="imgbtn" style="background-image:url(\'assets/img/phon.png\'); background-size:cover"></button>\n	      		<button ion-button clear class="imgbtn" style="background-image:url(\'assets/img/chat.png\'); background-size:cover; width: 18px;"></button>\n	      	</div>\n	      </div>\n	      <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png" (click)="order()">South indian food</h2>\n	      <p>Idli,sambhar, Kerla</p>\n	      <h3>Per plate $40.00</h3>\n	      <h3>Number of plate 5 x $40<span style="float: right;">$200.00</span></h3>\n	    </ion-item>\n	     <ion-item>\n	      <ion-thumbnail item-start>\n	        <img src="assets/img/southfod.png">\n	      </ion-thumbnail>\n	      <div class="main">\n	      	<div class="image">\n	      		<img src="assets/img/amanda.png">\n	      	</div>\n	      	<h1>Aaron Franklin</h1>\n	      	<div class="right-sec">\n	      		<button ion-button class="rating">3/5</button>\n	      		<button ion-button clear class="imgbtn" style="background-image:url(\'assets/img/phon.png\'); background-size:cover"></button>\n	      		<button ion-button clear class="imgbtn" style="background-image:url(\'assets/img/chat.png\'); background-size:cover; width: 18px;"></button>\n	      	</div>\n	      </div>\n	      <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png" (click)="order()">South indian food</h2>\n	      <p>Idli,sambhar, Kerla</p>\n	      <h3>Per plate $40.00</h3>\n	      <h3>Number of plate 5 x $40<span style="float: right;">$200.00</span></h3>\n	    </ion-item>\n	  </ion-list>\n	  <!-- pending end hear -->\n	  <!-- active order start -->\n	    <ion-list *ngSwitchCase="\'kittens\'">\n	    <ion-item>\n	      <ion-thumbnail item-start>\n	        <img src="assets/img/southfod.png">\n	      </ion-thumbnail>\n	      <div class="main">\n	      	<div class="image">\n	      		<img src="assets/img/amanda.png">\n	      	</div>\n	      	<h1>Aaron Franklin</h1>\n	      	<div class="right-sec">\n	      		<button ion-button class="rating">3/5</button>\n	      		<button ion-button clear class="imgbtn" style="background-image:url(\'assets/img/phon.png\'); background-size:cover"></button>\n	      		<button ion-button clear class="imgbtn" style="background-image:url(\'assets/img/chat.png\'); background-size:cover; width: 18px;"></button>\n	      	</div>\n	      </div>\n	      <h2 (click)="order()"> <img class="imgicon" width="11px" src="assets/img/acicon.png">South indian food</h2>\n	      <p>Idli,sambhar, Kerla</p>\n	      <h3>Per plate $40.00</h3>\n	      <h3>Number of plate 5 x $40<span style="float: right;">$200.00</span></h3>\n	    </ion-item>\n	   <ion-item>\n	      <ion-thumbnail item-start>\n	        <img src="assets/img/southfod.png">\n	      </ion-thumbnail>\n	      <div class="main">\n	      	<div class="image">\n	      		<img src="assets/img/amanda.png">\n	      	</div>\n	      	<h1>Aaron Franklin</h1>\n	      	<div class="right-sec">\n	      		<button ion-button class="rating">3/5</button>\n	      		<button ion-button clear class="imgbtn" style="background-image:url(\'assets/img/phon.png\'); background-size:cover"></button>\n	      		<button ion-button clear class="imgbtn" style="background-image:url(\'assets/img/chat.png\'); background-size:cover; width: 18px;"></button>\n	      	</div>\n	      </div>\n	      <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png" (click)="order()">South indian food</h2>\n	      <p>Idli,sambhar, Kerla</p>\n	      <h3>Per plate $40.00</h3>\n	      <h3>Number of plate 5 x $40<span style="float: right;">$200.00</span></h3>\n	    </ion-item>\n	    <ion-item>\n	      <ion-thumbnail item-start>\n	        <img src="assets/img/southfod.png">\n	      </ion-thumbnail>\n	      <div class="main">\n	      	<div class="image">\n	      		<img src="assets/img/amanda.png">\n	      	</div>\n	      	<h1>Aaron Franklin</h1>\n	      	<div class="right-sec">\n	      		<button ion-button class="rating">3/5</button>\n	      		<button ion-button clear class="imgbtn" style="background-image:url(\'assets/img/phon.png\'); background-size:cover"></button>\n	      		<button ion-button clear class="imgbtn" style="background-image:url(\'assets/img/chat.png\'); background-size:cover; width: 18px;"></button>\n	      	</div>\n	      </div>\n	      <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png" (click)="order()">South indian food</h2>\n	      <p>Idli,sambhar, Kerla</p>\n	      <h3>Per plate $40.00</h3>\n	      <h3>Number of plate 5 x $40<span style="float: right;">$200.00</span></h3>\n	    </ion-item>\n	  </ion-list>\n	  <!-- active order end here -->\n	  <ion-list *ngSwitchCase="\'History\'">\n	    <ion-item>\n	      <ion-thumbnail item-start style="width: 65px !important; height: 55px !important;">\n	        <img src="assets/img/opecity.png">\n	        <p>Cancelled</p>\n	      </ion-thumbnail>\n	      <div class="main">\n	      	<div class="image">\n	      		<img src="assets/img/amanda.png">\n	      	</div>\n	      	<h1>Aaron Franklin</h1>\n	      	<div class="right-sec">\n	      		<button ion-button class="rating histry">3/5</button>\n	      	</div>\n	      </div>\n	      <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png" (click)="order()">South indian food</h2>\n	      <p>Idli,sambhar, Kerla</p>\n	      <h3>Per plate $40.00</h3>\n	      <h3>Number of plate 5 x $40<span style="float: right;">$200.00</span></h3>\n	    </ion-item>\n	   <ion-item>\n	      <ion-thumbnail item-start style="width: 65px !important; height: 55px !important;">\n	        <img src="assets/img/opecity.png">\n	        <p style="background-color: #2bb600;">Compeleted</p>\n	      </ion-thumbnail>\n	      <div class="main">\n	      	<div class="image">\n	      		<img src="assets/img/amanda.png">\n	      	</div>\n	      	<h1>Aaron Franklin</h1>\n	      	<div class="right-sec">\n	      		<button ion-button class="rating histry">3/5</button>\n	      	</div>\n	      </div>\n	      <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png" (click)="order()">South indian food</h2>\n	      <p>Idli,sambhar, Kerla</p>\n	      <h3>Per plate $40.00</h3>\n	      <h3>Number of plate 5 x $40<span style="float: right;">$200.00</span></h3>\n	    </ion-item>\n	    <ion-item>\n	      <ion-thumbnail item-start style="width: 65px !important; height: 55px !important;">\n	        <img src="assets/img/opecity.png">\n	        <p>Cancelled</p>\n	      </ion-thumbnail>\n	      <div class="main">\n	      	<div class="image">\n	      		<img src="assets/img/amanda.png">\n	      	</div>\n	      	<h1>Aaron Franklin </h1>\n	      	<div class="right-sec">\n	      		<button ion-button class="rating histry">3/5</button>\n	      	</div>\n	      </div>\n	      <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png" (click)="order()">South indian food</h2>\n	      <p>Idli,sambhar, Kerla</p>\n	      <h3>Per plate $40.00</h3>\n	      <h3>Number of plate 5 x $40<span style="float: right;">$200.00</span></h3>\n	    </ion-item>\n	  </ion-list>\n	</div>\n</div>\n</ion-content>\n'/*ion-inline-end:"D:\rafaho\rafaho\src\pages\rafaho\rafaho.html"*/,
+        selector: 'page-rafaho',template:/*ion-inline-start:"D:\rafaho\rafaho\src\pages\rafaho\rafaho.html"*/'<!--\n  Generated template for the RafahoPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar  color="theme-header" >\n    <ion-title>Rafaho</ion-title>\n  </ion-navbar>\n <div class="segment-sec">\n  <ion-toolbar>\n  <ion-segment color="theme-header" [(ngModel)]="pet">\n    <ion-segment-button value="kittens" class="segment-button segment-activated" style="border-right: none;">\n     Active Order\n    </ion-segment-button>\n    <ion-segment-button value="puppies" style="border-left: none; border-right: none;">\n      Pending Order\n    </ion-segment-button>\n    <ion-segment-button value="History" style="border-left: none;">\n      Order History\n    </ion-segment-button>\n  </ion-segment>\n  </ion-toolbar>\n</div>\n\n</ion-header>\n\n\n<ion-content>\n<div class="content-sec">\n	<div [ngSwitch]="pet">\n	<!-- pending order include hear -->\n	  <ion-list *ngSwitchCase="\'puppies\'">\n\n	   <ion-item *ngFor="let dats of pendingorder">\n	      <ion-thumbnail item-start>\n	        <img [src]="dats?.products[0].image">\n	      </ion-thumbnail>\n	      <div class="main">\n	      	<div class="image">\n                    <img *ngIf="dats?.user_data[0].user_image" [src]="dats?.user_data[0].user_image">\n	      		<img *ngIf="!dats?.user_data[0].user_image" src="assets/img/amanda.png">\n	      	</div>\n	      	<h1>{{dats?.user_data[0].firstname}}</h1>\n	      	<div class="right-sec">\n	      		<button ion-button class="rating">3/5</button>\n	      		<button ion-button clear class="imgbtn" style="background-image:url(\'assets/img/phon.png\'); background-size:cover"></button>\n	      		<button ion-button clear class="imgbtn" style="background-image:url(\'assets/img/chat.png\'); background-size:cover; width: 18px;"></button>\n	      	</div>\n	      </div>\n	      <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png" (click)="order(dats)">{{dats?.products[0].product_name}}</h2>\n<!--	      <p>Idli,sambhar, Kerla</p>\n	      <h3>Per plate $40.00</h3>\n	      <h3>Number of plate 5 x $40<span style="float: right;">$200.00</span></h3>-->\n	    </ion-item>\n              <p *ngIf="show1 == 1">No Order placed</p>\n	\n	  </ion-list>\n	  <!-- pending end hear -->\n	  <!-- active order start -->\n          \n          \n	    <ion-list *ngSwitchCase="\'kittens\'">\n	    <ion-item  *ngFor="let dat of activeorder">\n	      <ion-thumbnail item-start>\n	        <img [src]="dat?.products[0].image">\n	      </ion-thumbnail>\n	      <div class="main">\n	      	<div class="image">\n	      		<img *ngIf="dat?.userimage" [src]="dat?.userimage">\n                        <img *ngIf="!dat?.userimage" src="assets/img/amanda.png">\n	      	</div>\n	      	<h1>{{dat?.chefname}}</h1>\n	      	<div class="right-sec">\n	      		<button ion-button class="rating">3/5</button>\n	      		<button ion-button clear class="imgbtn" style="background-image:url(\'assets/img/phon.png\'); background-size:cover"></button>\n	      		<button ion-button clear class="imgbtn" style="background-image:url(\'assets/img/chat.png\'); background-size:cover; width: 18px;"></button>\n	      	</div>\n	      </div>\n	      <h2 (click)="order(dat)"> <img class="imgicon" width="11px" src="assets/img/acicon.png">{{dat?.products[0].product_name}}</h2>\n	      <!--<p>{{dat?.products[0].product_name}}</p>-->\n<!--	      <h3>Per plate $</h3>\n	      <h3>Number of plate 5 x $40<span style="float: right;">$200.00</span></h3>-->\n	    </ion-item>\n	    <p *ngIf="show == 1">No Active Orders </p>\n\n	  </ion-list>\n          \n          <!-- active order end here -->\n          \n          \n          \n          \n	  <ion-list *ngSwitchCase="\'History\'">\n	 \n	   <ion-item *ngFor="let daatt of completedorders">\n	      <ion-thumbnail item-start style="width: 65px !important; height: 55px !important;">\n	        <img [src]="daatt?.products[0].image">\n	        <p style="background-color: #2bb600;">Compeleted</p>\n	      </ion-thumbnail>\n	      <div class="main">\n	      	<div class="image">\n	      		 <img *ngIf="daatt?.user_data[0].user_image" [src]="daatt?.user_data[0].user_image">\n	      		<img *ngIf="!daatt?.user_data[0].user_image" src="assets/img/amanda.png">\n	      	</div>\n	      	<h1>{{daatt?.user_data[0].firstname}}</h1>\n	      	<div class="right-sec">\n	      		<button ion-button class="rating histry">3/5</button>\n	      	</div>\n	      </div>\n	      <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png" (click)="order(daatt)">{{daatt?.products[0].product_name}}</h2>\n<!--	      <p>Idli,sambhar, Kerla</p>\n	      <h3>Per plate $40.00</h3>\n	      <h3>Number of plate 5 x $40<span style="float: right;">$200.00</span></h3>-->\n	    </ion-item>\n              \n	    <ion-item  *ngFor="let daatts of canceledorders">\n	      <ion-thumbnail item-start style="width: 65px !important; height: 55px !important;">\n	        <img [src]="daatts?.products[0].image">\n	        <p>Cancelled</p>\n	      </ion-thumbnail>\n	      <div class="main">\n	      	<div class="image">\n	      		 <img *ngIf="daatts?.user_data[0].user_image" [src]="daatts?.user_data[0].user_image">\n	      		<img *ngIf="!daatts?.user_data[0].user_image" src="assets/img/amanda.png">\n	      	</div>\n	      	<h1>{{daatts?.user_data[0].firstname}} </h1>\n	      	<div class="right-sec">\n	      		<button ion-button class="rating histry">3/5</button>\n	      	</div>\n	      </div>\n	      <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png" (click)="order(daatts)">{{daatts?.products[0].product_name}}</h2>\n<!--	      <p>Idli,sambhar, Kerla</p>\n	      <h3>Per plate $40.00</h3>\n	      <h3>Number of plate 5 x $40<span style="float: right;">$200.00</span></h3>-->\n	    </ion-item>\n               <p *ngIf="show2 == 1">No Orders in History </p>\n	  </ion-list>\n	</div>\n</div>\n</ion-content>\n'/*ion-inline-end:"D:\rafaho\rafaho\src\pages\rafaho\rafaho.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__providers_appsetting__["a" /* Appsetting */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_appsetting__["a" /* Appsetting */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */]) === "function" && _h || Object])
 ], RafahoPage);
 
+var _a, _b, _c, _d, _e, _f, _g, _h;
 //# sourceMappingURL=rafaho.js.map
 
 /***/ }),
@@ -617,6 +839,8 @@ RafahoPage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OrderdetialPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_appsetting__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -628,6 +852,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
+
 /**
  * Generated class for the OrderdetialPage page.
  *
@@ -635,10 +862,45 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var OrderdetialPage = (function () {
-    function OrderdetialPage(navCtrl, navParams) {
+    function OrderdetialPage(navCtrl, navParams, alertCtrl, loadCtrl, appsetting, toastCtrl, http) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.alertCtrl = alertCtrl;
+        this.loadCtrl = loadCtrl;
+        this.appsetting = appsetting;
+        this.toastCtrl = toastCtrl;
+        this.http = http;
+        this.orderdetails = [];
+        this.orderproddetails = [];
+        this.userdetail = [];
+        this.subtotal = 0;
+        this.get();
     }
+    OrderdetialPage.prototype.get = function () {
+        this.orderdetails = JSON.parse(localStorage.getItem('Ordersdetails'));
+        this.userdetail = JSON.parse(localStorage.getItem('UserDetail'));
+        console.log(this.orderdetails);
+        console.log(this.userdetail);
+        this.str = this.userdetail.address.split(",", this.userdetail.address.length);
+        this.str1 = this.str[0] + ',' + this.str[1];
+        var len = this.str1.length + 1;
+        this.str2 = this.userdetail.address.slice(len, this.userdetail.address.length);
+        console.log(this.str);
+        console.log(this.str1);
+        console.log(this.str2);
+        this.orderproddetails = this.orderdetails.products;
+        for (var x = 0; x < this.orderproddetails.length; x++) {
+            this.subtotal = this.subtotal + (this.orderproddetails[x].quantity * this.orderproddetails[x].productprice);
+        }
+        console.log(this.subtotal);
+        console.log();
+        this.str3 = this.orderdetails.booking_datetime.split("T", this.orderdetails.booking_datetime.length);
+        this.str4 = this.str3[1];
+        //    
+        this.str5 = this.str4.split(":00.");
+        console.log(this.str3[0]);
+        console.log(this.str5[0]);
+    };
     OrderdetialPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad OrderdetialPage');
     };
@@ -646,11 +908,12 @@ var OrderdetialPage = (function () {
 }());
 OrderdetialPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-orderdetial',template:/*ion-inline-start:"D:\rafaho\rafaho\src\pages\orderdetial\orderdetial.html"*/'<!--\n  Generated template for the OrderdetialPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar color="theme-header">\n    <ion-title>Orderdetail</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content >\n	<div class="top-sec">\n			<ion-grid>\n				<ion-row>\n					<ion-col col-6 class="left">\n					  <div class="chef">\n						<h5>Chef Samuel Linder</h5>\n					  </div>\n					</ion-col>\n					<ion-col col-6 class="right">\n					  <div class="phn">\n						<h5>9041-601-775</h5>\n						<span><img src="../assets/img/msg.png"></span>\n					  </div>\n					</ion-col>\n				</ion-row>\n			</ion-grid>\n		</div>\n	<div class="text-sec">\n		\n		<div class="mid-sec">\n			<h5>Customer Address:</h5>\n			<p>71 Pilgrim Avenue</p>\n			<p>Chevy Chase,MD 20815</p>\n			<div class="rghtbtn">\n				<button ion-button end>Order Cancle</button>\n			</div>\n		</div>\n		<div class="bottom-sec">\n			<ion-list>\n				<ion-item>\n					<h5 item-start class="strt">Booking Date & Time</h5>\n					<p>21 August 2017</p>\n					<p item-end class="ennd">9:05am</p>\n				</ion-item>\n			</ion-list>\n\n		</div>\n	</div>\n	<div class="content-sec">\n	  <ion-list>\n	    <ion-item>\n	      <ion-thumbnail item-start>\n	        <img src="../assets/img/southfod.png">\n	      </ion-thumbnail>\n	      <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png">South indian food</h2>\n	      <p>Idli,sambhar, Kerla</p>\n	      <h3>Per plate $40.00</h3>\n	      <h3>Number of plate 5 x $40<span style="float: right;">$200.00</span></h3>\n	    </ion-item>\n	    <ion-item>\n	      <ion-thumbnail item-start>\n	        <img src="assets/img/southfod.png">\n	      </ion-thumbnail>\n	      <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png">South indian food</h2>\n	      <p>Idli,sambhar, Kerla</p>\n	      <h3>Per plate $40.00</h3>\n	      <h3>Number of plate 5 x $40<span style="float: right;">$200.00</span></h3>\n	    </ion-item>\n	     <ion-item>\n	      <ion-thumbnail item-start>\n	        <img src="assets/img/southfod.png">\n	      </ion-thumbnail>\n	      <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png">South indian food</h2>\n	      <p>Idli,sambhar, Kerla</p>\n	      <h3>Per plate $40.00</h3>\n	      <h3>Number of plate 5 x $40<span style="float: right;">$200.00</span></h3>\n	    </ion-item>\n	</ion-list>\n</div>\n<div class="total">\n	<h2 class="left">Subtotal</h2>\n	<h2 class="right">$606.00</h2>\n</div>\n</ion-content>\n'/*ion-inline-end:"D:\rafaho\rafaho\src\pages\orderdetial\orderdetial.html"*/,
+        selector: 'page-orderdetial',template:/*ion-inline-start:"D:\rafaho\rafaho\src\pages\orderdetial\orderdetial.html"*/'<!--\n  Generated template for the OrderdetialPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar color="theme-header">\n    <ion-title>Orderdetail</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content >\n	<div class="top-sec">\n			<ion-grid>\n				<ion-row>\n					<ion-col col-6 class="left">\n					  <div class="chef">\n						<h5>{{orderdetails.user_data[0].firstname}}</h5>\n					  </div>\n					</ion-col>\n					<ion-col col-6 class="right">\n					  <div class="phn">\n						<h5>{{orderdetails.user_data[0].phone}}</h5>\n						<span><img src="../assets/img/msg.png"></span>\n					  </div>\n					</ion-col>\n				</ion-row>\n			</ion-grid>\n		</div>\n	<div class="text-sec">\n		\n		<div class="mid-sec">\n			<h5>Customer Address:</h5>\n			<p>{{str1}}</p>\n			<p>{{str2}}</p>\n			<div class="rghtbtn">\n				<!--<button ion-button end>Order Cancle</button>-->\n			</div>\n		</div>\n		<div class="bottom-sec">\n			<ion-list>\n				<ion-item>\n					<h5 item-start class="strt">Booking Date & Time</h5>\n					<p>{{str3[0]}}</p>\n					<p item-end class="ennd">{{this.str5[0]}}</p>\n				</ion-item>\n			</ion-list>\n\n		</div>\n	</div>\n	<div class="content-sec">\n	  <ion-list>\n              <div >\n	    <ion-item *ngFor="let dat of orderproddetails">\n	      <ion-thumbnail item-start>\n                  <img >\n	        <img [src]="dat?.image">\n	      </ion-thumbnail>\n	      <h2> <img class="imgicon" width="11px" src="assets/img/acicon.png">{{dat?.product_name}}</h2>\n	      <!--<p>Idli,sambhar, Kerla</p>-->\n	      <h3>Per plate ${{dat?.productprice}}</h3>\n	      <h3>Number of plate {{dat?.quantity}} x ${{dat?.productprice}}<span style="float: right;">${{dat?.quantity*dat?.productprice}}</span></h3>\n	    </ion-item>\n	</div>\n	</ion-list>\n</div>\n<div class="total">\n	<h2 class="left">Subtotal</h2>\n	<h2 class="right">${{subtotal}}</h2>\n</div>\n</ion-content>\n'/*ion-inline-end:"D:\rafaho\rafaho\src\pages\orderdetial\orderdetial.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__providers_appsetting__["a" /* Appsetting */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_appsetting__["a" /* Appsetting */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_2__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_http__["b" /* Http */]) === "function" && _g || Object])
 ], OrderdetialPage);
 
+var _a, _b, _c, _d, _e, _f, _g;
 //# sourceMappingURL=orderdetial.js.map
 
 /***/ }),
