@@ -1,6 +1,6 @@
 webpackJsonp([0],{
 
-/***/ 458:
+/***/ 457:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29,7 +29,7 @@ SouthfoodPageModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2__southfood__["a" /* SouthfoodPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__southfood__["a" /* SouthfoodPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__southfood__["a" /* SouthfoodPage */]),
         ],
     })
 ], SouthfoodPageModule);
@@ -76,7 +76,7 @@ SouthfoodPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'page-southfood',template:/*ion-inline-start:"D:\rafaho\rafaho\src\pages\southfood\southfood.html"*/'<!--\n  Generated template for the SouthfoodPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>southfood</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n</ion-content>\n'/*ion-inline-end:"D:\rafaho\rafaho\src\pages\southfood\southfood.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */]])
 ], SouthfoodPage);
 
 //# sourceMappingURL=southfood.js.map

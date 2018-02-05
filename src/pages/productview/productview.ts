@@ -26,7 +26,7 @@ export class ProductviewPage {
  cart1:any;
  cartid:any;
  result:any;
- 
+ no_of_products:any;
  quantity:any;
   constructor(public navCtrl: NavController, 
        public appsetting: Appsetting, 
@@ -34,8 +34,13 @@ export class ProductviewPage {
        private toastCtrl:ToastController,
        private myService:Service,
        public loadingCtrl: LoadingController) {
+      if (JSON.parse(localStorage.getItem('proctnumberincart'))){
+         this.no_of_products =  JSON.parse(localStorage.getItem('proctnumberincart'));
+      }
   }
-
+cartpro(){
+    this.navCtrl.push(CartPage)
+}
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProductviewPage');
      console.log(window.navigator.onLine);
@@ -78,11 +83,11 @@ for(var i = 0; i < str_array.length; i++) {
        let headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
 let options = new RequestOptions({ headers: headers})
- var a= JSON.parse(localStorage.getItem('UserDetail'));
+ var a = JSON.parse(localStorage.getItem('UserDetail'));
       console.log(a);
-      var b= JSON.parse(localStorage.getItem('Chefdetail'));
+      var b = JSON.parse(localStorage.getItem('Chefdetail'));
       console.log(b); 
-      var c= JSON.parse(localStorage.getItem('Bookingdatetime'));
+      var c = JSON.parse(localStorage.getItem('Bookingdatetime'));
       console.log(c); 
       
      var postdata = {
@@ -100,7 +105,7 @@ let options = new RequestOptions({ headers: headers})
      product_image0 :this.splarr.product_image0,
      product_ingredients:this.splarr.product_ingredients,
      discount:this.splarr.discount
- }
+      }
         console.log(postdata)
 
     var Serialized = this.serializeObj(postdata);

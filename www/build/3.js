@@ -1,6 +1,6 @@
 webpackJsonp([3],{
 
-/***/ 459:
+/***/ 458:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29,7 +29,7 @@ TermsPageModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2__terms__["a" /* TermsPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__terms__["a" /* TermsPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__terms__["a" /* TermsPage */]),
         ],
     })
 ], TermsPageModule);

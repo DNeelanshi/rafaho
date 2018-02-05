@@ -1,6 +1,6 @@
 webpackJsonp([7],{
 
-/***/ 454:
+/***/ 452:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29,7 +29,7 @@ ProductviewPageModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2__productview__["a" /* ProductviewPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__productview__["a" /* ProductviewPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__productview__["a" /* ProductviewPage */]),
         ],
     })
 ], ProductviewPageModule);

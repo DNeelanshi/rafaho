@@ -9,15 +9,15 @@
    <ion-navbar color="theme-header">
     <ion-title>
       {{splarr.specialties_product}}
-      <p>Online Chef list</p>
+      <p>Product Details</p>
     </ion-title>
 
 
-     <ion-buttons end >
-      <button ion-button icon-only class="btnprofile">
+    <ion-buttons end >
+      <button ion-button icon-only class="btnprofile" (click)="cartpro()">
       <div class="iconprf">
           <img src="assets/img/whitestore.png">
-          <p><span>2</span></p>
+         <p><span>{{no_of_products}}</span></p>
        </div>
       </button>     
     </ion-buttons>

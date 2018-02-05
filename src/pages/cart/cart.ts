@@ -94,6 +94,8 @@ let options = new RequestOptions({ headers: headers})
   this.http.post(this.appsetting.myGlobalVar + 'get_cart_data', Serialized, options).map(res => res.json()).subscribe(response => {
       console.log(response)
       Loading.dismiss();
+      console.log(response.data[0].products.length);
+        localStorage.setItem('proctnumberincart',JSON.stringify(response.data[0].products.length));
       console.log(response.data[0]._id);
       this.appsetting.cartid = response.data[0]._id;
       console.log(response.data[0].products);
@@ -105,11 +107,7 @@ let options = new RequestOptions({ headers: headers})
         this.subtotal = JSON.parse(localStorage.getItem('Cartlist'));
         console.log(this.subtotal);
          this.total();
-//      if(response.status == true){
-//      this.navCtrl.push(CartPage);
-//      }else{
-//          console.log('error');
-//      }
+
   },(err)=>{
       this.ToastMsg('Something went wrong')
       Loading.dismissAll();

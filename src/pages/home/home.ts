@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { ModalController,LoadingController,AlertController,ToastController } from 'ionic-angular';
+import { ModalController,LoadingController,AlertController,ToastController, Events } from 'ionic-angular';
 import { FilterPage } from '../filter/filter';
 import { ChefdetialsPage } from '../chefdetials/chefdetials';
 import { MapmodalPage } from "../mapmodal/mapmodal";
+import { CartPage } from "../cart/cart";
 import { ProductlistPage } from '../productlist/productlist';
 import { Http, RequestOptions, Headers } from "@angular/http";
 import { Appsetting } from "../../providers/appsetting";
@@ -33,6 +34,7 @@ searcharray1:any=[];
  data:any={};
  bukingdate:any;
  blurclass:any;
+ no_of_products:any;
   chefsearch:any={};
   constructor(public navCtrl: NavController, public modalCtrl: ModalController,
        public appsetting: Appsetting,
@@ -41,18 +43,33 @@ searcharray1:any=[];
      private nativeGeocoder: NativeGeocoder,
       public loadingCtrl: LoadingController,
        private alertCtrl:AlertController,
-       public toastCtrl:ToastController) {
-       var Loading = this.loadingCtrl.create({
+       public toastCtrl:ToastController,
+       public events: Events,
+       ) {
+     this.firsthit();
+      this.pet = "kittens";
+// events.subscribe('page0', (res) => {
+// this.firsthit();
+//    })
+  }
+  firsthit(){
+        var Loading = this.loadingCtrl.create({
           spinner: 'bubbles',
           cssClass: 'loader'
         });
         Loading.present().then(() => {
-    this.pet = "kittens";
+   
     this.data.datetime = this.date;
+     if (JSON.parse(localStorage.getItem('proctnumberincart')))
+         {
+         this.no_of_products =  JSON.parse(localStorage.getItem('proctnumberincart'));
+         console.log(this.no_of_products);
+      }
      Loading.dismiss();
     })
-//    this.get();
-//    alert('hello');
+  }
+  cartpage(){
+      this.navCtrl.push(CartPage);
   }
  fltr_opn() {
     let fltr_opn = this.modalCtrl.create(FilterPage);
@@ -83,10 +100,10 @@ searcharray1:any=[];
   openlist(){
       this.openllist = 1;
       this.blurclass = 'blurbg'
-      if(localStorage.getItem('Svedaddress')){
+      if(JSON.parse(localStorage.getItem('Svedaddress'))||JSON.parse(localStorage.getItem('Favaddress'))){
       this.searcharray = JSON.parse(localStorage.getItem('Svedaddress'));
       console.log(this.searcharray)
-       if(localStorage.getItem('Favaddress')){
+       if(JSON.parse(localStorage.getItem('Favaddress'))){
           this.searcharray1 = JSON.parse(localStorage.getItem('Favaddress'));  
             console.log(this.searcharray1)
        }else{
@@ -367,6 +384,7 @@ searchdish(vali){
     return result.join("&");
   }
   ionViewDidLoad() {
+      
     console.log('ionViewDidLoad HomePage');
     this.get();
       

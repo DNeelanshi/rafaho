@@ -29,7 +29,7 @@ AddwalletPageModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2__addwallet__["a" /* AddwalletPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__addwallet__["a" /* AddwalletPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__addwallet__["a" /* AddwalletPage */]),
         ],
     })
 ], AddwalletPageModule);

@@ -1,6 +1,6 @@
 webpackJsonp([10],{
 
-/***/ 451:
+/***/ 449:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29,7 +29,7 @@ OrderdetialPageModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2__orderdetial__["a" /* OrderdetialPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__orderdetial__["a" /* OrderdetialPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__orderdetial__["a" /* OrderdetialPage */]),
         ],
     })
 ], OrderdetialPageModule);

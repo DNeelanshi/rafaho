@@ -17,7 +17,7 @@
       <button ion-button icon-only class="btnprofile">
       <div class="iconprf">
           <img src="assets/img/whitestore.png">
-          <p><span>2</span></p>
+          <p><span>{{no_of_products}}</span></p>
        </div>
       </button>     
     </ion-buttons>
@@ -35,7 +35,7 @@
 	      <h2 (click)="dishview(pro)"> <img class="imgicon" width="11px" src="assets/img/acicon.png" >{{pro?.product_name}}</h2>
 	      <p>{{pro?.product_ingredients}}</p>
               <h3>Per plate ${{pro?.product_price}}</h3>
-	      <button ion-button outline item-end (click)="cart()">ADD TO CART</button>	       
+	      <button ion-button outline item-end (click)="cart(pro)">ADD TO CART</button>	       
 	    </ion-item>
 <!--	      <ion-item>
 	      <ion-thumbnail item-start>

@@ -241,6 +241,7 @@ else{
               this.iconname = 'star';
               console.log(this.appsetting.saved);
         this.appsetting.saved.push(auto);
+        console.log(this.appsetting.saved);
         localStorage.setItem('Favaddress',JSON.stringify(this.appsetting.saved));
 
           }
